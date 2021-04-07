@@ -102,7 +102,7 @@ public class BrowserView : MonoBehaviour
     {
         if (UrlInputField.text == "")
         {
-            LoadURL("google.com");
+            LoadURL("192.168.1.161:8081");
         }
 
         string potentialUrl = UrlInputField.text;
