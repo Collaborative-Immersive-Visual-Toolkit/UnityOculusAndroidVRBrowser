@@ -15,7 +15,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
-public class LaserPointer : OVRCursor
+public class LaserPointerMesh : OVRCursor
 {
     public enum LaserBeamBehavior
     {
@@ -37,11 +37,11 @@ public class LaserPointer : OVRCursor
             _laserBeamBehavior = value;
             if (laserBeamBehavior == LaserBeamBehavior.Off || laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
             {
-                lineRenderer.enabled = false;
+                //lineRenderer.enabled = false;
             }
             else
             {
-                lineRenderer.enabled = true;
+                //lineRenderer.enabled = true;
             }
         }
         get
@@ -53,11 +53,21 @@ public class LaserPointer : OVRCursor
     private Vector3 _forward;
     private Vector3 _endPoint;
     private bool _hitTarget;
-    private LineRenderer lineRenderer;
+    //private LineRenderer lineRenderer;
+    private MeshFilter[] quads;
+    private bool QuadsEnabled = true;
+
+    private void SetQuadsStartPosition(Vector3 position) {
+       
+        foreach (MeshFilter quad in quads) {
+            quad.gameObject.transform.position = position;
+        }
+    }
 
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
+        //lineRenderer = GetComponent<LineRenderer>();
+        quads = this.GetComponentsInChildren<MeshFilter>();
     }
 
     private void Start()
@@ -83,13 +93,16 @@ public class LaserPointer : OVRCursor
 
     private void LateUpdate()
     {
-        lineRenderer.SetPosition(0, _startPoint);
+        //lineRenderer.SetPosition(0, _startPoint);
+        SetQuadsStartPosition(_startPoint);
+
         if (_hitTarget)
         {
-            lineRenderer.SetPosition(1, _endPoint);
+            //lineRenderer.SetPosition(1, _endPoint);
             UpdateLaserBeam(_startPoint, _endPoint);
             if (cursorVisual)
-            {
+            {   
+
                 cursorVisual.transform.position = _endPoint;
                 cursorVisual.SetActive(true);
             }
@@ -97,7 +110,7 @@ public class LaserPointer : OVRCursor
         else
         {
             UpdateLaserBeam(_startPoint, _startPoint + maxLength * _forward);
-            lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
+            //lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
             if (cursorVisual) cursorVisual.SetActive(false);
         }
     }
@@ -111,25 +124,26 @@ public class LaserPointer : OVRCursor
         }
         else if (laserBeamBehavior == LaserBeamBehavior.On)
         {
-            lineRenderer.SetPosition(0, start);
-            lineRenderer.SetPosition(1, end);
+            //lineRenderer.SetPosition(0, start);
+            SetQuadsStartPosition(_startPoint);
+            //lineRenderer.SetPosition(1, end);
         }
         else if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
         {
             if (_hitTarget)
             {
-                if (!lineRenderer.enabled)
+                if (true)//(!lineRenderer.enabled)
                 {
-                    lineRenderer.enabled = true;
-                    lineRenderer.SetPosition(0, start);
-                    lineRenderer.SetPosition(1, end);
+                    //lineRenderer.enabled = true;
+                    //lineRenderer.SetPosition(0, start);
+                    //lineRenderer.SetPosition(1, end);
                 }
             }
             else
             {
-                if (lineRenderer.enabled)
+                if (true) //(lineRenderer.enabled)
                 {
-                    lineRenderer.enabled = false;
+                    //lineRenderer.enabled = false;
                 }
             }
         }
@@ -138,7 +152,10 @@ public class LaserPointer : OVRCursor
     void OnDisable()
     {
         if (cursorVisual) cursorVisual.SetActive(false);
+
     }
+
+
     public void OnInputFocusLost()
     {
         if (gameObject && gameObject.activeInHierarchy)

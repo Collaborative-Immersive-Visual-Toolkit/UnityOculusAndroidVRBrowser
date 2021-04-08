@@ -5,12 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OverlayBrowserDemo.unity
     guid: 849d0993dc0514622bc23678b462bd78
   - enabled: 0
     path: Assets/Scenes/UnderlayBrowserDemo.unity
     guid: d7bf3a91a75c0604eb9b6bbe9a2acb00
+  - enabled: 1
+    path: Assets/Scenes/OculusQuestBrowserDemo.unity
+    guid: 25253cf4ee366a54fb338ae678f3c7a2
+  - enabled: 0
+    path: Assets/Scenes/OverlayBrowserDemo - Copy.unity
+    guid: 95e07b0db0dae4f4eb1cb4786286cd28
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: fea1dc5d609f74063985f91073ed92d3,
       type: 2}

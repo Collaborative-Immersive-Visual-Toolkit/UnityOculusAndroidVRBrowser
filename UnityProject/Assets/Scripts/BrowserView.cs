@@ -21,7 +21,7 @@ public class BrowserView : MonoBehaviour
     public Button ForwardButton;
     public TMP_InputField UrlInputField;
     public TMP_Text ProgressText;
-    public Transform GazePointer;
+    public Transform Pointer;
     public RawImage RawImage;
     private UserAgent _currentUserAgent = UserAgent.mobile;
     private OVROverlay _overlay;
@@ -49,13 +49,13 @@ public class BrowserView : MonoBehaviour
     /// <summary>
     /// There's no normal browser substring because it is anything but the youtube.com/tv one.
     /// </summary>
-    private const string YoutubeSubstring = "youtube.com/tv";
+    private const string YoutubeSubstring = "http://bl.ocks.org/DStruths/raw/9c042e3a6b66048b5bd4/?raw=true";
 
     public static readonly Dictionary<BrowserHistoryType, string> DefaultUrls =
         new Dictionary<BrowserHistoryType, string>()
         {
-            {BrowserHistoryType.Browser, "https://www.google.com"},
-            {BrowserHistoryType.Youtube, "https://www." + YoutubeSubstring},
+            {BrowserHistoryType.Browser, YoutubeSubstring},
+            {BrowserHistoryType.Youtube,  YoutubeSubstring},
         };
 
     
@@ -68,7 +68,7 @@ public class BrowserView : MonoBehaviour
     // CHANGE PER YOUR INPUT MODULE SPECIFICS
     private void OnClick()
     {   
-        AddTap(GazePointer.transform.position);       
+        AddTap(Pointer.transform.position);       
     }
 
     //TODO: show your keyboard here
@@ -440,27 +440,28 @@ public class BrowserView : MonoBehaviour
     // method to to tap in the right coords despite difference in scaling
     private void AddTap(Vector3 pos)
     {
-        // get dimensions of rawimage
+        Debug.Log("addtap");
+        // Get dimensions of rawimage
         Camera thisCamera = Camera.main;
         Debug.Assert(thisCamera.name == "CenterEyeAnchor");
         Vector2 positionInRect = new Vector2();
 
         Vector2 screenPoint = RectTransformUtility .WorldToScreenPoint(thisCamera, pos);
-        //Debug.Log("screen point: " + screenPoint);
+        // Debug.Log("screen point: " + screenPoint);
         
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_rawImageRect,
             screenPoint, thisCamera, out positionInRect);
-        //Debug.Log("main camera is: " + Camera.main.name);
+        // Debug.Log("main camera is: " + Camera.main.name);
 
-        // take care of the pivots and their effect on position
+        // Take care of the pivots and their effect on position
         positionInRect.x += _rawImageRect.pivot.x * _rawImageRect.rect.width; 
         positionInRect.y += (_rawImageRect.pivot.y*_rawImageRect.rect.height);
         
         Debug.Assert(Math.Abs(_rawImageRect.pivot.y) > 0);
-        // change coordinate system 
+        // Change coordinate system 
         positionInRect.y += -_rawImageRect.rect.height;
         positionInRect.y = Math.Abs(positionInRect.y);
-        //Debug.Log(positionInRect);
+        // Debug.Log(positionInRect);
 
         // get the screen dimensions and divide them by the rectangle's screen dimensions for scaling
         float screenWidth = _surfaceWidth; //rect.width;
@@ -470,9 +471,10 @@ public class BrowserView : MonoBehaviour
         float yScale = screenHeight / _rawImageRect.rect.height; // rectHeightInScreen;
 
         Vector2 positionInWebView = new Vector2(positionInRect.x * xScale, positionInRect.y * yScale);
-//        Debug.Log("position in webview: " + positionInWebView);
+        
+        Debug.Log("position in webview: " + positionInWebView);
 
-//        Debug.Log("transformed pos:" + positionInWebView);
+        Debug.Log("transformed pos:" + positionInWebView);
         // if we're within the bounds of the rectangle
         if (_ajc!= null)
         {
@@ -488,6 +490,8 @@ public class BrowserView : MonoBehaviour
         {
             //_ajc.Call("SetShouldDraw", true);
             _ajc.Call(methodName,paramies);
+            Debug.Log("CallAjc");
+            Debug.Log(paramies);
         }
     } 
 

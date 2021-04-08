@@ -938,6 +938,8 @@ public class OVROverlay : MonoBehaviour
 
 	bool ComputeSubmit(ref OVRPose pose, ref Vector3 scale, ref bool overlay, ref bool headLocked)
 	{
+
+
 		Camera headCamera = Camera.main;
 
 		overlay = (currentOverlayType == OverlayType.Overlay);
