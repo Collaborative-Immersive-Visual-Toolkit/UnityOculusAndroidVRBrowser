@@ -24,7 +24,9 @@ public class BrowserView : MonoBehaviour
     public Transform Pointer;
     public RawImage RawImage;
     private UserAgent _currentUserAgent = UserAgent.mobile;
-    private OVROverlay _overlay;
+    public OVROverlay _overlay;
+    public string startUrl;
+
 
     /// <summary>
     /// The currently visited url.
@@ -97,28 +99,6 @@ public class BrowserView : MonoBehaviour
     
     #region Button Interactions
     
-
-    public void InvokeLoadURL()
-    {
-        if (UrlInputField.text == "")
-        {
-            LoadURL("192.168.1.161:8081");
-        }
-
-        string potentialUrl = UrlInputField.text;
-
-        if (ValidHttpURL(potentialUrl, out var outUri))
-        {
-            LoadURL(outUri.AbsoluteUri);
-        }
-        else
-        {
-            string encodedSearchString = WebUtility.UrlEncode(potentialUrl);
-            string searchUrl = "https://www.google.com/search?q=" + encodedSearchString;
-            LoadURL(searchUrl);
-        }
-
-    }
 
         
 
@@ -356,7 +336,7 @@ public class BrowserView : MonoBehaviour
     {
         UnityThread.initUnityThread();
         RawImage.GetComponent<Button>().onClick.AddListener(OnClick);
-        _overlay = GetComponent<OVROverlay>();
+        //_overlay = GetComponent<OVROverlay>();
         _rawImageRect = RawImage.GetComponent<RectTransform>();
 
         InitializeAndroidPlugin();
@@ -370,7 +350,7 @@ public class BrowserView : MonoBehaviour
         // SetYoutubeUserAgentOverride();
         SwitchSessionTo(BrowserHistoryType.Browser);
         ActivateGeckoSession();
-        InvokeLoadURL();
+        LoadURL(startUrl);
     }
 
   
@@ -382,6 +362,8 @@ public class BrowserView : MonoBehaviour
         /// <returns>The start function</returns>
         private IEnumerator Start()
         {
+
+          
 
 #if UNITY_EDITOR
             yield break;
@@ -495,7 +477,7 @@ public class BrowserView : MonoBehaviour
         }
     } 
 
-        public void SetInputFieldUrl(string url)
+    public void SetInputFieldUrl(string url)
     {
 
         // don't set the url to the same thing multiple times, it may overwrite what the user has typed
@@ -506,29 +488,29 @@ public class BrowserView : MonoBehaviour
         CurrentUrl = url;
     }
 
-        public void UpdateProgress(int progress)
-        {
-            OnProgressUpdate?.Invoke(progress);
-            ProgressText.text = progress.ToString();
-        }
+    public void UpdateProgress(int progress)
+    {
+        OnProgressUpdate?.Invoke(progress);
+        ProgressText.text = progress.ToString();
+    }
 
-        public void CanGoBack(bool canGoBack)
-        {
-            // only for browser
-            if (_currentBrowserHistoryType != BrowserHistoryType.Browser)
-                return;
+    public void CanGoBack(bool canGoBack)
+    {
+        // only for browser
+        if (_currentBrowserHistoryType != BrowserHistoryType.Browser)
+            return;
             
-            BackButton.enabled = canGoBack;
-        }
+        BackButton.enabled = canGoBack;
+    }
 
-        public void CanGoForward(bool canGoForward)
-        {
-            // only for browser
-            if (_currentBrowserHistoryType != BrowserHistoryType.Browser)
-                return;
+    public void CanGoForward(bool canGoForward)
+    {
+        // only for browser
+        if (_currentBrowserHistoryType != BrowserHistoryType.Browser)
+            return;
             
-            ForwardButton.enabled = canGoForward;
-        }
+        ForwardButton.enabled = canGoForward;
+    }
 
     private string _filePathToReadWhenComplete = "";
     public void PrepareReadFile(string path, string directory, string fileName, string url)
@@ -547,8 +529,7 @@ public class BrowserView : MonoBehaviour
         Debug.Log("file contents are: " + fileContents);
 
     }
-    
-    
+     
     public void OnPageVisited(string url, string lastUrl)
     {
         Debug.Log("on page visited: " + url );
@@ -557,9 +538,6 @@ public class BrowserView : MonoBehaviour
         OnPageLoad?.Invoke(url);
     }
     
-    
-
-
     // used for autofill text, if the input field target changes
     public void RestartInput()
     {
@@ -575,8 +553,6 @@ public class BrowserView : MonoBehaviour
 
     #endregion
  
-    
-    
     private bool ValidHttpURL(string s, out Uri resultURI)
     {        
         bool returnVal = false;
@@ -661,26 +637,6 @@ public class BrowserView : MonoBehaviour
         {
             UnityThread.executeInUpdate(BrowserView.OnSessionCrash);
         }
-
-        public void OnFullScreenRequestChange(bool fullScreen){
-        
-//            UnityThread.executeInUpdate(() => BrowserView.OnFullScreenRequestChange(fullScreen));
-
-        }
-
-        //    public void DownloadFileRequestedAtURL(string path, string directory, string fileName, string url)
-        //    {
-        //        Debug.Log("message from android about download files: " + url);
-        //        
-        //        UnityThread.executeInUpdate(()=> BrowserView.PrepareReadFile(path,directory,fileName,url));
-        //    }
-        //
-        //    public void FileDownloadComplete()
-        //    {
-        //        UnityThread.executeInUpdate(()=> BrowserView.ReadFile());
-        //
-        //    }
-
 
 
 

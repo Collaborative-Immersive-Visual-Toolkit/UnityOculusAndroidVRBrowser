@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.VR", "Oculus.VR.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.Platform", "Oculus.Platform.csproj", "{605A3408-E569-36F5-AEE5-BB2E4D4830C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tayx.Graphy", "Tayx.Graphy.csproj", "{9AD8BDF5-252B-E316-01CF-F34C8ED61D68}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{3CC9D2C0-C461-07D9-EDF3-4FFB4DE5C299}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.VR.Scripts.Editor", "Oculus.VR.Scripts.Editor.csproj", "{54EB40C8-6784-CF70-35D6-28A8347DF7DF}"
@@ -14,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.VR.Editor", "Oculus.VR.Editor.csproj", "{55E2420A-4308-286B-9BE0-1AB4198227CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.Platform.Editor", "Oculus.Platform.Editor.csproj", "{07BA777F-122A-1824-488C-4BE7D07F24B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tayx.Graphy.Editor", "Tayx.Graphy.Editor.csproj", "{77DED0BC-E08F-73D4-785F-093FBB70BAEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,10 @@ Global
 		{605A3408-E569-36F5-AEE5-BB2E4D4830C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{605A3408-E569-36F5-AEE5-BB2E4D4830C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{605A3408-E569-36F5-AEE5-BB2E4D4830C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD8BDF5-252B-E316-01CF-F34C8ED61D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD8BDF5-252B-E316-01CF-F34C8ED61D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD8BDF5-252B-E316-01CF-F34C8ED61D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD8BDF5-252B-E316-01CF-F34C8ED61D68}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CC9D2C0-C461-07D9-EDF3-4FFB4DE5C299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CC9D2C0-C461-07D9-EDF3-4FFB4DE5C299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CC9D2C0-C461-07D9-EDF3-4FFB4DE5C299}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +57,10 @@ Global
 		{07BA777F-122A-1824-488C-4BE7D07F24B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07BA777F-122A-1824-488C-4BE7D07F24B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07BA777F-122A-1824-488C-4BE7D07F24B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77DED0BC-E08F-73D4-785F-093FBB70BAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77DED0BC-E08F-73D4-785F-093FBB70BAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77DED0BC-E08F-73D4-785F-093FBB70BAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77DED0BC-E08F-73D4-785F-093FBB70BAEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
