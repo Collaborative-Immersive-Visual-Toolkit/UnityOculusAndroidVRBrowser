@@ -7,7 +7,8 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 
 public class BrowserView : MonoBehaviour 
@@ -26,7 +27,7 @@ public class BrowserView : MonoBehaviour
     private UserAgent _currentUserAgent = UserAgent.mobile;
     public OVROverlay _overlay;
     public string startUrl;
-
+    private EventTrigger eventTrigger = null;
 
     /// <summary>
     /// The currently visited url.
@@ -42,6 +43,8 @@ public class BrowserView : MonoBehaviour
     private static string classString = "com.eyeflite.ian.geckoviewplugin.GeckoViewPLugin";
     private BrowserHistoryType _currentBrowserHistoryType;
 
+    private bool Dragging = false;
+    private Vector2 dragStartPosition = new Vector2();
     public enum BrowserHistoryType
     {
         Browser,
@@ -68,9 +71,91 @@ public class BrowserView : MonoBehaviour
     }
 
     // CHANGE PER YOUR INPUT MODULE SPECIFICS
-    private void OnClick()
-    {   
-        AddTap(Pointer.transform.position);       
+    public void OnClick(BaseEventData data)
+    {
+        if (!Dragging)
+        {
+            //Debug.Log("OnClick");
+            //Debug.Log(data);
+            AddTap();       
+
+        }
+
+    }
+
+    public void StartDrag(BaseEventData data)
+    {
+        PointerEventData eventData = (PointerEventData)data;
+
+        AddTap();
+
+        //Debug.Log("StartDrag");
+        Dragging = true;
+        dragStartPosition = eventData.position;
+        //Debug.Log(data);
+    }
+
+    public void EndDrag(BaseEventData data)
+    {
+        //Debug.Log("EndDrag");
+        Dragging = false;
+        //Debug.Log(data);
+    }
+
+    public void Drag()
+    {
+        Vector2 currentPosition = PointerPositionInRect();
+
+        float verticalDistance = dragStartPosition.y - currentPosition.y;
+
+        if (verticalDistance > 50 || verticalDistance < -50 )
+        {
+            dragStartPosition = currentPosition;
+            InvokeScrollY((int)verticalDistance);
+        }
+
+
+    }
+
+    public Vector2 PointerPositionInRect() {
+
+        Vector3 pos = Pointer.transform.position;
+
+        Camera thisCamera = Camera.main;
+        Debug.Assert(thisCamera.name == "CenterEyeAnchor");
+        Vector2 positionInRect = new Vector2();
+
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(thisCamera, pos);
+        // Debug.Log("screen point: " + screenPoint);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(_rawImageRect,
+            screenPoint, thisCamera, out positionInRect);
+        // Debug.Log("main camera is: " + Camera.main.name);
+
+        // Take care of the pivots and their effect on position
+        positionInRect.x += _rawImageRect.pivot.x * _rawImageRect.rect.width;
+        positionInRect.y += (_rawImageRect.pivot.y * _rawImageRect.rect.height);
+
+        Debug.Assert(Math.Abs(_rawImageRect.pivot.y) > 0);
+        // Change coordinate system 
+        positionInRect.y += -_rawImageRect.rect.height;
+        positionInRect.y = Math.Abs(positionInRect.y);
+        // Debug.Log(positionInRect);
+
+        // get the screen dimensions and divide them by the rectangle's screen dimensions for scaling
+        float screenWidth = _surfaceWidth; //rect.width;
+        float screenHeight = _surfaceHeight; //rect.height;
+
+        float xScale = screenWidth / _rawImageRect.rect.width; // rectWidthInScreen;
+        float yScale = screenHeight / _rawImageRect.rect.height; // rectHeightInScreen;
+
+        Vector2 positionInWebView = new Vector2(positionInRect.x * xScale, positionInRect.y * yScale);
+
+        //Debug.Log("position in webview: " + positionInWebView);
+
+        //Debug.Log("transformed pos:" + positionInWebView);
+
+        return positionInWebView;
     }
 
     //TODO: show your keyboard here
@@ -98,9 +183,7 @@ public class BrowserView : MonoBehaviour
 
     
     #region Button Interactions
-    
-
-        
+      
 
     // PLUGIN METHODS:
 
@@ -108,16 +191,13 @@ public class BrowserView : MonoBehaviour
     {
         CallAjc("StopWebview", new object[] { });
     }
-
-    // NAVIGATION: 
     
     public void LoadURLIfNew(string url)
     {
         if (url!=CurrentUrl)
             LoadURL(url);
     }
-
-        
+   
     public void LoadURL(string url)
     {            
         SetInputFieldUrl(url);
@@ -163,7 +243,6 @@ public class BrowserView : MonoBehaviour
         CallAjc("ScrollByXorY", new object[] { 50, 0 });
     }
 
-
     public void InvokeScrollPageUp()
     {
         int javaCode = 92;
@@ -174,6 +253,21 @@ public class BrowserView : MonoBehaviour
     {
         int javaCode = 93;
         CallAjc("AddKeyCode", new object[] { javaCode });
+    }
+
+    public void InvokeScrollY(int value)
+    {
+        //Debug.Log(value);
+        //CallAjc("ScrollByXorY", new object[] { 0, value });
+
+        if (value > 0) InvokeScrollPageUp();
+        else InvokeScrollPageDown();
+    }
+
+    public void InvokeScrollX(int value)
+    {
+
+        CallAjc("ScrollByXorY", new object[] { value, 0 });
     }
 
 
@@ -194,7 +288,6 @@ public class BrowserView : MonoBehaviour
         desktop,
         vr
     }
-
 
     private void SetYoutubeUserAgentOverride()
     {
@@ -334,15 +427,19 @@ public class BrowserView : MonoBehaviour
     #region Initialization
     private void Awake()
     {
+     
         UnityThread.initUnityThread();
-        RawImage.GetComponent<Button>().onClick.AddListener(OnClick);
-        //_overlay = GetComponent<OVROverlay>();
+        //RawImage.GetComponent<Button>().onClick.AddListener(OnClick);
         _rawImageRect = RawImage.GetComponent<RectTransform>();
 
         InitializeAndroidPlugin();
     }
-    
-    
+
+    private void Update()
+    {
+        if (Dragging) Drag();
+    }
+
 
     private void OnGeckoViewReady()
     {
@@ -401,6 +498,9 @@ public class BrowserView : MonoBehaviour
             _surfaceWidth = _overlay.externalSurfaceWidth; //(int) _rawImage.rectTransform.rect.width;
             _surfaceHeight = _overlay.externalSurfaceHeight; //(int) (_rawImage.rectTransform.rect.height);
 
+            Debug.Log("_surfaceWidth "+ _surfaceWidth);
+            Debug.Log("_surfaceHeight " + _surfaceHeight);
+
             var tempAjc = new AndroidJavaClass(classString);
             _ajc = tempAjc.CallStatic<AndroidJavaObject>("CreateInstance",
                 new object[] {_overlay.externalSurfaceWidth, _overlay.externalSurfaceHeight, UserAgent.mobile.ToString("G") });
@@ -420,43 +520,10 @@ public class BrowserView : MonoBehaviour
     #region AndroidInterface
     
     // method to to tap in the right coords despite difference in scaling
-    private void AddTap(Vector3 pos)
+    private void AddTap()
     {
-        Debug.Log("addtap");
-        // Get dimensions of rawimage
-        Camera thisCamera = Camera.main;
-        Debug.Assert(thisCamera.name == "CenterEyeAnchor");
-        Vector2 positionInRect = new Vector2();
+        Vector2 positionInWebView = PointerPositionInRect();
 
-        Vector2 screenPoint = RectTransformUtility .WorldToScreenPoint(thisCamera, pos);
-        // Debug.Log("screen point: " + screenPoint);
-        
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(_rawImageRect,
-            screenPoint, thisCamera, out positionInRect);
-        // Debug.Log("main camera is: " + Camera.main.name);
-
-        // Take care of the pivots and their effect on position
-        positionInRect.x += _rawImageRect.pivot.x * _rawImageRect.rect.width; 
-        positionInRect.y += (_rawImageRect.pivot.y*_rawImageRect.rect.height);
-        
-        Debug.Assert(Math.Abs(_rawImageRect.pivot.y) > 0);
-        // Change coordinate system 
-        positionInRect.y += -_rawImageRect.rect.height;
-        positionInRect.y = Math.Abs(positionInRect.y);
-        // Debug.Log(positionInRect);
-
-        // get the screen dimensions and divide them by the rectangle's screen dimensions for scaling
-        float screenWidth = _surfaceWidth; //rect.width;
-        float screenHeight = _surfaceHeight; //rect.height;
-
-        float xScale = screenWidth / _rawImageRect.rect.width; // rectWidthInScreen;
-        float yScale = screenHeight / _rawImageRect.rect.height; // rectHeightInScreen;
-
-        Vector2 positionInWebView = new Vector2(positionInRect.x * xScale, positionInRect.y * yScale);
-        
-        Debug.Log("position in webview: " + positionInWebView);
-
-        Debug.Log("transformed pos:" + positionInWebView);
         // if we're within the bounds of the rectangle
         if (_ajc!= null)
         {

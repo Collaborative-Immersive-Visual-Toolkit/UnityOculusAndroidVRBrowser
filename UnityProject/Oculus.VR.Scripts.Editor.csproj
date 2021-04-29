@@ -639,11 +639,11 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
