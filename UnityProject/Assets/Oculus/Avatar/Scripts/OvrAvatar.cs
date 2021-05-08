@@ -555,6 +555,10 @@ public class OvrAvatar : MonoBehaviour
 
     void Start()
     {
+
+        Debug.Log("[CDS]Start");
+
+
         if (OvrAvatarSDKManager.Instance == null)
         {
             return;
@@ -562,8 +566,10 @@ public class OvrAvatar : MonoBehaviour
 #if !UNITY_ANDROID
         if (CombineMeshes)
         {
+
             CombineMeshes = false;
             AvatarLogger.Log("Combined Meshes currently only supported on mobile");
+
         }
 #endif
 #if !UNITY_5_5_OR_NEWER
@@ -574,6 +580,7 @@ public class OvrAvatar : MonoBehaviour
         }
 #endif
         materialManager = gameObject.AddComponent<OvrAvatarMaterialManager>();
+
 
         try
         {
@@ -1152,6 +1159,7 @@ public class OvrAvatar : MonoBehaviour
 
     private void ConfigureHelpers()
     {
+
         Transform head =
             transform.Find("body/body_renderPart_0/root_JNT/body_JNT/chest_JNT/neckBase_JNT/neck_JNT/head_JNT");
         if (head == null)
@@ -1199,6 +1207,8 @@ public class OvrAvatar : MonoBehaviour
             lipsyncContext.skipAudioSource = !CanOwnMicrophone;
 
             StartCoroutine(WaitForMouthAudioSource());
+
+
 
             LocalAvatarInstantiated?.Invoke();
         }

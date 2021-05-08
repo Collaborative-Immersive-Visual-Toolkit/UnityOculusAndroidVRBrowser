@@ -478,9 +478,16 @@ public class BrowserView : MonoBehaviour
             AndroidJNI.CallVoidMethod(pluginObject, surfaceMethodId,
                 new jvalue[] { new jvalue { l = _overlay.externalSurfaceObject } });
 
-            AndroidJNI.DeleteLocalRef(pluginClass);
-            AndroidJNI.DeleteLocalRef(pluginObject);
-            OnGeckoViewReady();
+            //try
+            //{
+            //    AndroidJNI.DeleteLocalRef(pluginClass);
+            //    AndroidJNI.DeleteLocalRef(pluginObject);
+            //}
+            //catch 
+            //{
+            //}
+
+        OnGeckoViewReady();
         }
 
        

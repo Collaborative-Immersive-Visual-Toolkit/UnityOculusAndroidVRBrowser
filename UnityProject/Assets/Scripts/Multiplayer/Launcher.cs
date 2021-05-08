@@ -136,8 +136,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             // request to all other clients in the network to create a remote 
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.InstantiateVrAvatarEventCode, photonView.ViewID, raiseEventOptions, SendOptions.SendReliable);
 
-            OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
-            ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
+            //OvrAvatar ovrAvatar = localAvatar.GetComponent<OvrAvatar>();
+            //ovrAvatar.oculusUserID = MasterManager.GameSettings.UserID;
 
             Debug.Log("[PUN] LocalAvatar instantiatiation triggered now waiting for OVRAvatar to initialize");
 
@@ -153,6 +153,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void LocalAvatarInstantiated() {
 
+      
         StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 
         //inputsManager.Instance.localAvatar= localAvatar;
@@ -216,15 +217,15 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
         photonView.ViewID = (int)photonEvent.CustomData;
 
-        OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
-        ovrAvatar.oculusUserID = player.UserId;
-
-        Debug.Log("[PUN] RemoteAvatar instantiated");
+        //OvrAvatar ovrAvatar = remoteAvatar.GetComponent<OvrAvatar>();
+        //ovrAvatar.oculusUserID = player.UserId;
 
         OvrAvatar.RemoteAvatarInstantiated += OvrAvatar_RemoteAvatarInstantiated;
 
+        Debug.Log("[PUN] RemoteAvatar instantiated");
+
         //PhotonVoiceView pvv = remoteAvatar.GetComponent<PhotonVoiceView>();
-      
+
     }
 
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject rA)

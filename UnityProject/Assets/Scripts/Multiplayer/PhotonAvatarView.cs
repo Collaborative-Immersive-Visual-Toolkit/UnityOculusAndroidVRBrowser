@@ -15,7 +15,9 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 
 	public void Start()
 	{
-		if(photonView ==null) photonView = GetComponent<PhotonView>();
+	
+
+		if (photonView ==null) photonView = GetComponent<PhotonView>();
 
 		if (photonView.IsMine)
 		{
@@ -46,10 +48,14 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 
 	public void OnLocalAvatarPacketRecorded(object sender, OvrAvatar.PacketEventArgs args)
 	{
+
+
 		if (!PhotonNetwork.InRoom || (PhotonNetwork.CurrentRoom.PlayerCount < 2))
 		{
 			return;
 		}
+
+		if (OvrAvatarSDKManager.Instance == null && !Oculus.Platform.Core.IsInitialized()) return;
 
 		using (MemoryStream outputStream = new MemoryStream())
 		{
@@ -69,6 +75,8 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 
 	private void DeserializeAndQueuePacketData(byte[] data)
 	{
+		
+
 		using (MemoryStream inputStream = new MemoryStream(data))
 		{
 			
@@ -79,17 +87,28 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
 			
 			byte[] sdkData = reader.ReadBytes(size);
 
-			if (OvrAvatarSDKManager.Instance == null) return;
+
+
+			if (OvrAvatarSDKManager.Instance == null && !Oculus.Platform.Core.IsInitialized()) return;
+
+
 
 			System.IntPtr packet = Oculus.Avatar.CAPI.ovrAvatarPacket_Read((System.UInt32)data.Length, sdkData);
 
+
+
+			if (remoteDriver == null) return;
+
 			remoteDriver.QueuePacket(remoteSequence, new OvrAvatarPacket { ovrNativePacket = packet });
 
+	
 		}
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
+		
+
 		if (stream.IsWriting)
 		{
 			if (packetData.Count == 0)

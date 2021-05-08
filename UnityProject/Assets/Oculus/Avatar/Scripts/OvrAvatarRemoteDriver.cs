@@ -22,6 +22,8 @@ public class OvrAvatarRemoteDriver : OvrAvatarDriver
 
     public void QueuePacket(int sequence, OvrAvatarPacket packet)
     {
+        Debug.Log("[CDS]QueuePacket");
+
         if (sequence > CurrentSequence)
         {
             CurrentSequence = sequence;
