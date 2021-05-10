@@ -550,6 +550,8 @@ public class BrowserView : MonoBehaviour
     public void ReceivedAddLongTapNetworkEvent( object[] data )
     {
 
+        object[] data2 = new object[] { (string)data[0], (string)data[1] };
+
         // if we're within the bounds of the rectangle
         if (_ajc != null)
         {

@@ -33,7 +33,13 @@ public class BrowserViewNetwork : MonoBehaviourPun
 
             object[] data = (object[])obj.CustomData;
 
-            //gameObject.SendMessage("ReceivedAddLongTapNetworkEvent", data);
+            if ((string)data[2] == gameObject.transform.parent.gameObject.name) {
+
+                gameObject.SendMessage("ReceivedAddLongTapNetworkEvent", data);
+
+            }
+
+            
         }
     }
 }
