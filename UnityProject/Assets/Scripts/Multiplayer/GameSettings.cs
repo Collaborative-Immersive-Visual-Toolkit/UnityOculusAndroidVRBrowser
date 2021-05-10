@@ -60,7 +60,10 @@ public class GameSettings : ScriptableObject
     public byte InstantiateObserverEventCode = 2; 
 
     [SerializeField]
-    public byte NextDataDisplay = 3; 
+    public byte NextDataDisplay = 3;
+
+    [SerializeField]
+    public byte AddLongTap = 10;
 
     [SerializeField]
     public byte HideUnhideLayer = 4; 

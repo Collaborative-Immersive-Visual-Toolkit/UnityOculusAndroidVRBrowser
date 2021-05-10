@@ -77,8 +77,8 @@ public class BrowserView : MonoBehaviour
         {
             //Debug.Log("OnClick");
             //Debug.Log(data);
-            AddTap();       
-
+            AddTap();
+           
         }
 
     }
@@ -529,16 +529,35 @@ public class BrowserView : MonoBehaviour
     // method to to tap in the right coords despite difference in scaling
     private void AddTap()
     {
+
         Vector2 positionInWebView = PointerPositionInRect();
+
+        object[] data = new object[] { positionInWebView.x, positionInWebView.y  };
 
         // if we're within the bounds of the rectangle
         if (_ajc!= null)
         {
-            CallAjc("AddLongTap", new object[]{positionInWebView.x, positionInWebView.y});
+            CallAjc("AddLongTap", data);
         }
+
+        object[] data2 = new object[] { positionInWebView.x, positionInWebView.y, gameObject.transform.parent.gameObject.name};
+
+        // we also send a message to the rest of the components in the gameobject 
+        gameObject.SendMessage("RaiseAddLongTapNetworkEvent", data2);
+
     }
-      
-    
+
+    public void ReceivedAddLongTapNetworkEvent( object[] data )
+    {
+
+        // if we're within the bounds of the rectangle
+        if (_ajc != null)
+        {
+            CallAjc("AddLongTap", data);
+        }
+   
+    }
+
     // before calling anything to theplugin, make sure it has drawing enabled
     private void CallAjc(string methodName, object[] paramies)
     {
@@ -650,6 +669,7 @@ public class BrowserView : MonoBehaviour
 
         return returnVal;
     }
+
 
 }
 

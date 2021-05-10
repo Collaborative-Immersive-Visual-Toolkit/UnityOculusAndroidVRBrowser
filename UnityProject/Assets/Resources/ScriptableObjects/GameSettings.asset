@@ -19,6 +19,7 @@ MonoBehaviour:
   InstantiateVrAvatarEventCode: 1
   InstantiateObserverEventCode: 2
   NextDataDisplay: 3
+  AddLongTap: 10
   HideUnhideLayer: 4
   SpawnPlaceholder: 5
   DeletePlaceHolders: 6

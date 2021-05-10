@@ -4275,6 +4275,7 @@ GameObject:
   - component: {fileID: 8746379488220302167}
   - component: {fileID: 8746379488220302165}
   - component: {fileID: 8746379488220302137}
+  - component: {fileID: 5137965701618585027}
   m_Layer: 0
   m_Name: BrowserView
   m_TagString: Untagged
@@ -4429,6 +4430,18 @@ MonoBehaviour:
   - {fileID: 0}
   isAlphaPremultiplied: 0
   _previewInEditor: 0
+--- !u!114 &5137965701618585027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746379488220302170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e533e2985de8ba6439f36c291b46d704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8746379488220302171
 GameObject:
   m_ObjectHideFlags: 0
