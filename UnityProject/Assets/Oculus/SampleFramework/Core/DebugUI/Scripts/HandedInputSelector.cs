@@ -29,13 +29,11 @@ public class HandedInputSelector : MonoBehaviour
     {
         if(OVRInput.GetActiveController() == OVRInput.Controller.LTouch)
         {
-            SetActiveController(OVRInput.Controller.LTouch);
-            gameObject.SendMessage("ChangeOfActiveController", "Left", SendMessageOptions.DontRequireReceiver);
+            SetActiveController(OVRInput.Controller.LTouch);           
         }
         else
         {
             SetActiveController(OVRInput.Controller.RTouch);
-            gameObject.SendMessage("ChangeOfActiveController", "Right", SendMessageOptions.DontRequireReceiver);
         }
 
     }
@@ -45,11 +43,23 @@ public class HandedInputSelector : MonoBehaviour
         Transform t;
         if(c == OVRInput.Controller.LTouch)
         {
+
             t = m_CameraRig.leftHandAnchor;
+
+            if (t != m_InputModule.rayTransform)
+            {
+                gameObject.SendMessage("ChangeOfActiveController", "Left", SendMessageOptions.DontRequireReceiver);
+            }
         }
         else
         {
+
             t = m_CameraRig.rightHandAnchor;
+
+            if (t != m_InputModule.rayTransform)
+            {
+                gameObject.SendMessage("ChangeOfActiveController", "Right", SendMessageOptions.DontRequireReceiver);
+            }
         }
         m_InputModule.rayTransform = t;
     }
