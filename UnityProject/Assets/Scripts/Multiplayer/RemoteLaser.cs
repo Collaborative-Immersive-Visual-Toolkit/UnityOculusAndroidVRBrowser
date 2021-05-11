@@ -55,8 +55,6 @@ public class RemoteLaser : MonoBehaviourPun
         if (obj.Code == MasterManager.GameSettings.LaserPointerChange)
         {
 
-            //StartCoroutine(LoadNext());
-
             object[] data = (object[])obj.CustomData;
 
             if ((string)data[3] == gameObject.transform.parent.gameObject.name)

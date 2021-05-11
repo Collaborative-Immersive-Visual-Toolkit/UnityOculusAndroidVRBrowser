@@ -14,6 +14,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using Photon.Pun;
 
 public class LaserPointer : OVRCursor
 {
@@ -105,9 +106,9 @@ public class LaserPointer : OVRCursor
     // make laser beam a behavior with a prop that enables or disables
     private void UpdateLaserBeam(Vector3 start, Vector3 end)
     {
-        object[] data = new object[] { start, end, _hitTarget, MasterManager.GameSettings.Nickname };
+        object[] data = new object[] { start, end, _hitTarget, PhotonNetwork.NickName };
 
-        gameObject.SendMessage("ReceivedAddLongTapNetworkEvent", data, SendMessageOptions.DontRequireReceiver);
+        gameObject.SendMessage("RaiseLaserChangeEvent", data, SendMessageOptions.DontRequireReceiver);
 
         if (laserBeamBehavior == LaserBeamBehavior.Off)
         {
