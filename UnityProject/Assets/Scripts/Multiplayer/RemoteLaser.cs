@@ -88,9 +88,11 @@ public class RemoteLaser : MonoBehaviourPun
                 if (!lineRenderer.enabled)
                 {
                     lineRenderer.enabled = true;
-                    lineRenderer.SetPosition(0, start);
-                    lineRenderer.SetPosition(1, end);
+                    
                 }
+
+                lineRenderer.SetPosition(0, start);
+                lineRenderer.SetPosition(1, end);
             }
             else
             {
