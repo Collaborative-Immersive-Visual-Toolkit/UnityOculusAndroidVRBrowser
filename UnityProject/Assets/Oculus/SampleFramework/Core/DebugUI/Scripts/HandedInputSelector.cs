@@ -43,23 +43,11 @@ public class HandedInputSelector : MonoBehaviour
         Transform t;
         if(c == OVRInput.Controller.LTouch)
         {
-
             t = m_CameraRig.leftHandAnchor;
-
-            if (t != m_InputModule.rayTransform)
-            {
-                gameObject.SendMessage("ChangeOfActiveController", "Left", SendMessageOptions.DontRequireReceiver);
-            }
         }
         else
         {
-
             t = m_CameraRig.rightHandAnchor;
-
-            if (t != m_InputModule.rayTransform)
-            {
-                gameObject.SendMessage("ChangeOfActiveController", "Right", SendMessageOptions.DontRequireReceiver);
-            }
         }
         m_InputModule.rayTransform = t;
     }

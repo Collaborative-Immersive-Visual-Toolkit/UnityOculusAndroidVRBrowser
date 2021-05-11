@@ -257,10 +257,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //instantiate ui helpers
         GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
 
-        RemoteHandInputSelector remoteInputSelector = remoteAvatarUIHelpers.GetComponent<RemoteHandInputSelector>();
-
-        remoteInputSelector.remoteAvatar = remoteAvatar;
-
         Debug.Log("[PUN] RemoteAvatar UI helpers instanstiated");
     }
 
@@ -364,5 +360,19 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         if(!Directory.Exists(path)) Directory.CreateDirectory(path);
 
+    }
+
+    private GameObject GetChildWithName(GameObject obj, string name)
+    {
+        Transform trans = obj.transform;
+        Transform childTrans = trans.Find(name);
+        if (childTrans != null)
+        {
+            return childTrans.gameObject;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

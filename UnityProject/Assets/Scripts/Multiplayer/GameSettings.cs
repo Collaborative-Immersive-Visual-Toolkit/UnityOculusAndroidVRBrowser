@@ -66,7 +66,7 @@ public class GameSettings : ScriptableObject
     public byte AddLongTap = 10;
 
     [SerializeField]
-    public byte ChangeHandInputRemote = 11;
+    public byte LaserPointerChange = 11;
 
     [SerializeField]
     public byte HideUnhideLayer = 4; 
@@ -75,8 +75,9 @@ public class GameSettings : ScriptableObject
     public byte SpawnPlaceholder = 5; 
 
     [SerializeField]
-    public byte DeletePlaceHolders = 6; 
-    
+    public byte DeletePlaceHolders = 6;
+
+
     public string DataFolder = "Data";
 }
 

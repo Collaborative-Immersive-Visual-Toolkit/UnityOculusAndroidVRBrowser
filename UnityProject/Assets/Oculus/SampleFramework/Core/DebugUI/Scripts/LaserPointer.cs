@@ -105,6 +105,10 @@ public class LaserPointer : OVRCursor
     // make laser beam a behavior with a prop that enables or disables
     private void UpdateLaserBeam(Vector3 start, Vector3 end)
     {
+        object[] data = new object[] { start, end, _hitTarget, MasterManager.GameSettings.Nickname };
+
+        gameObject.SendMessage("ReceivedAddLongTapNetworkEvent", data, SendMessageOptions.DontRequireReceiver);
+
         if (laserBeamBehavior == LaserBeamBehavior.Off)
         {
             return;
