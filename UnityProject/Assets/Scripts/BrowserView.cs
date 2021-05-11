@@ -13,11 +13,9 @@ using UnityEngine.EventSystems;
 
 public class BrowserView : MonoBehaviour 
 {
-    
     public event  Action<int> OnProgressUpdate = delegate{  };
     public event Action<string> OnPageLoad = delegate {  }; 
 
-    
     public Button BackButton;
     public Button ForwardButton;
     public TMP_InputField UrlInputField;
@@ -34,7 +32,6 @@ public class BrowserView : MonoBehaviour
     /// </summary>
     public string CurrentUrl = "";
 
-    
     private int _surfaceWidth = Screen.width;
     private int _surfaceHeight = 1440; 
     private AndroidJavaObject _ajc;
@@ -164,7 +161,6 @@ public class BrowserView : MonoBehaviour
         
     }
 
-    
     /// <summary>
     /// Calls the plugin to get png bytes from the surface.
     /// </summary>
@@ -181,7 +177,6 @@ public class BrowserView : MonoBehaviour
         return bytes;
     }
 
-    
     #region Button Interactions
       
 
@@ -423,7 +418,6 @@ public class BrowserView : MonoBehaviour
     
 #endregion
 
-    
     #region Initialization
     private void Awake()
     {
@@ -547,18 +541,23 @@ public class BrowserView : MonoBehaviour
 
     }
 
+
     public void ReceivedAddLongTapNetworkEvent( object[] data )
     {
 
-        object[] data2 = new object[] { (string)data[0], (string)data[1] };
+        Debug.Log("ReceivedAddLongTapNetworkEvent");
+
+        object[] data2 = new object[] { (float)data[0], (float)data[1] };
 
         // if we're within the bounds of the rectangle
         if (_ajc != null)
         {
-            CallAjc("AddLongTap", data);
+            CallAjc("AddLongTap", data2);
         }
-   
+        
+
     }
+
 
     // before calling anything to theplugin, make sure it has drawing enabled
     private void CallAjc(string methodName, object[] paramies)

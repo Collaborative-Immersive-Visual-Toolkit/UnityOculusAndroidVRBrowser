@@ -211,7 +211,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID " + player.UserId);
 
         GameObject remoteAvatar = Instantiate(Resources.Load("RemoteAvatar")) as GameObject;
-
+       
         remoteAvatar.name = player.NickName;
 
         PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
@@ -225,6 +225,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Debug.Log("[PUN] RemoteAvatar instantiated");
 
         //PhotonVoiceView pvv = remoteAvatar.GetComponent<PhotonVoiceView>();
+
 
     }
 
@@ -246,7 +247,21 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         else 
             Debug.LogError("inputs manager cannot register any avatar");
 
+        InstantiateRemoteUiHelpers(rA);
+
         return rA;
+    }
+
+    private void InstantiateRemoteUiHelpers(GameObject remoteAvatar) {
+
+        //instantiate ui helpers
+        GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
+
+        RemoteHandInputSelector remoteInputSelector = remoteAvatarUIHelpers.GetComponent<RemoteHandInputSelector>();
+
+        remoteInputSelector.remoteAvatar = remoteAvatar;
+
+        Debug.Log("[PUN] RemoteAvatar UI helpers instanstiated");
     }
 
 

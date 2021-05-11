@@ -30,10 +30,12 @@ public class HandedInputSelector : MonoBehaviour
         if(OVRInput.GetActiveController() == OVRInput.Controller.LTouch)
         {
             SetActiveController(OVRInput.Controller.LTouch);
+            gameObject.SendMessage("ChangeOfActiveController", "Left", SendMessageOptions.DontRequireReceiver);
         }
         else
         {
             SetActiveController(OVRInput.Controller.RTouch);
+            gameObject.SendMessage("ChangeOfActiveController", "Right", SendMessageOptions.DontRequireReceiver);
         }
 
     }

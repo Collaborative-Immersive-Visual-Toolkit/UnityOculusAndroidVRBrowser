@@ -66,6 +66,9 @@ public class GameSettings : ScriptableObject
     public byte AddLongTap = 10;
 
     [SerializeField]
+    public byte ChangeHandInputRemote = 11;
+
+    [SerializeField]
     public byte HideUnhideLayer = 4; 
 
     [SerializeField]
