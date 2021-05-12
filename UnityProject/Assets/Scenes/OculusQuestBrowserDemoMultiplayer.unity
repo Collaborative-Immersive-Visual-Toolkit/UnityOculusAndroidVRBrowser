@@ -186,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: m_Name
-      value: Browser 897
+      value: Histograms
       objectReference: {fileID: 0}
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
@@ -216,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: startUrl
-      value: https://jsfiddle.net/sbanca/s5xbndot/897/show
+      value: https://graphs-for-collaborative-vr.web.app/Histograms.html
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
@@ -318,95 +318,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &351797780
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.92387956
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.38268343
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -135
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_Name
-      value: Browser 71
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379488220302167, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 915534832}
-    - target: {fileID: 8746379488220302209, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: pointer
-      value: 
-      objectReference: {fileID: 1211116945}
-    - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: Pointer
-      value: 
-      objectReference: {fileID: 483088540}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
 --- !u!1001 &483088539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -553,7 +464,7 @@ PrefabInstance:
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: m_Name
-      value: Browser 831
+      value: Oscar
       objectReference: {fileID: 0}
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
@@ -578,7 +489,7 @@ PrefabInstance:
     - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: startUrl
-      value: https://jsfiddle.net/sbanca/s5xbndot/831/show
+      value: https://graphs-for-collaborative-vr.web.app/Oscar.html
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
@@ -645,6 +556,10 @@ PrefabInstance:
       propertyPath: _trackingOriginType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: EnableRotation
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
 --- !u!4 &631046424 stripped
@@ -653,100 +568,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 631046423}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &748457162
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.38268343
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.92387956
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_Name
-      value: Browser 820
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8746379488220302167, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 915534832}
-    - target: {fileID: 8746379488220302209, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: pointer
-      value: 
-      objectReference: {fileID: 1211116945}
-    - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: Pointer
-      value: 
-      objectReference: {fileID: 483088540}
-    - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
-        type: 3}
-      propertyPath: startUrl
-      value: https://jsfiddle.net/sbanca/s5xbndot/820/show
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
 --- !u!1001 &913501146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,7 +765,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1372919872
 GameObject:
@@ -1198,6 +1019,100 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+--- !u!1001 &1647448661
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.1000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_Name
+      value: BoxAndWhiskers2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746379488220302167, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 915534832}
+    - target: {fileID: 8746379488220302209, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: pointer
+      value: 
+      objectReference: {fileID: 1211116945}
+    - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: Pointer
+      value: 
+      objectReference: {fileID: 483088540}
+    - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
+        type: 3}
+      propertyPath: startUrl
+      value: https://graphs-for-collaborative-vr.web.app/BoxAndWhiskers2.html
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
 --- !u!1 &1958678706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1038146256242982, guid: a9d2de84afb308a4796cc671d3432b4d,
@@ -1281,7 +1196,7 @@ PrefabInstance:
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: m_Name
-      value: Browser 846
+      value: BoxAndWhiskers
       objectReference: {fileID: 0}
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
@@ -1306,7 +1221,7 @@ PrefabInstance:
     - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: startUrl
-      value: https://jsfiddle.net/sbanca/s5xbndot/846/show
+      value: https://graphs-for-collaborative-vr.web.app/BoxAndWhiskers.html
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
@@ -1355,7 +1270,7 @@ PrefabInstance:
     - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8746379487400150786, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
@@ -1469,7 +1384,7 @@ PrefabInstance:
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: m_Name
-      value: Browser 835
+      value: Scatterplot1
       objectReference: {fileID: 0}
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
@@ -1494,7 +1409,7 @@ PrefabInstance:
     - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: startUrl
-      value: https://jsfiddle.net/sbanca/s5xbndot/835/show
+      value: https://graphs-for-collaborative-vr.web.app/Scatterplot1.html
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
@@ -1563,7 +1478,7 @@ PrefabInstance:
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: m_Name
-      value: Browser 894
+      value: Scatterplot2
       objectReference: {fileID: 0}
     - target: {fileID: 8746379487400150787, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
@@ -1588,7 +1503,7 @@ PrefabInstance:
     - target: {fileID: 8746379488220302301, guid: af13bdf7a40344d4c91564d9a56c462d,
         type: 3}
       propertyPath: startUrl
-      value: https://jsfiddle.net/sbanca/s5xbndot/894/show
+      value: https://graphs-for-collaborative-vr.web.app/Scatterplot2.html
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af13bdf7a40344d4c91564d9a56c462d, type: 3}
