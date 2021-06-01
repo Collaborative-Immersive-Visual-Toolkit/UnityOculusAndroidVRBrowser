@@ -34,7 +34,7 @@ public class RemoteVisualCone : MonoBehaviour
             if ((string)data[1] == gameObject.transform.parent.gameObject.name)
             {
 
-                UpdateVisualCone((List<Vector3>)data[0]);
+                UpdateVisualCone(data[0]);
 
             }
 
@@ -42,10 +42,10 @@ public class RemoteVisualCone : MonoBehaviour
         }
     }
 
-    private void UpdateVisualCone(List<Vector3> positions)
+    private void UpdateVisualCone(Vector3[] positions)
     {
 
-        lineRenderer.positionCount = positions.Count;
-        lineRenderer.SetPositions(positions.ToArray());
+        lineRenderer.positionCount = positions.Length;
+        lineRenderer.SetPositions(positions);
     }
 }
