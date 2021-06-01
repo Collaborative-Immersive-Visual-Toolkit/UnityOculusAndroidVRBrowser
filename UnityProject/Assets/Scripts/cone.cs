@@ -15,6 +15,8 @@ public class cone : MonoBehaviourPun
 
     public LineRenderer lr;
 
+    private List<Vector3> OldPositions;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +34,13 @@ public class cone : MonoBehaviourPun
 
         c.ComputeRaycast();
         c.updateLineRender(lr);
-        RaiseVisualConeChangeEvent(c.SerializeData());
-        //c.RaycastForward();
 
+        if (OldPositions != c.positions)
+        {
+            var data = c.SerializeData();
+            RaiseVisualConeChangeEvent(data);
+        }
+        OldPositions = c.positions;
 
     }
 
@@ -61,7 +67,7 @@ public class ConeVectors
 
     public RaycastHit currenthit;
 
-    private List<Vector3> positions;
+    public List<Vector3> positions;
 
 
     // Bit shift the index of the layer (8) to get a bit mask
@@ -145,7 +151,7 @@ public class ConeVectors
 
     public object[] SerializeData() {
 
-        object[] data = new object[] { positions, PhotonNetwork.NickName };
+        object[] data = new object[] { positions.ToArray(), PhotonNetwork.NickName };
 
         return data;
     }
