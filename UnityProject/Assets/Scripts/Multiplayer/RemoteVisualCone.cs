@@ -42,10 +42,11 @@ public class RemoteVisualCone : MonoBehaviour
         }
     }
 
-    private void UpdateVisualCone(Vector3[] positions)
+    private void UpdateVisualCone(object positions)
     {
 
-        lineRenderer.positionCount = positions.Length;
-        lineRenderer.SetPositions(positions);
+        Vector3[] pos = (Vector3[])positions;
+        lineRenderer.positionCount = pos.Length;
+        lineRenderer.SetPositions((Vector3[])pos);
     }
 }
