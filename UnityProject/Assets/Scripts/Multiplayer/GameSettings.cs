@@ -69,6 +69,9 @@ public class GameSettings : ScriptableObject
     public byte LaserPointerChange = 11;
 
     [SerializeField]
+    public byte VisualConeChange = 12;
+
+    [SerializeField]
     public byte HideUnhideLayer = 4; 
 
     [SerializeField]

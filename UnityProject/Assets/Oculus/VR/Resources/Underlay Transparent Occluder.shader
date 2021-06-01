@@ -9,7 +9,7 @@ Shader "Oculus/Underlay Transparent Occluder" {
         _MainTex("Base (RGB) Trans (A)", 2D) = "white" {}
     }
         SubShader{
-        Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+        Tags{ "Queue" = "Transparent" "IgnoreProjector" = "False" "RenderType" = "Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
 
         // extra pass that renders to depth buffer only

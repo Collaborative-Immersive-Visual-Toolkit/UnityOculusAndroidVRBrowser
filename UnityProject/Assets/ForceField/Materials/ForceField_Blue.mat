@@ -76,20 +76,20 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HighlightThresholdMax: 0.15
-    - _IntersectionThreshold: 0.389
+    - _IntersectionThreshold: 0.268
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Refraction: 10
-    - _SilhouetteEnhancement: 0.25
+    - _SilhouetteEnhancement: -2
     - _SilouetteFactor: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _XSpeed: 0
-    - _YSpeed: 0
+    - _XSpeed: -10
+    - _YSpeed: -10
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.44961074, g: 0.8096981, b: 0.9705882, a: 0}

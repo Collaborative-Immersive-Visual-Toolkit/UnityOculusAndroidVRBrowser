@@ -18,6 +18,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public GameObject loading;
 
+    public GameObject cone;
+
     public bool observer = false;
 
     public bool voiceDebug = true;
@@ -255,7 +257,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     private void InstantiateRemoteUiHelpers(GameObject remoteAvatar) {
 
         //instantiate ui helpers
-        GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
+        //GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
+
+        //instanstiate field of view 
+        Transform Head = DeepChildSearch(remoteAvatar, "head_JNT");
+        var newcone = Instantiate(cone, Head, false);
+        //newcone.transform.parent = Head.transform;
 
         Debug.Log("[PUN] RemoteAvatar UI helpers instanstiated");
     }
@@ -374,5 +381,33 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         {
             return null;
         }
+    }
+
+    public Transform DeepChildSearch(GameObject g, string childName)
+    {
+
+        Transform child = null;
+
+        for (int i = 0; i < g.transform.childCount; i++)
+        {
+
+            Transform currentchild = g.transform.GetChild(i);
+
+            if (currentchild.gameObject.name == childName)
+            {
+
+                return currentchild;
+            }
+            else
+            {
+
+                child = DeepChildSearch(currentchild.gameObject, childName);
+
+                if (child != null) return child;
+            }
+
+        }
+
+        return null;
     }
 }
