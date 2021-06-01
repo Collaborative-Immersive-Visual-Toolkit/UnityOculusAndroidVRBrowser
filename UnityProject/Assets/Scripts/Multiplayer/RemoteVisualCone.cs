@@ -7,7 +7,7 @@ using Photon.Pun;
 public class RemoteVisualCone : MonoBehaviour
 {
    
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
 
     private void Awake()
     {
@@ -31,10 +31,10 @@ public class RemoteVisualCone : MonoBehaviour
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[3] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[2] == gameObject.transform.parent.gameObject.name)
             {
 
-                UpdateVisualCone();
+                UpdateVisualCone((List<Vector3>)data[1]);
 
             }
 
