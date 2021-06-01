@@ -260,8 +260,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
 
         //instanstiate field of view 
-        Transform Head = DeepChildSearch(remoteAvatar, "head_JNT");
-        var newcone = Instantiate(cone, Head, false);
+        //Transform Head = DeepChildSearch(remoteAvatar, "head_JNT");
+        //var newcone = Instantiate(cone, Head, false);
         //newcone.transform.parent = Head.transform;
 
         Debug.Log("[PUN] RemoteAvatar UI helpers instanstiated");
