@@ -31,7 +31,7 @@ public class RemoteVisualCone : MonoBehaviour
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[2] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[1] == gameObject.transform.parent.gameObject.name)
             {
 
                 UpdateVisualCone((List<Vector3>)data[1]);
