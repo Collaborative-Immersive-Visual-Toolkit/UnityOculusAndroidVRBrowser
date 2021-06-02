@@ -56,9 +56,35 @@ public class LaserPointer : OVRCursor
     private bool _hitTarget;
     private LineRenderer lineRenderer;
 
+    public int layerMask = 1 << 10;
+
+    RaycastHit hit1 = new RaycastHit();
+
+    RaycastHit hit2 = new RaycastHit();
+
+    public Color c;
+    bool checkIfInside(Vector3 point)
+    {
+
+        hit1 = new RaycastHit();
+        hit2 = new RaycastHit();
+
+        Vector3 direction = new Vector3(0, 1, 0);
+
+        if (Physics.Raycast(point, direction, out hit1, 6f, layerMask) &&
+            Physics.Raycast(point, -direction, out hit2, 6f, layerMask))
+        {
+            if (hit1.transform.name == hit2.transform.name) return true;
+        }
+
+        return false;
+    }
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+
+        c = lineRenderer.materials[0].color;
     }
 
     private void Start()
@@ -84,6 +110,17 @@ public class LaserPointer : OVRCursor
 
     private void LateUpdate()
     {
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger)>=0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
+        {
+            laserBeamBehavior = LaserBeamBehavior.OnWhenHitTarget;
+        }
+        else {
+
+            laserBeamBehavior = LaserBeamBehavior.Off;
+        }
+
+
+
         lineRenderer.SetPosition(0, _startPoint);
         if (_hitTarget)
         {
@@ -118,6 +155,7 @@ public class LaserPointer : OVRCursor
         {
             lineRenderer.SetPosition(0, start);
             lineRenderer.SetPosition(1, end);
+            UpdateMaterial(end);
         }
         else if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
         {
@@ -137,7 +175,14 @@ public class LaserPointer : OVRCursor
                     lineRenderer.enabled = false;
                 }
             }
+            UpdateMaterial(end);
         }
+    }
+
+    private void UpdateMaterial(Vector3 end) {
+
+        if(checkIfInside(end)) lineRenderer.materials[0].color = Color.green;
+        else lineRenderer.materials[0].color = c;
     }
 
     void OnDisable()

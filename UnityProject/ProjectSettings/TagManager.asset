@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - VRUIBackground
+  - VRUIText
+  - VRUIToggle
+  - VRUIOutline
   layers:
   - Default
   - TransparentFX
@@ -14,11 +18,11 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - cone
-  - 
-  - 
-  - 
-  - 
+  - octagon
+  - othersCones
+  - own cone
+  - player
+  - inverseOctagon
   - 
   - 
   - 

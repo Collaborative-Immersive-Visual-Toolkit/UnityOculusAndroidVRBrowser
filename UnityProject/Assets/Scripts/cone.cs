@@ -16,6 +16,7 @@ public class cone : MonoBehaviourPun
     public LineRenderer lr;
 
     private List<Vector3> OldPositions;
+    public bool visible = true;
 
     // Start is called before the first frame update
     void Start()
@@ -25,15 +26,16 @@ public class cone : MonoBehaviourPun
 
         c = ConeVectors.CreateFromJSON(jsonTextFile);
 
-        c.init(head);
+        c.init(head,lr);
     }
 
+    // Update is called once per frame
     // Update is called once per frame
     void FixedUpdate()
     {
 
         c.ComputeRaycast();
-        c.updateLineRender(lr);
+        if (visible) c.updateLineRender(lr);
 
         if (OldPositions != c.positions)
         {
@@ -45,6 +47,17 @@ public class cone : MonoBehaviourPun
     }
 
 
+    public void SwitchVis()
+    {
+        visible = !visible;
+
+        if (!visible)
+        {
+
+            c.clearLineRender(lr);
+        }
+    }
+    
     public void RaiseVisualConeChangeEvent(object[] data)
     {
 
@@ -69,11 +82,17 @@ public class ConeVectors
 
     public List<Vector3> positions;
 
+    public float distances;
+
+    public Color c;
 
     // Bit shift the index of the layer (8) to get a bit mask
-    public int layerMask = 1 << 9;
+    //public int layerMask = 1 << 9;
+    private static int octagon;
+    private static int inverseOctagon;
+    private int layerMask;
 
-    public void init(Transform h)
+    public void init(Transform h, LineRenderer lr)
     {
 
         head = h;
@@ -81,6 +100,14 @@ public class ConeVectors
         directions = new Vector3[vectorsList.Length];
 
         hits = new RaycastHit[vectorsList.Length];
+
+        c = lr.materials[0].color;
+
+
+
+        octagon = 1 << LayerMask.NameToLayer("octagon");
+        inverseOctagon = 1 << LayerMask.NameToLayer("inverseOctagon");
+        layerMask = octagon | inverseOctagon;
     }
 
     public static ConeVectors CreateFromJSON(TextAsset jsonString)
@@ -102,26 +129,33 @@ public class ConeVectors
 
     public void ComputeRaycast()
     {
-        positions = new List<Vector3>();
 
         ComputeWorldToLocal();
 
         int i = vectorsList.Length;
         hits = new RaycastHit[i];
+        positions = new List<Vector3>();
+        distances = 0;
 
         while (i > 0)
         {
-
-            i--;
-            //(Vector3 origin, Vector3 direction, out RaycastHit hitInfo, float maxDistance, int layerMask);
+            i--;        
             if (Physics.Raycast(head.position, directions[i], out hits[i], 6f, layerMask))
             {
-                //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                //sphere.transform.position = hits[i].point;
-                //sphere.transform.localScale = new Vector3(.1f, .1f, .1f);
-                //currenthit = hits[i];
+                if (hits[i].collider.gameObject.name == "inverse") {
 
-                positions.Add(hits[i].point);
+                    if (hits[i].point.y > 1) {
+                        positions.Add(new Vector3(hits[i].point.x,1.959f, hits[i].point.z));
+                    }
+                    else {
+                        positions.Add(new Vector3(hits[i].point.x,0.625f, hits[i].point.z));
+                    }
+                }
+                else
+                {
+                    positions.Add(hits[i].point);
+                }              
+                distances+=hits[i].distance;
             }
 
         }
@@ -132,6 +166,9 @@ public class ConeVectors
 
         lr.positionCount = positions.Count;
         lr.SetPositions(positions.ToArray());
+        c.a = 1f - ((distances / positions.Count) / 6.5f);
+        lr.materials[0].color = c;
+        
     }
 
     public void RaycastForward()
@@ -151,11 +188,20 @@ public class ConeVectors
 
     public object[] SerializeData() {
 
-        object[] data = new object[] { positions.ToArray(), PhotonNetwork.NickName };
+        //object[] data = new object[] { positions.ToArray(), c.a, PhotonNetwork.NickName };
+
+        object[] data = new object[] { positions.ToArray(), c.a, PhotonNetwork.NickName };
 
         return data;
     }
 
- 
+    public void clearLineRender(LineRenderer lr)
+    {
+       
+            lr.positionCount = 0;
+        
+
+    }
+
 }
 

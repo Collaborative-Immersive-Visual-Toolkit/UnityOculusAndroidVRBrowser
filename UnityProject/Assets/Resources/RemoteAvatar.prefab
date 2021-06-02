@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c56546bfc27f7b469bda2e011957f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visible: 1
   lineRenderer: {fileID: 7166460556314166592}
 --- !u!120 &7166460556314166592
 LineRenderer:
@@ -396,7 +397,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 708317dba215f4a4ca7d181260d4064b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -427,8 +428,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.007003784
-        value: 0.041353226
+        time: 0
+        value: 0.01908493
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -474,7 +475,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
-  m_Loop: 0
+  m_Loop: 1
 --- !u!1 &6975170555100180702
 GameObject:
   m_ObjectHideFlags: 0

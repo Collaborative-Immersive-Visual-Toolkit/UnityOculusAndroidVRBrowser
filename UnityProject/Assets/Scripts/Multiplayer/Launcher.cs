@@ -26,6 +26,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public AvatarBehaviourRecorder avatarRecorder;
 
+    public RemoteAvatarsManager ram;
+
     PhotonView photonView;
     void Start()
     {
@@ -256,13 +258,17 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void InstantiateRemoteUiHelpers(GameObject remoteAvatar) {
 
+        ram.List.Add(remoteAvatar);
+
         //instantiate ui helpers
         //GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
 
-        //instanstiate field of view 
-        //Transform Head = DeepChildSearch(remoteAvatar, "head_JNT");
-        //var newcone = Instantiate(cone, Head, false);
-        //newcone.transform.parent = Head.transform;
+        //instanstiate cone
+        Transform Head = DeepChildSearch(remoteAvatar, "head_JNT");
+        var newcone = Instantiate(cone, Head, false);
+        newcone.transform.parent = Head.transform;
+        newcone.name = "VisualCone";
+        newcone.layer = 10;
 
         Debug.Log("[PUN] RemoteAvatar UI helpers instanstiated");
     }

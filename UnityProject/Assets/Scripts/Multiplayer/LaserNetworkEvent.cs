@@ -14,6 +14,4 @@ public class LaserNetworkEvent : MonoBehaviourPun
 
     }
 
-
-
 }
