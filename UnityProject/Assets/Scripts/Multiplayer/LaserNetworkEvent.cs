@@ -14,4 +14,11 @@ public class LaserNetworkEvent : MonoBehaviourPun
 
     }
 
+    public void RaiseStickyPointerChangeEvent(object[] data)
+    {
+
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.StickyPointerChange, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+    }
+
 }
