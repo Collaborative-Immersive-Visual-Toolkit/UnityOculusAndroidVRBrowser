@@ -12,7 +12,7 @@ public class RemoteLaser : MonoBehaviourPun
         Off,        // laser beam always off
         OnWhenHitTarget,  // laser beam only activates when hit valid target
     }
-
+    private LaserBeamBehavior laserBeamBehavior;
     private LineRenderer lineRenderer;
 
     public GameObject stickyPointerPrefab;
@@ -20,6 +20,10 @@ public class RemoteLaser : MonoBehaviourPun
 
     private bool insideOtherCone;
 
+    private Vector3 _startPoint;
+    private Vector3 _endPoint;
+    private bool _hitTarget;
+    private bool sticky;
 
     private Color c;
 
@@ -47,30 +51,28 @@ public class RemoteLaser : MonoBehaviourPun
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[5] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[6] == gameObject.transform.parent.gameObject.name)
             {
-                insideOtherCone = (bool)data[4];
-                UpdateLaserBeam((Vector3)data[0], (Vector3)data[1], (bool)data[2] , (LaserBeamBehavior)data[3]);
+
+                _startPoint = (Vector3)data[0];
+                _endPoint = (Vector3)data[1];
+                _hitTarget = (bool)data[2]; 
+                sticky = (bool)data[3];
+                laserBeamBehavior = (LaserBeamBehavior)data[4];
+                insideOtherCone = (bool)data[5];
+
+                UpdateLaserBeam();
+                UpdateStickyPointer();
                 UpdateMaterial();
 
-            }
-
-
-        } else if (obj.Code == MasterManager.GameSettings.StickyPointerChange) {
-
-
-            object[] data = (object[])obj.CustomData;
-
-            if ((string)data[3] == gameObject.transform.parent.gameObject.name)
-            {
-
-                UpdateStickyPointer((Vector3)data[0], (bool)data[1], (LaserBeamBehavior)data[2]);
 
             }
+
         }
+ 
     }
 
-    private void UpdateLaserBeam(Vector3 start, Vector3 end, bool _hitTarget, LaserBeamBehavior  laserBeamBehavior)
+    private void UpdateLaserBeam()
     {
         if (laserBeamBehavior == LaserBeamBehavior.Off)
         {
@@ -84,8 +86,8 @@ public class RemoteLaser : MonoBehaviourPun
         }
         else if (laserBeamBehavior == LaserBeamBehavior.On)
         {
-            lineRenderer.SetPosition(0, start);
-            lineRenderer.SetPosition(1, end);          
+            lineRenderer.SetPosition(0, _startPoint);
+            lineRenderer.SetPosition(1, _endPoint);          
         }
         else if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
         {
@@ -97,8 +99,8 @@ public class RemoteLaser : MonoBehaviourPun
                     
                 }
 
-                lineRenderer.SetPosition(0, start);
-                lineRenderer.SetPosition(1, end);
+                lineRenderer.SetPosition(0, _startPoint);
+                lineRenderer.SetPosition(1, _endPoint);
             }
             else
             {
@@ -117,16 +119,16 @@ public class RemoteLaser : MonoBehaviourPun
         else lineRenderer.materials[0].color = c;
     }
 
-    private void UpdateStickyPointer(Vector3 end, bool sticky, LaserBeamBehavior laserBeamBehavior) {
+    private void UpdateStickyPointer() {
 
         if (stickyPointer == null)
         {
-            stickyPointer = Instantiate(stickyPointerPrefab, end, Quaternion.identity);
+            stickyPointer = Instantiate(stickyPointerPrefab, _endPoint, Quaternion.identity);
         }
 
         if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
         {
-            stickyPointer.transform.position = end;
+            stickyPointer.transform.position = _endPoint;
         }
 
         stickyPointer.SetActive(sticky);

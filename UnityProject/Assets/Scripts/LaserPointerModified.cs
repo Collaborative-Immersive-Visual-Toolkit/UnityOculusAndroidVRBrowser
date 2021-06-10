@@ -133,6 +133,10 @@ public class LaserPointerModified : OVRCursor
             lineRenderer.SetPosition(1, _startPoint + maxLength * _forward);
             if (cursorVisual) cursorVisual.SetActive(false);
         }
+
+        object[] data = new object[] { _startPoint, _endPoint, _hitTarget, sticky, laserBeamBehavior, insideOtherCone, PhotonNetwork.NickName };
+        gameObject.SendMessage("RaiseLaserChangeEvent", data, SendMessageOptions.DontRequireReceiver);
+
     }
 
     private void stickyPointerManager(Vector3 _endPoint) {
@@ -178,8 +182,7 @@ public class LaserPointerModified : OVRCursor
 
         }
 
-        object[] data = new object[] { _endPoint, sticky, laserBeamBehavior, PhotonNetwork.NickName };
-        gameObject.SendMessage("RaiseStickyPointerChangeEvent", data, SendMessageOptions.DontRequireReceiver);
+
 
 
     }
@@ -202,9 +205,7 @@ public class LaserPointerModified : OVRCursor
     // make laser beam a behavior with a prop that enables or disables
     private void UpdateLaserBeam(Vector3 start, Vector3 end)
     {
-        object[] data = new object[] { start, end, _hitTarget, laserBeamBehavior, insideOtherCone, PhotonNetwork.NickName };
 
-        gameObject.SendMessage("RaiseLaserChangeEvent", data, SendMessageOptions.DontRequireReceiver);
 
         if (laserBeamBehavior == LaserBeamBehavior.Off)
         {
