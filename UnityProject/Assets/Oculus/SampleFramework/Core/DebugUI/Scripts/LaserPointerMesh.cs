@@ -84,6 +84,14 @@ public class LaserPointerMesh : OVRCursor
         _hitTarget = true;
     }
 
+    public override void SetCursorStartDest(Vector3 start, Vector3 dest, Vector3 normal, GameObject gobj)
+    {
+        _startPoint = start;
+        _endPoint = dest;
+        _hitTarget = true;
+    }
+
+
     public override void SetCursorRay(Transform t)
     {
         _startPoint = t.position;

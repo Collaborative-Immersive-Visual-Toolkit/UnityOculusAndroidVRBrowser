@@ -25,7 +25,10 @@ public class LaserPointerModified : OVRCursor
     public GameObject stickyPointerPrefab;
     private GameObject stickyPointer;
     private bool sticky;
+    private bool disableSticky = false;
     private bool stickyinsideOtherCone;
+    private bool isUI;
+    private bool updateMaterial = true;
     public LaserBeamBehavior laserBeamBehavior
     {
         set
@@ -48,6 +51,7 @@ public class LaserPointerModified : OVRCursor
     private Vector3 _startPoint;
     private Vector3 _forward;
     private Vector3 _endPoint;
+    private GameObject _gobj;
     private bool _hitTarget;
     private LineRenderer lineRenderer;
     private bool insideOtherCone;
@@ -94,6 +98,19 @@ public class LaserPointerModified : OVRCursor
         _startPoint = start;
         _endPoint = dest;
         _hitTarget = true;
+        _gobj = null;
+    }
+
+    public override void SetCursorStartDest(Vector3 start, Vector3 dest, Vector3 normal, GameObject gobj)
+    {
+        _startPoint = start;
+        _endPoint = dest;
+        _hitTarget = true;
+        _gobj = gobj;
+
+        if (_gobj != null & _gobj.layer == 5) isUI = true;
+        else isUI = false;
+
     }
 
     public override void SetCursorRay(Transform t)
@@ -139,9 +156,23 @@ public class LaserPointerModified : OVRCursor
 
     }
 
+    public void toggleSticky() {
+
+        disableSticky = !disableSticky;
+
+    }
+
     private void stickyPointerManager(Vector3 _endPoint) {
 
-        if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
+
+        if (isUI || disableSticky) 
+        {
+
+            sticky = false;
+            stickyPointer.SetActive(false);
+
+        }
+        else if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
         {
             if (stickyPointer == null)
             {
@@ -164,40 +195,35 @@ public class LaserPointerModified : OVRCursor
             {
                 sticky = false;
                 stickyPointer.SetActive(false);
-
             }
-
-           
         }
-        else if (laserBeamBehavior == LaserBeamBehavior.Off & sticky) {
+        else if (laserBeamBehavior == LaserBeamBehavior.Off & sticky) 
+        {
 
             stickyinsideOtherCone = checkIfInside(stickyPointer.transform.position);
 
-            if (stickyinsideOtherCone) {
-
+            if (stickyinsideOtherCone) 
+            {
                 sticky = false;
                 stickyPointer.SetActive(false);
-
             }
-
         }
-
-
-
 
     }
 
     private void SwitchBetweenTypesOfLaserBehaviour() {
 
         //if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
-       if (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f )
+        if (OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
         {
             laserBeamBehavior = LaserBeamBehavior.OnWhenHitTarget;
-
+        } 
+        else if (isUI) 
+        {
+            laserBeamBehavior = LaserBeamBehavior.OnWhenHitTarget;
         }
         else
         {
-
             laserBeamBehavior = LaserBeamBehavior.Off;
         }
     }
@@ -240,10 +266,18 @@ public class LaserPointerModified : OVRCursor
         }
     }
 
+    public void toggleMaterialUpdate() {
+        updateMaterial = !updateMaterial;
+    }
+
     private void UpdateMaterial() {
 
-        if(insideOtherCone) lineRenderer.materials[0].color = Color.green;
-        else lineRenderer.materials[0].color = c;
+        if (updateMaterial)
+        {
+            if (insideOtherCone) lineRenderer.materials[0].color = Color.green;
+            else lineRenderer.materials[0].color = c;
+        }
+
     }
 
     void OnDisable()

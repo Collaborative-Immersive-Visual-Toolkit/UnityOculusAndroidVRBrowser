@@ -202,6 +202,11 @@ public class OVRGazePointer : OVRCursor {
         RequestShow();
     }
 
+    public override void SetCursorStartDest(Vector3 start, Vector3 dest, Vector3 normal, GameObject gobj)
+    {
+        SetCursorStartDest( start, dest,  normal);
+    }
+
     public override void SetCursorRay(Transform ray)
     {
         // We don't do anything here, because we already set this properly by default in Update.

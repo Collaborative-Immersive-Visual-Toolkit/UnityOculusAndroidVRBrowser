@@ -624,7 +624,7 @@ namespace UnityEngine.EventSystems
                     // Set are gaze indicator with this world position and normal
                     Vector3 worldPos = raycast.worldPosition;
                     Vector3 normal = GetRectTransformNormal(graphicRect);
-                    m_Cursor.SetCursorStartDest(rayTransform.position, worldPos, normal);
+                    m_Cursor.SetCursorStartDest(rayTransform.position, worldPos, normal, raycast.gameObject);
                 }
             }
 

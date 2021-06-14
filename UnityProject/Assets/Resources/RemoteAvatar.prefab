@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 114111323619864140}
   - component: {fileID: 114730040972961466}
   - component: {fileID: 114296640112679660}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RemoteAvatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
   UseSDKPackets: 1
   PacketSettings:
     UpdateRate: 0.033333335
-  StartWithControllers: 0
+  StartWithControllers: 1
   FirstPersonLayer:
     layerIndex: 0
   ThirdPersonLayer:
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 3299936173363892020}
   - component: {fileID: 5694081785848980643}
   - component: {fileID: 5180538320144758592}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 2137239216464153451}
   - component: {fileID: 3387371418307736018}
   - component: {fileID: 7166460556314166592}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: VisualCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 8822484120808214762}
   - component: {fileID: 7927208203212441280}
   - component: {fileID: 4130404459593938611}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Laser Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -559,7 +559,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.49246788
         inSlope: 0
         outSlope: 0
         tangentMode: 0

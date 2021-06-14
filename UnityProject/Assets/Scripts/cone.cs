@@ -24,9 +24,19 @@ public class cone : MonoBehaviourPun
         //Load text from a JSON file (Assets/Resources/Text/jsonFile01.json)
         //var jsonTextFile = Resources.Load<TextAsset>("vectors_cone_20_77");
 
+        if (head == null) {
+
+            GameObject parent =  GameObject.Find("OVRPlayerController");
+
+            head =  DeepChildSearch(parent, "CenterEyeAnchor");
+
+        }
+
         c = ConeVectors.CreateFromJSON(jsonTextFile);
 
         c.init(head,lr);
+
+
     }
 
     // Update is called once per frame
@@ -63,6 +73,34 @@ public class cone : MonoBehaviourPun
 
         PhotonNetwork.RaiseEvent(MasterManager.GameSettings.VisualConeChange, data, Photon.Realtime.RaiseEventOptions.Default, SendOptions.SendReliable);
 
+    }
+
+    private Transform DeepChildSearch(GameObject g, string childName)
+    {
+
+        Transform child = null;
+
+        for (int i = 0; i < g.transform.childCount; i++)
+        {
+
+            Transform currentchild = g.transform.GetChild(i);
+
+            if (currentchild.gameObject.name == childName)
+            {
+
+                return currentchild;
+            }
+            else
+            {
+
+                child = DeepChildSearch(currentchild.gameObject, childName);
+
+                if (child != null) return child;
+            }
+
+        }
+
+        return null;
     }
 
 }

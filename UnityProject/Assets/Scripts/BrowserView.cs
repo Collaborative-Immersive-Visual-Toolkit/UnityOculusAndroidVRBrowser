@@ -194,7 +194,11 @@ public class BrowserView : MonoBehaviour
     }
    
     public void LoadURL(string url)
-    {            
+    {
+        var rand = new System.Random();
+
+        //add a query to force cache refreshing
+        url = url +"?"+ rand.Next(1000);
         SetInputFieldUrl(url);
         CallAjc("LoadURL", new object[] {url});
 
@@ -431,7 +435,7 @@ public class BrowserView : MonoBehaviour
 
     private void Update()
     {
-        if (Dragging) Drag();
+       // if (Dragging) Drag();
     }
 
 

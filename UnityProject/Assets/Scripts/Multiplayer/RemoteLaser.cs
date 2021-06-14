@@ -112,11 +112,13 @@ public class RemoteLaser : MonoBehaviourPun
         }
     }
 
+
     private void UpdateMaterial()
     {
 
-        if (insideOtherCone) lineRenderer.materials[0].color = Color.green;
-        else lineRenderer.materials[0].color = c;
+            if (insideOtherCone) lineRenderer.materials[0].color = Color.green;
+            else lineRenderer.materials[0].color = c;
+        
     }
 
     private void UpdateStickyPointer() {

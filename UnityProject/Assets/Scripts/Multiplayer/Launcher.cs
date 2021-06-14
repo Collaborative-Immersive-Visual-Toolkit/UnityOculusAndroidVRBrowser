@@ -14,6 +14,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private GameObject localObserver;
 
+    public GameObject localAvatarsMenu;
+
     public GameObject rig;
 
     public GameObject loading;
@@ -157,7 +159,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void LocalAvatarInstantiated() {
 
-      
+        localAvatarsMenu.SetActive(true);
+
         StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 
         //inputsManager.Instance.localAvatar= localAvatar;
