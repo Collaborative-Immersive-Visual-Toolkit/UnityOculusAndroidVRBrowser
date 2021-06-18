@@ -15,11 +15,13 @@ MonoBehaviour:
   _gameversion: 0.0.1
   _nickname: Satana
   _userID: 0
-  _roomName: SatteliteRoom
+  _roomName: CollaborationRoom
   InstantiateVrAvatarEventCode: 1
   InstantiateObserverEventCode: 2
   NextDataDisplay: 3
   AddLongTap: 10
+  LaserPointerChange: 11
+  VisualConeChange: 12
   HideUnhideLayer: 4
   SpawnPlaceholder: 5
   DeletePlaceHolders: 6

@@ -74,7 +74,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     void IMatchmakingCallbacks.OnJoinedRoom()
     {
+
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
+
+        if (!firstconnection) return;
+
+        firstconnection = false;
 
         StartCoroutine(waitForSdkManagerInstantiated());
     }
@@ -106,11 +111,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        
         Debug.Log("[PUN] Disconnected -->" + cause);
 
         Debug.Log("[PUN] reconnecting to server");
 
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.Reconnect();
     }
 
     //AVATAR
@@ -221,6 +227,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         //sender 
         Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
+
+        //check if a remote avatar still exist and clean up 
+
+        GameObject oldRemoteAvatar = GameObject.Find(player.NickName);
+
+        if (oldRemoteAvatar != null) Destroy(oldRemoteAvatar);
 
         Debug.Log("[PUN] Instantiatate an avatar for user " + player.NickName + "\n with user ID " + player.UserId);
 
