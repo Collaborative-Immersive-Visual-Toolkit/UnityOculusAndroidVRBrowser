@@ -31,6 +31,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     public RemoteAvatarsManager ram;
 
     PhotonView photonView;
+
+    public bool firstconnection = true;
+
+
+
     void Start()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -87,7 +92,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         else InstantiateLocalAvatar();
     }
 
-
     void IOnEventCallback.OnEvent(EventData photonEvent)
     {
         if (photonEvent.Code == MasterManager.GameSettings.InstantiateVrAvatarEventCode)
@@ -102,9 +106,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.Log("[PUN] disconnected from server because of " + cause.ToString());
-    }
+        Debug.Log("[PUN] Disconnected -->" + cause);
 
+        Debug.Log("[PUN] reconnecting to server");
+
+        PhotonNetwork.ConnectUsingSettings();
+    }
 
     //AVATAR
     //local avatar

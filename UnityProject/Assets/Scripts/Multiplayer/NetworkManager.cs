@@ -42,6 +42,7 @@ public class NetworkManager : MonoBehaviour, IConnectionCallbacks, IMatchmakingC
 
     void IConnectionCallbacks.OnDisconnected(DisconnectCause cause)
     {
+        
     }
 
     void IConnectionCallbacks.OnRegionListReceived(RegionHandler regionHandler)

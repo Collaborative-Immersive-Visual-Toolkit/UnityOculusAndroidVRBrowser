@@ -9,12 +9,19 @@ public class RemoteVisualCone : MonoBehaviour
 
     public bool visible = true;
     public LineRenderer lineRenderer;
-    public Color c;
+
+    //gradient 
+    private float from = 0.001f;
+    private float to = 0.999f;
+    private float howfar = 0f;
+    private bool direction = true;
+    private float alpha = 1f;
+
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        c = lineRenderer.materials[0].color;
+
     }
 
     private void OnEnable()
@@ -34,10 +41,10 @@ public class RemoteVisualCone : MonoBehaviour
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[2] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[3] == gameObject.transform.parent.gameObject.name)
             {
 
-                if(visible)UpdateVisualCone(data[0],data[1]);
+                if(visible)UpdateVisualCone(data[0],data[1], data[2]);
 
             }
 
@@ -45,7 +52,7 @@ public class RemoteVisualCone : MonoBehaviour
         }
     }
 
-    private void UpdateVisualCone(object positions,object alpha)
+    private void UpdateVisualCone(object positions,object alpha, object middle)
     {
 
         Vector3[] pos = (Vector3[])positions;
@@ -53,8 +60,10 @@ public class RemoteVisualCone : MonoBehaviour
         lineRenderer.positionCount = pos.Length;
         lineRenderer.SetPositions((Vector3[])pos);
 
-        c.a = (float)alpha;
-        lineRenderer.materials[0].color = c;
+
+        lineRenderer.materials[0].SetFloat("_Middle", (float)middle);
+
+        lineRenderer.materials[0].SetFloat("_Alpha", (float)alpha);
     }
 
     public void SwitchVis()

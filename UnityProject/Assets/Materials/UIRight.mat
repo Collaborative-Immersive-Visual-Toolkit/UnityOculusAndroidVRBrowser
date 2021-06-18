@@ -7,25 +7,21 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ForceField_Yellow
-  m_Shader: {fileID: 4800000, guid: 04f09216798172a44add418cef8a2fbb, type: 3}
-  m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 1
+  m_Name: UIRight
+  m_Shader: {fileID: 4800000, guid: 782b97b0a41bf644299cc3746a71d6d3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_DoubleSidedGI: 1
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 005d1601ac0c4bf44a7c6197730ca40e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpTex:
-        m_Texture: {fileID: 2800000, guid: 87525872b13389f428ecc8fe9739346e, type: 3}
-        m_Scale: {x: 2, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -44,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e14e6b7e7a0c09549b8481d830c59293, type: 3}
-        m_Scale: {x: 2, y: 1}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -59,41 +55,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpAmt: 100
+    - _Alpha: 0.999
     - _BumpScale: 1
-    - _BumpStrength: 3
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distortion: 80
     - _DstBlend: 0
-    - _Factor: 2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HighlightThresholdMax: 0.05
-    - _IntersectionThreshold: 0.1
     - _Metallic: 0
+    - _Middle: 0.001
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Refraction: 10
-    - _SilhouetteEnhancement: 2
-    - _SilouetteFactor: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _XSpeed: 0
-    - _YSpeed: 2
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.9490365, b: 0.30689657, a: 0.843}
+    - _Color: {r: 1, g: 0.4209369, b: 0.2971698, a: 1}
+    - _ColorBot: {r: 0, g: 1, b: 0.6313726, a: 1}
+    - _ColorMid: {r: 0, g: 1, b: 0.2810154, a: 1}
+    - _ColorTop: {r: 0, g: 1, b: 0.63234663, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighlightColor: {r: 1.5395956, g: 1.410307, b: 0.4406429, a: 1}
-    - _RegularColor: {r: 0, g: 0.255172, b: 1, a: 0.153}
-    - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

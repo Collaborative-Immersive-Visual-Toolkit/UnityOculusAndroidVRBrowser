@@ -1,4 +1,4 @@
-
+﻿
 
 using UnityEngine;
 using System.Collections;
@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 using Photon.Pun;
+using System.Collections.Generic;
 
 public class LaserPointerModified : OVRCursor
 {
@@ -62,6 +63,15 @@ public class LaserPointerModified : OVRCursor
     RaycastHit hit2 = new RaycastHit();
 
     private Color c;
+
+    public Material[] Visible;
+    
+    public Material[] NonVisible;
+
+    public stickyCircle circle;
+
+    private bool wasOnWhenHitTarget=false;
+
     bool checkIfInside(Vector3 point)
     {
 
@@ -83,7 +93,7 @@ public class LaserPointerModified : OVRCursor
     {
         lineRenderer = GetComponent<LineRenderer>();
 
-        c = lineRenderer.materials[0].color;
+        //c = lineRenderer.materials[0].color;
     }
 
     private void Start()
@@ -130,7 +140,8 @@ public class LaserPointerModified : OVRCursor
         insideOtherCone = checkIfInside(_endPoint);
 
         //attach a sticky pointer if the 
-        stickyPointerManager(_endPoint);
+        //stickyPointerManager(_endPoint);
+        stickyPointerManagerUpdate(_endPoint);
 
         // do the standard laser pointer stuff from the ovr
         lineRenderer.SetPosition(0, _startPoint);
@@ -151,7 +162,7 @@ public class LaserPointerModified : OVRCursor
             if (cursorVisual) cursorVisual.SetActive(false);
         }
 
-        object[] data = new object[] { _startPoint, _endPoint, _hitTarget, sticky, laserBeamBehavior, insideOtherCone, PhotonNetwork.NickName };
+        object[] data = new object[] { _startPoint, _endPoint, _hitTarget, sticky, laserBeamBehavior, insideOtherCone, circle.circlePos, circle.alpha, PhotonNetwork.NickName };
         gameObject.SendMessage("RaiseLaserChangeEvent", data, SendMessageOptions.DontRequireReceiver);
 
     }
@@ -211,6 +222,61 @@ public class LaserPointerModified : OVRCursor
 
     }
 
+    private void stickyPointerManagerUpdate(Vector3 _endPoint)
+    {
+
+        if (isUI || disableSticky)
+        {
+
+            return;
+
+        }
+        else if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
+        {
+
+            if (!wasOnWhenHitTarget) {
+
+                circle.cleanList();
+            }
+                
+            if (!insideOtherCone & !sticky)
+            {
+                sticky = true;
+                circle.capture(_endPoint);
+
+            }
+            else if (!insideOtherCone & sticky)
+            {
+                circle.capture(_endPoint);
+            }
+            else if (insideOtherCone & sticky)
+            {
+                circle.DestroySlowly();
+                sticky = false;
+            }
+
+            wasOnWhenHitTarget = true;
+
+        }
+        else if (laserBeamBehavior == LaserBeamBehavior.Off & sticky)
+        {
+
+            stickyinsideOtherCone = checkIfInside(circle.center);
+
+            if (stickyinsideOtherCone && sticky)
+            {
+                circle.DestroySlowly();
+                sticky = false;
+            }
+
+            if (wasOnWhenHitTarget) {
+
+                wasOnWhenHitTarget = false;
+            }
+        }
+
+    }
+
     private void SwitchBetweenTypesOfLaserBehaviour() {
 
         //if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger) >= 0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
@@ -231,7 +297,6 @@ public class LaserPointerModified : OVRCursor
     // make laser beam a behavior with a prop that enables or disables
     private void UpdateLaserBeam(Vector3 start, Vector3 end)
     {
-
 
         if (laserBeamBehavior == LaserBeamBehavior.Off)
         {
@@ -261,9 +326,9 @@ public class LaserPointerModified : OVRCursor
                 {
                     lineRenderer.enabled = false;
                 }
-            }
-           
+            }         
         }
+
     }
 
     public void toggleMaterialUpdate() {
@@ -273,9 +338,9 @@ public class LaserPointerModified : OVRCursor
     private void UpdateMaterial() {
 
         if (updateMaterial)
-        {
-            if (insideOtherCone) lineRenderer.materials[0].color = Color.green;
-            else lineRenderer.materials[0].color = c;
+        {         
+            if (insideOtherCone) lineRenderer.materials = Visible;
+            else lineRenderer.materials = NonVisible;
         }
 
     }
@@ -284,6 +349,7 @@ public class LaserPointerModified : OVRCursor
     {
         if (cursorVisual) cursorVisual.SetActive(false);
     }
+    
     public void OnInputFocusLost()
     {
         if (gameObject && gameObject.activeInHierarchy)

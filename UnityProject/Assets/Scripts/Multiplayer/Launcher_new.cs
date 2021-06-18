@@ -13,7 +13,31 @@ public class Launcher_new : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMa
 
     public bool voiceDebug = true;
 
+    public bool firstconnection = true;
+
     PhotonView photonView;
+
+    //void Update() {
+
+    //    if(PhotonNetwork.NetworkClientState == ClientState.Disconnected)
+    //    {
+    //        Debug.Log("[PUN] re - connecting to server");
+    //        PhotonNetwork.Reconnect();
+    //    }
+
+
+    //}
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        Debug.Log("[PUN] Focus status -->" + PhotonNetwork.NetworkClientState.ToString());
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        Debug.Log("[PUN] Paused status -->" + PhotonNetwork.NetworkClientState.ToString());
+    }
+
     void Start()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -29,8 +53,18 @@ public class Launcher_new : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMa
 
     }
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("[PUN] Disconnected -->" + cause);
+
+        Debug.Log("[PUN] reconnecting to server");
+
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     public override void OnConnectedToMaster()
     {
+
 
         Debug.Log("[PUN] connected to server");
 
@@ -45,7 +79,11 @@ public class Launcher_new : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMa
 
     void IMatchmakingCallbacks.OnJoinedRoom()
     {
+
         Debug.Log("[PUN] joined room " + PhotonNetwork.CurrentRoom);
+
+        if (!firstconnection) return;
+        firstconnection = false;
 
         InstantiateLocalAvatar();
     }

@@ -27,11 +27,17 @@ public class RemoteLaser : MonoBehaviourPun
 
     private Color c;
 
+    private Vector3[] circlepos;
+    private float circlealpha;
+
+    public Material[] Visible;
+    public Material[] NonVisible;
+    public stickyCircleRemote circle;
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
 
-        c = lineRenderer.materials[0].color;
+        //c = lineRenderer.materials[0].color;
     }
 
     private void OnEnable()
@@ -51,7 +57,7 @@ public class RemoteLaser : MonoBehaviourPun
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[6] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[8] == gameObject.transform.parent.gameObject.name)
             {
 
                 _startPoint = (Vector3)data[0];
@@ -60,10 +66,13 @@ public class RemoteLaser : MonoBehaviourPun
                 sticky = (bool)data[3];
                 laserBeamBehavior = (LaserBeamBehavior)data[4];
                 insideOtherCone = (bool)data[5];
+                circlepos = (Vector3[])data[6];
+                circlealpha = (float)data[7];
 
                 UpdateLaserBeam();
-                UpdateStickyPointer();
+                //UpdateStickyPointer();
                 UpdateMaterial();
+                UpdateStickyCircle();
 
 
             }
@@ -112,12 +121,11 @@ public class RemoteLaser : MonoBehaviourPun
         }
     }
 
-
     private void UpdateMaterial()
     {
 
-            if (insideOtherCone) lineRenderer.materials[0].color = Color.green;
-            else lineRenderer.materials[0].color = c;
+            if (insideOtherCone) lineRenderer.materials= Visible;
+            else lineRenderer.materials = NonVisible;
         
     }
 
@@ -136,4 +144,14 @@ public class RemoteLaser : MonoBehaviourPun
         stickyPointer.SetActive(sticky);
         
     }
+
+    private void UpdateStickyCircle()
+    {
+
+        if(circlepos != circle.pos) circle.updateLineRender(circlepos);
+        if (circlealpha != circle.alpha)  circle.UpdateAlpha(circlealpha);
+
+    }
+
+
 }

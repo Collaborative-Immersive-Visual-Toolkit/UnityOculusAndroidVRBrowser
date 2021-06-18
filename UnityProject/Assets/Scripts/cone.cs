@@ -122,10 +122,16 @@ public class ConeVectors
 
     public float distances;
 
-    public Color c;
+    //gradient 
+    private float from = 0.001f;
+    private float to= 0.999f;
+    private float howfar = 0f;
+    private bool direction = true;
+    private float alpha = 1f;
+    private float middle = 1f;
 
     // Bit shift the index of the layer (8) to get a bit mask
-    //public int layerMask = 1 << 9;
+    // public int layerMask = 1 << 9;
     private static int octagon;
     private static int inverseOctagon;
     private int layerMask;
@@ -139,13 +145,10 @@ public class ConeVectors
 
         hits = new RaycastHit[vectorsList.Length];
 
-        c = lr.materials[0].color;
-
-
-
         octagon = 1 << LayerMask.NameToLayer("octagon");
         inverseOctagon = 1 << LayerMask.NameToLayer("inverseOctagon");
         layerMask = octagon | inverseOctagon;
+
     }
 
     public static ConeVectors CreateFromJSON(TextAsset jsonString)
@@ -178,7 +181,7 @@ public class ConeVectors
         while (i > 0)
         {
             i--;        
-            if (Physics.Raycast(head.position, directions[i], out hits[i], 6f, layerMask))
+            if (Physics.Raycast(head.position, directions[i], out hits[i], 8f, layerMask))
             {
                 if (hits[i].collider.gameObject.name == "inverse") {
 
@@ -202,11 +205,28 @@ public class ConeVectors
 
     public void updateLineRender(LineRenderer lr) {
 
+        //alpha
         lr.positionCount = positions.Count;
         lr.SetPositions(positions.ToArray());
-        c.a = 1f - ((distances / positions.Count) / 6.5f);
-        lr.materials[0].color = c;
-        
+
+        alpha = 1f - ((distances / positions.Count) / 6.5f);
+
+        lr.materials[0].SetFloat("_Alpha", alpha);
+
+        ///gradient
+        /*if (howfar < 0.1f) direction = true;
+        else if (howfar > 0.9f) direction = false;
+
+        if (direction) howfar += 0.01f;
+        else howfar -= 0.01f;*/
+
+        if (howfar > 1f) howfar = 0f;
+        howfar += 0.005f;
+
+        middle = Mathf.Lerp(from, to, howfar);
+
+        lr.materials[0].SetFloat("_Middle", middle);
+
     }
 
     public void RaycastForward()
@@ -228,7 +248,7 @@ public class ConeVectors
 
         //object[] data = new object[] { positions.ToArray(), c.a, PhotonNetwork.NickName };
 
-        object[] data = new object[] { positions.ToArray(), c.a, PhotonNetwork.NickName };
+        object[] data = new object[] { positions.ToArray(), alpha, middle, PhotonNetwork.NickName };
 
         return data;
     }
