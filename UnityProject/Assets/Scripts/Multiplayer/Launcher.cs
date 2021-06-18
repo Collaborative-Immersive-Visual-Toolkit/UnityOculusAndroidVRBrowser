@@ -116,7 +116,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         Debug.Log("[PUN] reconnecting to server");
 
-        PhotonNetwork.Reconnect();
+        PhotonNetwork.ReconnectAndRejoin();
     }
 
     //AVATAR
