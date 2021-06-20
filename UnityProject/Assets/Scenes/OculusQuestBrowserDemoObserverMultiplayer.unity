@@ -1616,6 +1616,7 @@ MonoBehaviour:
   voiceDebug: 0
   avatarRecorder: {fileID: 0}
   ram: {fileID: 1350780339}
+  firstconnection: 1
 --- !u!4 &1350780338
 Transform:
   m_ObjectHideFlags: 0
@@ -2573,6 +2574,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 64ff6d3a88ad6084d8eb95ae190e92a4, type: 2}
+    - target: {fileID: 3208440522273299435, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 3579325436444631536, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: head
@@ -2593,6 +2599,11 @@ PrefabInstance:
       propertyPath: Pointer
       value: 
       objectReference: {fileID: 4802744538545259}
+    - target: {fileID: 6190138769544552404, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190138769544552409, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2608,11 +2619,21 @@ PrefabInstance:
       propertyPath: pointer
       value: 
       objectReference: {fileID: 1525749420057099}
+    - target: {fileID: 6190138769761384839, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190138769761384842, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bd5380d36e435d548a4578be0ac3ab80, type: 2}
+    - target: {fileID: 6190138771307610707, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190138771307610718, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2643,6 +2664,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 67fc7e1360053d34c936a9ad42a247e2, type: 2}
+    - target: {fileID: 6190138771351350187, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190138771422391065, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: Pointer
@@ -2658,6 +2684,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 915534832}
+    - target: {fileID: 6190138771422391198, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190138771527900688, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: Pointer
@@ -2668,6 +2699,11 @@ PrefabInstance:
       propertyPath: pointer
       value: 
       objectReference: {fileID: 1525749420057099}
+    - target: {fileID: 6190138771527900823, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190138771527900826, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2957,6 +2993,11 @@ PrefabInstance:
       propertyPath: pointer
       value: 
       objectReference: {fileID: 1525749420057099}
+    - target: {fileID: 614604115469287861, guid: e6516aab35c32b04aaa29607c91ae2d4,
+        type: 3}
+      propertyPath: m_Name
+      value: AndroidBrowserView
+      objectReference: {fileID: 0}
     - target: {fileID: 614604115469287864, guid: e6516aab35c32b04aaa29607c91ae2d4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

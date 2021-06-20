@@ -23,6 +23,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OculusQuestBrowserDemoMultiplayer.unity
     guid: 0375c052d88feec4284daaf6198dadbb
+  - enabled: 0
+    path: Assets/SimpleWebBrowser/Demo/web_browser_oculus.unity
+    guid: 388ebb96b378aa0419ef4f2b2a6c800e
+  - enabled: 0
+    path: Assets/SimpleWebBrowser/Demo/web_browser_oculus_bkp.unity
+    guid: 894e5c948952e0b4cbeaf2b94972980d
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: fea1dc5d609f74063985f91073ed92d3,
       type: 2}

@@ -9,7 +9,7 @@ public class BrowserViewNetwork : MonoBehaviourPun
 
     public void RaiseAddLongTapNetworkEvent(object[] data)
     {
-
+        
         PhotonNetwork.RaiseEvent(MasterManager.GameSettings.AddLongTap, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
     }

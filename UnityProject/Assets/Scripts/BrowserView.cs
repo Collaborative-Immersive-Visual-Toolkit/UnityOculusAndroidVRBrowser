@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -20,8 +21,9 @@ public class BrowserView : MonoBehaviour
     public Button ForwardButton;
     public TMP_InputField UrlInputField;
     public TMP_Text ProgressText;
-    public Transform Pointer;
+
     public RawImage RawImage;
+    public Image Image;
     private UserAgent _currentUserAgent = UserAgent.mobile;
     public OVROverlay _overlay;
     public string startUrl;
@@ -70,11 +72,13 @@ public class BrowserView : MonoBehaviour
     // CHANGE PER YOUR INPUT MODULE SPECIFICS
     public void OnClick(BaseEventData data)
     {
+        PointerEventData eventData = (PointerEventData)data;
+
+        
         if (!Dragging)
         {
-            //Debug.Log("OnClick");
-            //Debug.Log(data);
-            AddTap();
+           
+            AddTap(eventData);
            
         }
 
@@ -84,7 +88,7 @@ public class BrowserView : MonoBehaviour
     {
         PointerEventData eventData = (PointerEventData)data;
 
-        AddTap();
+        AddTap(eventData);
 
         //Debug.Log("StartDrag");
         Dragging = true;
@@ -99,9 +103,11 @@ public class BrowserView : MonoBehaviour
         //Debug.Log(data);
     }
 
-    public void Drag()
+    public void Drag(BaseEventData data)
     {
-        Vector2 currentPosition = PointerPositionInRect();
+        PointerEventData eventData = (PointerEventData)data;
+
+        Vector2 currentPosition = PointerPositionInRect(eventData.position);
 
         float verticalDistance = dragStartPosition.y - currentPosition.y;
 
@@ -114,16 +120,12 @@ public class BrowserView : MonoBehaviour
 
     }
 
-    public Vector2 PointerPositionInRect() {
-
-        Vector3 pos = Pointer.transform.position;
+    public Vector2 PointerPositionInRect(Vector3 screenPoint)
+    {
 
         Camera thisCamera = Camera.main;
         Debug.Assert(thisCamera.name == "CenterEyeAnchor");
         Vector2 positionInRect = new Vector2();
-
-        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(thisCamera, pos);
-        // Debug.Log("screen point: " + screenPoint);
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_rawImageRect,
             screenPoint, thisCamera, out positionInRect);
@@ -148,12 +150,9 @@ public class BrowserView : MonoBehaviour
 
         Vector2 positionInWebView = new Vector2(positionInRect.x * xScale, positionInRect.y * yScale);
 
-        //Debug.Log("position in webview: " + positionInWebView);
-
-        //Debug.Log("transformed pos:" + positionInWebView);
-
         return positionInWebView;
     }
+
 
     //TODO: show your keyboard here
     public void ChangeKeyboardVisiblity(bool show)
@@ -428,7 +427,8 @@ public class BrowserView : MonoBehaviour
      
         UnityThread.initUnityThread();
         //RawImage.GetComponent<Button>().onClick.AddListener(OnClick);
-        _rawImageRect = RawImage.GetComponent<RectTransform>();
+        if(RawImage!=null) _rawImageRect = RawImage.GetComponent<RectTransform>();
+        else if(Image != null) _rawImageRect = Image.GetComponent<RectTransform>();
 
         InitializeAndroidPlugin();
     }
@@ -525,10 +525,10 @@ public class BrowserView : MonoBehaviour
     #region AndroidInterface
     
     // method to to tap in the right coords despite difference in scaling
-    private void AddTap()
+    private void AddTap(PointerEventData eventData)
     {
 
-        Vector2 positionInWebView = PointerPositionInRect();
+        Vector2 positionInWebView = PointerPositionInRect(eventData.position);
 
         object[] data = new object[] { positionInWebView.x, positionInWebView.y  };
 
