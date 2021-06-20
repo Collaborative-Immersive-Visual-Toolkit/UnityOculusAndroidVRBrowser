@@ -621,7 +621,7 @@ MonoBehaviour:
   stickyPointerPrefab: {fileID: 6369511576161345178, guid: a62dcef86f0e9aa4a97c64b730402eed,
     type: 3}
   Visible:
-  - {fileID: 2100000, guid: 7c6165ced6f326d42a795cab71195225, type: 2}
+  - {fileID: 2100000, guid: c3575e91b142a9f40bf476791f3eef01, type: 2}
   NonVisible:
   - {fileID: 2100000, guid: 7c6165ced6f326d42a795cab71195225, type: 2}
   circle: {fileID: 780097887688398712}
@@ -764,3 +764,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53177309367c3884f97c15723d359063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alpha: 0
+  pos: []
