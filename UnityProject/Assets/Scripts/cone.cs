@@ -7,6 +7,7 @@ using System;
 
 public class cone : MonoBehaviourPun
 {
+    public bool disabled = false;
     public Transform head;
 
     public TextAsset jsonTextFile;
@@ -43,6 +44,11 @@ public class cone : MonoBehaviourPun
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (disabled)
+        {
+            c.clearLineRender(lr);
+            return;
+        }
 
         c.ComputeRaycast();
         if (visible) c.updateLineRender(lr);

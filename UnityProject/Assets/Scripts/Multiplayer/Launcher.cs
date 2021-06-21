@@ -176,7 +176,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 
-        //inputsManager.Instance.localAvatar= localAvatar;
+        inputsManager.Instance.localAvatar= localAvatar;
     }
    
     private IEnumerator PhotonVoiceInstantiationForLocalAvatar()
@@ -343,6 +343,16 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         //destroy the player controller 
         Destroy(GameObject.Find("OVRPlayerController"));
+
+        //destroy the player cone
+        GameObject octagon = GameObject.Find("octagon");
+        if (octagon != null) {
+            cone c = octagon.GetComponent<cone>();
+            c.disabled = true;
+        }
+
+        //destroy UiHelpers
+        Destroy(GameObject.Find("UIHelpers"));
 
         //enable observer recorder
         avatarRecorder.enabled = true;

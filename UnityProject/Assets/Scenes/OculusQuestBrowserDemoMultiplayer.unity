@@ -1512,6 +1512,7 @@ GameObject:
   - component: {fileID: 1350780338}
   - component: {fileID: 1350780337}
   - component: {fileID: 1350780339}
+  - component: {fileID: 1350780340}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1535,9 +1536,9 @@ MonoBehaviour:
   rig: {fileID: 0}
   loading: {fileID: 0}
   cone: {fileID: 4268547671926540873, guid: b3ec76496318c2a438354aeafee9f103, type: 3}
-  observer: 0
+  observer: 1
   voiceDebug: 0
-  avatarRecorder: {fileID: 0}
+  avatarRecorder: {fileID: 1350780340}
   ram: {fileID: 1350780339}
   firstconnection: 1
 --- !u!4 &1350780338
@@ -1567,6 +1568,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   List: []
+--- !u!114 &1350780340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350780336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3caf2eb46a6a84b4aa57ccfaa18749b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameRate: 25
 --- !u!1 &1372919872
 GameObject:
   m_ObjectHideFlags: 0
