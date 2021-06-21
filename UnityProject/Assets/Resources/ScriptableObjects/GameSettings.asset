@@ -25,4 +25,4 @@ MonoBehaviour:
   HideUnhideLayer: 4
   SpawnPlaceholder: 5
   DeletePlaceHolders: 6
-  _observer: 1
+  _observer: 0

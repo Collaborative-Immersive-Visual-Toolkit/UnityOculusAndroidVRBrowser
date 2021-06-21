@@ -171,7 +171,11 @@ public class LaserPointerModified : OVRCursor
 
         disableSticky = !disableSticky;
 
+        if (disableSticky) { 
+            circle.DestroySlowly(); 
+        }
     }
+
 
     private void stickyPointerManager(Vector3 _endPoint) {
 
