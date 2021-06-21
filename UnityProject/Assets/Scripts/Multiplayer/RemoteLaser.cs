@@ -6,6 +6,7 @@ using Photon.Pun;
 
 public class RemoteLaser : MonoBehaviourPun
 {
+    public GameObject Pointer;
     public enum LaserBeamBehavior
     {
         On,        // laser beam always on
@@ -69,6 +70,7 @@ public class RemoteLaser : MonoBehaviourPun
                 circlepos = (Vector3[])data[6];
                 circlealpha = (float)data[7];
 
+                UpdatePointer();
                 UpdateLaserBeam();
                 //UpdateStickyPointer();
                 UpdateMaterial();
@@ -81,6 +83,10 @@ public class RemoteLaser : MonoBehaviourPun
  
     }
 
+    private void UpdatePointer() {
+
+        Pointer.transform.position = _endPoint;
+    }
     private void UpdateLaserBeam()
     {
         if (laserBeamBehavior == LaserBeamBehavior.Off)
@@ -89,6 +95,7 @@ public class RemoteLaser : MonoBehaviourPun
             if (lineRenderer.enabled)
             {
                 lineRenderer.enabled = false;
+                Pointer.SetActive(false);
             }
 
             return;
@@ -105,7 +112,7 @@ public class RemoteLaser : MonoBehaviourPun
                 if (!lineRenderer.enabled)
                 {
                     lineRenderer.enabled = true;
-                    
+                    Pointer.SetActive(true);
                 }
 
                 lineRenderer.SetPosition(0, _startPoint);
@@ -116,6 +123,7 @@ public class RemoteLaser : MonoBehaviourPun
                 if (lineRenderer.enabled)
                 {
                     lineRenderer.enabled = false;
+                    Pointer.SetActive(false);
                 }
             }
         }

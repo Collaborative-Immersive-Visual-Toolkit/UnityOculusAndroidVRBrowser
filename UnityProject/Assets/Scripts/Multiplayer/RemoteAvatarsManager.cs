@@ -4,9 +4,35 @@ using UnityEngine;
 
 public class RemoteAvatarsManager : MonoBehaviour
 {
+    public List<inputs> inputs;
+
 
 
     public List<GameObject> List;
+
+
+
+    private void Awake()
+    {
+        List = new List<GameObject>();
+        inputs = new List<inputs>();
+    }
+
+    private void Update()
+    {
+        if (List.Count > 0)
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+
+                if (List[i] == null)
+                {
+                    inputs.RemoveAt(i);
+                    List.RemoveAt(i);
+                }
+            }
+        }
+    }
 
     public void switchVisibility() {
 
@@ -20,8 +46,6 @@ public class RemoteAvatarsManager : MonoBehaviour
 
 
                 }
-
-
 
      }
 

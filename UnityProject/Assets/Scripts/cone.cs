@@ -25,6 +25,12 @@ public class cone : MonoBehaviourPun
         //Load text from a JSON file (Assets/Resources/Text/jsonFile01.json)
         //var jsonTextFile = Resources.Load<TextAsset>("vectors_cone_20_77");
 
+        if (MasterManager.GameSettings.Observer)
+        {
+            lr.positionCount = 0;
+            return;
+        }
+
         if (head == null) {
 
             GameObject parent =  GameObject.Find("OVRPlayerController");
@@ -41,12 +47,10 @@ public class cone : MonoBehaviourPun
     }
 
     // Update is called once per frame
-    // Update is called once per frame
     void FixedUpdate()
     {
-        if (disabled)
+        if (MasterManager.GameSettings.Observer)
         {
-            c.clearLineRender(lr);
             return;
         }
 
@@ -61,7 +65,6 @@ public class cone : MonoBehaviourPun
         OldPositions = c.positions;
 
     }
-
 
     public void SwitchVis()
     {

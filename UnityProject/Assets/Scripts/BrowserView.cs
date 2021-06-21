@@ -62,7 +62,8 @@ public class BrowserView : MonoBehaviour
             {BrowserHistoryType.Youtube,  YoutubeSubstring},
         };
 
-    
+
+
     // CALL THIS TO ADD KEYS TO BROWSER    
     public void AppendText(string appendText)
     {
@@ -268,7 +269,6 @@ public class BrowserView : MonoBehaviour
         CallAjc("ScrollByXorY", new object[] { value, 0 });
     }
 
-
     public void InvokeScrollAllTheWay(bool down)
     {
         int javaCode = 122; // home key
@@ -424,13 +424,23 @@ public class BrowserView : MonoBehaviour
     #region Initialization
     private void Awake()
     {
-     
+
+#if UNITY_EDITOR
+
+        if (MasterManager.GameSettings.Observer)
+        {
+            _overlay.enabled = false;
+        }
+
+#elif UNITY_ANDROID
         UnityThread.initUnityThread();
         //RawImage.GetComponent<Button>().onClick.AddListener(OnClick);
         if(RawImage!=null) _rawImageRect = RawImage.GetComponent<RectTransform>();
         else if(Image != null) _rawImageRect = Image.GetComponent<RectTransform>();
 
         InitializeAndroidPlugin();
+
+#endif
     }
 
     private void Update()
@@ -520,9 +530,9 @@ public class BrowserView : MonoBehaviour
 
 
 
-    #endregion
+#endregion
      
-    #region AndroidInterface
+#region AndroidInterface
     
     // method to to tap in the right coords despite difference in scaling
     private void AddTap(PointerEventData eventData)
@@ -649,7 +659,7 @@ public class BrowserView : MonoBehaviour
         //CallAjc("RestartBrowser", new object[]{("trash", true)});   
     }
 
-    #endregion
+#endregion
  
     private bool ValidHttpURL(string s, out Uri resultURI)
     {        

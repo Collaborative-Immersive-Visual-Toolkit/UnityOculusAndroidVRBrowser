@@ -28,8 +28,10 @@ public class data_loader : MonoBehaviourPun
 
     public PartecipantsVoiceRecorder partecipantsVoiceRecorder;
 
+    public RemoteAvatarsManager ram;
+    /*
     [Tooltip("Gamepad button to act as gaze click")]
-    public OVRInput.Button joyPadClickButton = OVRInput.Button.One;
+    public OVRInput.Button joyPadClickButton = OVRInput.Button.One;*/
 
     //public RecorderAll recorderAll;
 
@@ -77,7 +79,7 @@ public class data_loader : MonoBehaviourPun
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) || OVRInput.GetDown(joyPadClickButton))
+        if (Input.GetKeyDown(KeyCode.Q) )
             Next();
     }
 
@@ -113,7 +115,7 @@ public class data_loader : MonoBehaviourPun
 
     public void RecordEvent() {
 
-        if (recordCurrentdata) avatarRecorder.NewData(currentData);
+        if (recordCurrentdata) avatarRecorder.NewData(currentData.name);
 
         else avatarRecorder.closeWriter();
 

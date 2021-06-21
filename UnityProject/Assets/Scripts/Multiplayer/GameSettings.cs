@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Manager/GameSettings")]
 public class GameSettings : ScriptableObject
 {
+
     [SerializeField]
     private string _gameversion = "0.0.1";
 
@@ -30,9 +31,9 @@ public class GameSettings : ScriptableObject
 
     private string _userID = "0";
 
-    public string UserID { 
+    public string UserID {
         get {
-            return _userID; 
+            return _userID;
         }
         set {
 
@@ -45,19 +46,19 @@ public class GameSettings : ScriptableObject
 
 
     [SerializeField]
-    private string _roomName = "CollaborationRoom"; 
+    private string _roomName = "CollaborationRoom";
 
-    public string RoomName { 
+    public string RoomName {
         get { return _roomName; }
         set { _roomName = value; }
     }
 
-  
-    [SerializeField]
-    public byte InstantiateVrAvatarEventCode = 1; 
 
     [SerializeField]
-    public byte InstantiateObserverEventCode = 2; 
+    public byte InstantiateVrAvatarEventCode = 1;
+
+    [SerializeField]
+    public byte InstantiateObserverEventCode = 2;
 
     [SerializeField]
     public byte NextDataDisplay = 3;
@@ -73,16 +74,57 @@ public class GameSettings : ScriptableObject
     public byte VisualConeChange = 12;
 
     [SerializeField]
-    public byte HideUnhideLayer = 4; 
+    public byte HideUnhideLayer = 4;
 
     [SerializeField]
-    public byte SpawnPlaceholder = 5; 
+    public byte SpawnPlaceholder = 5;
 
     [SerializeField]
     public byte DeletePlaceHolders = 6;
 
 
-    public string DataFolder = "Data";
+    [SerializeField]
+    public bool _observer = true;
+
+    public bool Observer
+    {
+        get {
+
+
+#if UNITY_EDITOR
+
+            return _observer;
+
+#elif UNITY_ANDROID
+
+        return false;
+
+#else
+               
+        return _observer; 
+#endif
+
+
+
+        }
+        set {
+
+            _observer = value;
+
+
+
+        }
+    }
+
+    private string _dataFolder = "Data";
+    
+    public string DataFolder {
+
+        get { 
+            return _dataFolder +System.DateTime.Now.ToString("_MMM_ddd_HH"); 
+        }
+
+    }
 }
 
 

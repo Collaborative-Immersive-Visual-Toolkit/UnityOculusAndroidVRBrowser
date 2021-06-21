@@ -16,13 +16,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public GameObject localAvatarsMenu;
 
-    public GameObject rig;
-
-    public GameObject loading;
-
     public GameObject cone;
-
-    public bool observer = false;
 
     public bool voiceDebug = true;
 
@@ -32,9 +26,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     PhotonView photonView;
 
-    public bool firstconnection = true;
-
-
 
     void Start()
     {
@@ -43,7 +34,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         PhotonNetwork.AuthValues = new AuthenticationValues();
 
-        if (observer) {
+        if (MasterManager.GameSettings.Observer) {
 
             PhotonNetwork.NickName ="Observer";
             PhotonNetwork.AuthValues.UserId = "1";
@@ -93,7 +84,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
             yield return new WaitForSeconds(0.1f);
         }
 
-        if (observer) ObserverInstantiation();
+        if (MasterManager.GameSettings.Observer) ObserverInstantiation();
         else InstantiateLocalAvatar();
     }
 
@@ -117,6 +108,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Debug.Log("[PUN] reconnecting to server");
 
         PhotonNetwork.ReconnectAndRejoin();
+    }
+
+    public override void OnLeftRoom() {
+        
+        Debug.Log("[PUN] LeftRoom" );
+
     }
 
     //AVATAR
@@ -176,7 +173,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 
-        inputsManager.Instance.localAvatar= localAvatar;
     }
    
     private IEnumerator PhotonVoiceInstantiationForLocalAvatar()
@@ -266,20 +262,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject rA)
     {
 
-        if(inputsManager.Instance.remoteAvatar == rA || inputsManager.Instance.localAvatar == rA)
-            return rA;
+        ram.List.Add(rA);
 
-        if (inputsManager.Instance.remoteAvatar == null) { 
-            inputsManager.Instance.remoteAvatar = rA;
-            Debug.Log("[PUN] inputsManager associate avatar" + rA.name+" to remoteAvatar");
-        }else if (inputsManager.Instance.localAvatar == null) { 
-            inputsManager.Instance.localAvatar = rA;
-            Debug.Log("[PUN] inputsManager associate avatar" + rA.name + " to localAvatar");
-            Debug.Log("[PUN] RemoteAvatar instantiated");
-        }
-            
-        else 
-            Debug.LogError("inputs manager cannot register any avatar");
+        ram.inputs.Add(rA.GetComponent<inputs>());
+
+        Debug.Log("[PUN] RemoteAvatar instantiated");
 
         InstantiateRemoteUiHelpers(rA);
 
@@ -288,10 +275,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void InstantiateRemoteUiHelpers(GameObject remoteAvatar) {
 
-        ram.List.Add(remoteAvatar);
-
-        //instantiate ui helpers
-        //GameObject remoteAvatarUIHelpers = Instantiate(Resources.Load("UIHelpersRemote")) as GameObject;
+       
 
         //instanstiate cone
         Transform Head = DeepChildSearch(remoteAvatar, "head_JNT");
