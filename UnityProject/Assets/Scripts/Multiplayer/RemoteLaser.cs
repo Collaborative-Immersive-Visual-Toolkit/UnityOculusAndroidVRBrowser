@@ -25,6 +25,7 @@ public class RemoteLaser : MonoBehaviourPun
     private Vector3 _endPoint;
     private bool _hitTarget;
     private bool sticky;
+    private bool reorient;
 
     private Color c;
 
@@ -34,6 +35,7 @@ public class RemoteLaser : MonoBehaviourPun
     public Material[] Visible;
     public Material[] NonVisible;
     public stickyCircleRemote circle;
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -77,16 +79,20 @@ public class RemoteLaser : MonoBehaviourPun
                 UpdateStickyCircle();
 
 
+
             }
 
         }
  
     }
 
+
+
     private void UpdatePointer() {
 
         Pointer.transform.position = _endPoint;
     }
+    
     private void UpdateLaserBeam()
     {
         if (laserBeamBehavior == LaserBeamBehavior.Off)

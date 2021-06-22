@@ -70,6 +70,8 @@ public class LaserPointerModified : OVRCursor
 
     public stickyCircle circle;
 
+    public bool reorient;
+
     private bool wasOnWhenHitTarget=false;
 
     bool checkIfInside(Vector3 point)
@@ -141,7 +143,7 @@ public class LaserPointerModified : OVRCursor
 
         //attach a sticky pointer if the 
         //stickyPointerManager(_endPoint);
-        stickyPointerManagerUpdate(_endPoint);
+        stickyCircleUpdate(_endPoint);
 
         // do the standard laser pointer stuff from the ovr
         lineRenderer.SetPosition(0, _startPoint);
@@ -175,7 +177,6 @@ public class LaserPointerModified : OVRCursor
             circle.DestroySlowly(); 
         }
     }
-
 
     private void stickyPointerManager(Vector3 _endPoint) {
 
@@ -226,7 +227,7 @@ public class LaserPointerModified : OVRCursor
 
     }
 
-    private void stickyPointerManagerUpdate(Vector3 _endPoint)
+    private void stickyCircleUpdate(Vector3 _endPoint)
     {
 
         if (isUI || disableSticky)
@@ -248,15 +249,18 @@ public class LaserPointerModified : OVRCursor
                 sticky = true;
                 circle.capture(_endPoint);
 
+
             }
             else if (!insideOtherCone & sticky)
             {
                 circle.capture(_endPoint);
+
             }
             else if (insideOtherCone & sticky)
             {
                 circle.DestroySlowly();
                 sticky = false;
+
             }
 
             wasOnWhenHitTarget = true;
@@ -271,6 +275,7 @@ public class LaserPointerModified : OVRCursor
             {
                 circle.DestroySlowly();
                 sticky = false;
+
             }
 
             if (wasOnWhenHitTarget) {

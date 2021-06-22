@@ -684,7 +684,7 @@ GameObject:
   - component: {fileID: 609262455465130201}
   - component: {fileID: 121576218054182760}
   - component: {fileID: 780097887688398712}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: StickyCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

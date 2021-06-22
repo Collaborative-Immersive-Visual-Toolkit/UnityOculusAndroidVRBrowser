@@ -8,6 +8,17 @@ TagManager:
   - VRUIText
   - VRUIToggle
   - VRUIOutline
+  - VRUIButton
+  - VRUIButtonIcon
+  - VRUIIcon
+  - VRUISlider
+  - VRUICheckbox
+  - VRUIAccent
+  - VRUIButtonControlBar
+  - VRUIButtonTab
+  - VRUIRadio
+  - VRUIButtonList
+  - OthersStickyCircle
   layers:
   - Default
   - TransparentFX
@@ -25,7 +36,7 @@ TagManager:
   - inverseOctagon
   - remoteplayer
   - floor
-  - 
+  - 'othersStickyCircles '
   - 
   - 
   - 
