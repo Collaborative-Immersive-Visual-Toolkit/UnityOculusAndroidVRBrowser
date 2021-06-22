@@ -69,7 +69,8 @@ public class stickyCircle : MonoBehaviour
    
             GenerateCircle();
             updateLineRender();
-            lineRenderer.materials[0].SetFloat("_Alpha", 1);
+        alpha = 1;
+            lineRenderer.materials[0].SetFloat("_Alpha", alpha);
     }
 
     private void GenerateCircle()
