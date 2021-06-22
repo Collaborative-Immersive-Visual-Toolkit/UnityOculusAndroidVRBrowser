@@ -15,18 +15,30 @@ public class stickyCircleRemote : MonoBehaviour
 
     public GameObject reorient;
 
+    public bool reorienting = false;
+
+    ReorientManager rom;
+
     float timeToGo;
+
+    // The target marker.
+    public Transform target;
+
+    // Angular speed in radians per sec.
+    public float speed = 1.0f;
+
+    private GameObject player;
 
     void FixedUpdate()
     {
         if (Time.fixedTime >= timeToGo)
         {
             
-            timeToGo = Time.fixedTime + 10.0f;
+            timeToGo = Time.fixedTime + .2f;
 
             if (reorient != null)
             {
-                if (checkIfInside(GetAveragePoint()))
+                if (!checkIfInside(GetAveragePoint()) && alpha>0.1)
                 {
                     reorient.SetActive(true);
                 }
@@ -43,8 +55,14 @@ public class stickyCircleRemote : MonoBehaviour
         layerMask = LayerMask.GetMask("");
         lineRenderer = GetComponent<LineRenderer>();
         reorient = GameObject.Find("ReOrientButtonPlaceholder");
-        if (reorient != null) reorient = reorient.GetComponent<ReorientManager>().g;
-        timeToGo = Time.fixedTime + 20.0f;
+        if (reorient != null)
+        {
+
+            rom = reorient.GetComponent<ReorientManager>();
+            reorient = rom.g;
+            rom.scr = this;
+        }
+        timeToGo = Time.fixedTime + .2f;
     }
 
     public void updateLineRender(Vector3[] circlePos)
@@ -64,7 +82,6 @@ public class stickyCircleRemote : MonoBehaviour
 
     }
 
-
     public Vector3 GetAveragePoint()
     {
 
@@ -75,7 +92,6 @@ public class stickyCircleRemote : MonoBehaviour
         return average / pos.Length;
 
     }
-
 
     bool checkIfInside(Vector3 point)
     {
@@ -93,4 +109,31 @@ public class stickyCircleRemote : MonoBehaviour
 
         return false;
     }
+
+    public void ReorientAvatar() {
+
+        if(player==null) player = GameObject.Find("OVRPlayerController");
+
+        reorienting = true;
+
+    }
+
+    public void Update()
+    {
+        if (reorienting && player != null)
+        {
+
+            Vector3 target = GetAveragePoint();
+
+            player.transform.RotateAround(GetAveragePoint(), Vector3.up, 20 * Time.deltaTime);
+
+            if (Vector3.Dot(new Vector3(target.x, 0f, target.z), new Vector3(player.transform.forward.x, 0f, player.transform.forward.z)) < 0.1) reorienting = false;
+
+        }
+    }
+
+
+
+
+
 }

@@ -7,4 +7,10 @@ public class ReorientManager : MonoBehaviour
 
     public GameObject g;
 
+    public stickyCircleRemote scr;
+
+    public void reorient() {
+
+        scr.ReorientAvatar();
+    }
 }
