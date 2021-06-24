@@ -15,7 +15,7 @@ public class stickyCircleRemote : MonoBehaviour
 
     public GameObject reorient;
 
-    public bool reorienting = false;
+
 
     ReorientManager rom;
 
@@ -23,6 +23,7 @@ public class stickyCircleRemote : MonoBehaviour
 
     // The target marker.
     public Transform target;
+    private Transform Head;
 
     // Angular speed in radians per sec.
     public float speed = 1.0f;
@@ -114,25 +115,52 @@ public class stickyCircleRemote : MonoBehaviour
 
         if(player==null) player = GameObject.Find("OVRPlayerController");
 
-        reorienting = true;
+        if (Head == null && player != null) Head = DeepChildSearch(player, "head_JNT");
 
-    }
-
-    public void Update()
-    {
-        if (reorienting && player != null)
+        if (Head != null && player != null)
         {
 
-            Vector3 target = GetAveragePoint();
-
-            player.transform.RotateAround(GetAveragePoint(), Vector3.up, 20 * Time.deltaTime);
-
-            if (Vector3.Dot(new Vector3(target.x, 0f, target.z), new Vector3(player.transform.forward.x, 0f, player.transform.forward.z)) < 0.1) reorienting = false;
-
+            Vector3 localTarget = Head.InverseTransformPoint(GetAveragePoint());
+            float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+            
+            player.transform.RotateAround(Head.position, Vector3.up, angle);
         }
+
+
+
+
     }
 
 
+
+
+    public Transform DeepChildSearch(GameObject g, string childName)
+    {
+
+        Transform child = null;
+
+        for (int i = 0; i < g.transform.childCount; i++)
+        {
+
+            Transform currentchild = g.transform.GetChild(i);
+
+            if (currentchild.gameObject.name == childName)
+            {
+
+                return currentchild;
+            }
+            else
+            {
+
+                child = DeepChildSearch(currentchild.gameObject, childName);
+
+                if (child != null) return child;
+            }
+
+        }
+
+        return null;
+    }
 
 
 
