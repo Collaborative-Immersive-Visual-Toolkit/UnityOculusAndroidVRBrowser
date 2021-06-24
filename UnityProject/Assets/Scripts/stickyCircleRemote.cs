@@ -113,17 +113,27 @@ public class stickyCircleRemote : MonoBehaviour
 
     public void ReorientAvatar() {
 
-        if(player==null) player = GameObject.Find("OVRPlayerController");
+        if (player==null) player = GameObject.Find("OVRPlayerController");
 
         if (Head == null && player != null) Head = DeepChildSearch(player, "head_JNT");
 
         if (Head != null && player != null)
         {
-
-            Vector3 localTarget = Head.InverseTransformPoint(GetAveragePoint());
-            float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-            
+            //rotate
+            Vector3 target = GetAveragePoint();
+            Vector3 localTarget = Head.InverseTransformPoint(target);
+            float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;            
             player.transform.RotateAround(Head.position, Vector3.up, angle);
+
+            //get distance of remote avatar from circle 
+            Vector3  distv = target - this.transform.parent.transform.position;
+            float dist = distv.magnitude;
+            Vector3 diffv = target - Head.position;
+            float diff =  diffv.magnitude - dist;
+            player.transform.position -= (diffv.normalized * diff);
+
+
+            ///todo send rotation and translation to remote player 
         }
 
 
