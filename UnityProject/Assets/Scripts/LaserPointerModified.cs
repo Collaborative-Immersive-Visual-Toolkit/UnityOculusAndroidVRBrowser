@@ -303,7 +303,6 @@ public class LaserPointerModified : OVRCursor
         }
     }
 
-    // make laser beam a behavior with a prop that enables or disables
     private void UpdateLaserBeam(Vector3 start, Vector3 end)
     {
 

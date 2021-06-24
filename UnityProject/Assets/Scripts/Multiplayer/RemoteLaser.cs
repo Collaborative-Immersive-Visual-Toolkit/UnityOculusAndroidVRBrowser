@@ -86,8 +86,6 @@ public class RemoteLaser : MonoBehaviourPun
  
     }
 
-
-
     private void UpdatePointer() {
 
         Pointer.transform.position = _endPoint;

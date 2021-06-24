@@ -5,8 +5,6 @@ using UnityEngine;
 public class inputs : MonoBehaviour
 {
 
-      
-
         [SerializeField]
         private Transform _controller = null;
         public Transform Controller
@@ -14,7 +12,6 @@ public class inputs : MonoBehaviour
             get 
             {
                _controller = DeepChildSearch(gameObject, "hand_right");
-
                 return _controller; 
             }
                  
@@ -27,11 +24,7 @@ public class inputs : MonoBehaviour
         {
             get
             {
-           
-                 var headtemp = DeepChildSearch(gameObject, "head_JNT");
                 _localHead = DeepChildSearch(gameObject, "head_JNT");
-            
-
                 return _localHead;
             }
 
@@ -44,11 +37,7 @@ public class inputs : MonoBehaviour
         {
             get
             {
-
-                var headtemp = DeepChildSearch(gameObject, "Pointer");
                 _pointer = DeepChildSearch(gameObject, "Pointer");
-    
-
                 return _pointer;
             }
 

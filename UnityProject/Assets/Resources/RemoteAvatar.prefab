@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 114730040972961466}
   - component: {fileID: 114296640112679660}
   - component: {fileID: 7132528688804897970}
+  - component: {fileID: 9152328229255299341}
   m_Layer: 14
   m_Name: RemoteAvatar
   m_TagString: Untagged
@@ -203,6 +204,18 @@ MonoBehaviour:
   _controller: {fileID: 0}
   _localHead: {fileID: 0}
   _pointer: {fileID: 0}
+--- !u!114 &9152328229255299341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143252}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76bf1b16e187db44486f09e126963c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1847214126697133449
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +268,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 4.9504952
   MaxDistance: 5
   Pan2D: 0
   rolloffMode: 0
@@ -814,3 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alpha: 0
   pos: []
+  layerMask: 0
+  reorient: {fileID: 0}
+  target: {fileID: 0}
+  speed: 1

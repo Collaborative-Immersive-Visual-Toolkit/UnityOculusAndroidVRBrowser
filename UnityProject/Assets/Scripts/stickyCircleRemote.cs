@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 
-public class stickyCircleRemote : MonoBehaviour
+public class stickyCircleRemote : MonoBehaviourPun
 {
 
     public float alpha;
@@ -11,23 +13,19 @@ public class stickyCircleRemote : MonoBehaviour
 
     RaycastHit hit1 = new RaycastHit();
     RaycastHit hit2 = new RaycastHit();
-    public int layerMask ;
+    public int layerMask;
 
     public GameObject reorient;
-
-
-
     ReorientManager rom;
-
     float timeToGo;
 
     // The target marker.
     public Transform target;
     private Transform Head;
+    private Transform RemoteHead;
 
     // Angular speed in radians per sec.
     public float speed = 1.0f;
-
     private GameObject player;
 
     void FixedUpdate()
@@ -64,6 +62,7 @@ public class stickyCircleRemote : MonoBehaviour
             rom.scr = this;
         }
         timeToGo = Time.fixedTime + .2f;
+
     }
 
     public void updateLineRender(Vector3[] circlePos)
@@ -117,7 +116,9 @@ public class stickyCircleRemote : MonoBehaviour
 
         if (Head == null && player != null) Head = DeepChildSearch(player, "head_JNT");
 
-        if (Head != null && player != null)
+        if(RemoteHead == null) RemoteHead = DeepChildSearch(this.transform.parent.gameObject, "head_JNT");
+
+        if (Head != null && player != null )
         {
             //rotate
             Vector3 target = GetAveragePoint();
@@ -126,14 +127,30 @@ public class stickyCircleRemote : MonoBehaviour
             player.transform.RotateAround(Head.position, Vector3.up, angle);
 
             //get distance of remote avatar from circle 
-            Vector3  distv = target - this.transform.parent.transform.position;
+            Vector3  distv = target - RemoteHead.position;
             float dist = distv.magnitude;
             Vector3 diffv = target - Head.position;
             float diff =  diffv.magnitude - dist;
             player.transform.position -= (diffv.normalized * diff);
 
+            //chgeck that remote player and player are not too close
+            if (RemoteHead != null) 
+            {
+                Vector3 distanceBetweenPlayers = Head.position - RemoteHead.position;
+                
+                if (distanceBetweenPlayers.magnitude<1f) {
+
+                    player.transform.position += (distanceBetweenPlayers.normalized * (1f - distanceBetweenPlayers.magnitude));
+                }
+
+            }
 
             ///todo send rotation and translation to remote player 
+            
+            //object[] data = new object[] { player.transform, PhotonNetwork.NickName };
+
+
+            //PhotonNetwork.RaiseEvent(MasterManager.GameSettings.Reorient, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
         }
 
 
