@@ -23,10 +23,13 @@ public class stickyCircleRemote : MonoBehaviourPun
     public Transform target;
     private Transform Head;
     private Transform RemoteHead;
+    private OVRPlayerController ovrpc;
 
     // Angular speed in radians per sec.
     public float speed = 1.0f;
     private GameObject player;
+
+    private bool renable = false;
 
     void FixedUpdate()
     {
@@ -47,6 +50,17 @@ public class stickyCircleRemote : MonoBehaviourPun
                 }
             }
         }
+    }
+
+    private void Update()
+    {
+
+        if (renable && ovrpc != null)
+        {
+            renable = false;
+            ovrpc.enabled = true;
+        }
+
     }
 
     private void Awake()
@@ -120,24 +134,24 @@ public class stickyCircleRemote : MonoBehaviourPun
 
         if (Head != null && player != null )
         {
-            //rotate
+
             Vector3 target = GetAveragePoint();
-            Vector3 localTarget = Head.InverseTransformPoint(target);
-            float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;            
-            player.transform.RotateAround(Head.position, Vector3.up, angle);
+
+            //initialize Teleportation
+            ovrpc =  player.GetComponent<OVRPlayerController>();
+            ovrpc.enabled = false; //disable ovrpc
 
             //get distance of remote avatar from circle 
-            Vector3  distv = target - RemoteHead.position;
-            float dist = distv.magnitude;
-            Vector3 diffv = target - Head.position;
-            float diff =  diffv.magnitude - dist;
-            player.transform.position -= (diffv.normalized * diff);
+            Vector3 translateVector =  target - player.transform.position;
+            translateVector = new Vector3(translateVector.x, 0f, translateVector.z); //make translation to xz plane
+            translateVector = translateVector.normalized * 1.5f; //set ditsance to 1.5 m
+            player.transform.position += translateVector; //translate
 
-            //chgeck that remote player and player are not too close
+            //check that remote player and player are not too close
             if (RemoteHead != null) 
             {
                 Vector3 distanceBetweenPlayers = Head.position - RemoteHead.position;
-                
+
                 if (distanceBetweenPlayers.magnitude<1f) {
 
                     player.transform.position += (distanceBetweenPlayers.normalized * (1f - distanceBetweenPlayers.magnitude));
@@ -145,12 +159,17 @@ public class stickyCircleRemote : MonoBehaviourPun
 
             }
 
+            //rotate
+            Vector3 localTarget = Head.InverseTransformPoint(target);
+            float angle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+            player.transform.RotateAround(Head.position, Vector3.up, angle);
+
             ///todo send rotation and translation to remote player 
-            
-            //object[] data = new object[] { player.transform, PhotonNetwork.NickName };
 
+            object[] data = new object[] { angle, PhotonNetwork.NickName };
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.Reorient, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
-            //PhotonNetwork.RaiseEvent(MasterManager.GameSettings.Reorient, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+            renable = true;
         }
 
 

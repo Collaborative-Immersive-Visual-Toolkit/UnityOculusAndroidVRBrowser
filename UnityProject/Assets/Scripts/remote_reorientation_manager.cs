@@ -6,7 +6,8 @@ using Photon.Pun;
 
 public class remote_reorientation_manager : MonoBehaviourPun
 {
-    private Transform t;
+    private float angle;
+    Transform Head;
 
     private void OnEnable()
     {
@@ -25,13 +26,12 @@ public class remote_reorientation_manager : MonoBehaviourPun
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[1] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[1] == gameObject.name)
             {
 
-                t = (Transform)data[0];
+                angle = (float)data[0];
 
-                this.transform.position = t.position;
-                this.transform.rotation = t.rotation;
+                ReorientAvatar(angle);
 
             }
 
@@ -39,6 +39,49 @@ public class remote_reorientation_manager : MonoBehaviourPun
 
     }
 
+    public void ReorientAvatar(float angle)
+    {
 
-    
+        if (Head == null ) Head = DeepChildSearch(this.gameObject, "head_JNT");
+
+        if (Head != null )
+        {
+
+            this.transform.RotateAround(Head.position, Vector3.up, angle);
+
+
+        }
+
+
+    }
+
+
+    public Transform DeepChildSearch(GameObject g, string childName)
+    {
+
+        Transform child = null;
+
+        for (int i = 0; i < g.transform.childCount; i++)
+        {
+
+            Transform currentchild = g.transform.GetChild(i);
+
+            if (currentchild.gameObject.name == childName)
+            {
+
+                return currentchild;
+            }
+            else
+            {
+
+                child = DeepChildSearch(currentchild.gameObject, childName);
+
+                if (child != null) return child;
+            }
+
+        }
+
+        return null;
+    }
+
 }

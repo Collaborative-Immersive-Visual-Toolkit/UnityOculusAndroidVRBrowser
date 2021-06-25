@@ -126,7 +126,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         GameObject OVRPlayerController = GameObject.Find("OVRPlayerController");
         photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
         PhotonTransformView photonTransformView = OVRPlayerController.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
-        //photonTransformView.m_SynchronizeRotation = false;
+        photonTransformView.m_SynchronizeRotation = false;
         photonView.ObservedComponents = new List<Component>();
         photonView.ObservedComponents.Add(photonTransformView);
         photonView.Synchronization = ViewSynchronization.UnreliableOnChange; // set observeoption to unreliableonchange
