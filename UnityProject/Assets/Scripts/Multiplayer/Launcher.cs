@@ -262,9 +262,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     private GameObject OvrAvatar_RemoteAvatarInstantiated(GameObject rA)
     {
 
-        ram.List.Add(rA);
-
-        ram.inputs.Add(rA.GetComponent<inputs>());
+        ram.AddToList(rA);
 
         Debug.Log("[PUN] RemoteAvatar instantiated");
 

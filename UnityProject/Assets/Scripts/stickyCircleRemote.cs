@@ -24,6 +24,7 @@ public class stickyCircleRemote : MonoBehaviourPun
     private bool renable = false;
     public Material[] Visible;
     public Material[] NonVisible;
+    public Vector3 center;
 
     void FixedUpdate()
     {
@@ -101,7 +102,9 @@ public class stickyCircleRemote : MonoBehaviourPun
 
         foreach (Vector3 p in pos) average += p;
 
-        return average / pos.Length;
+        center = average / pos.Length;
+
+        return center;
 
     }
 
@@ -203,11 +206,11 @@ public class stickyCircleRemote : MonoBehaviourPun
         return null;
     }
 
-    private void UpdateMaterial()
+    public void UpdateMaterial(float alpha)
     {
 
-        //if (insideOtherCone) lineRenderer.materials = Visible;
-        //else lineRenderer.materials = NonVisible;
+        if (alpha<1) lineRenderer.materials = Visible;
+        else lineRenderer.materials = NonVisible;
 
     }
 

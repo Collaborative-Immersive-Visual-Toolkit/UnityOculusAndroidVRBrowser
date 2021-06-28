@@ -26,9 +26,15 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     string HeadPos ;
     string HeadEAng;
-    string ControllerPos;
-    string ControllerEAng;
+    string ControllerRPos;
+    string ControllerREAng;
+    string ControllerLPos;
+    string ControllerLEAng;
     string PointerPos;
+    string PointerVis;
+    string StickyCircle;
+    string StickyCircleVis;
+    string Relocate;
 
     private void OnEnable()
     {
@@ -41,15 +47,15 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.R))
-        { 
+        if (ram.inputs.Count > 1 && ram.inputs.Count <= 2)
+        {
             Record();
         }
-        else if(Input.GetKeyDown(KeyCode.S)) 
+        else if (ram.inputs.Count > 2) 
         {
-            closeWriter();
-            return;
+            Debug.Log("there are too many users logged");
         }
+
 
         if (writer == null ) return;
 
@@ -61,15 +67,22 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
             HeadPos = i.LocalHead == null ? "null,null,null" : i.LocalHead.position.ToString("F3");
             HeadEAng = i.LocalHead == null ? "null,null,null" : i.LocalHead.eulerAngles.ToString("F3");
-            ControllerPos = i.Controller == null ? "null,null,null" : i.Controller.position.ToString("F3");
-            ControllerEAng = i.Controller == null ? "null,null,null" : i.Controller.eulerAngles.ToString("F3");
-            PointerPos = i.Pointer.gameObject.activeSelf == false ? "null,null,null" : i.Pointer.position.ToString("F3");
+            ControllerRPos = i.ControllerRight == null ? "null,null,null" : i.ControllerRight.position.ToString("F3");
+            ControllerREAng = i.ControllerRight == null ? "null,null,null" : i.ControllerRight.eulerAngles.ToString("F3");
+            ControllerLPos = i.ControllerLeft == null ? "null,null,null" : i.ControllerLeft.position.ToString("F3");
+            ControllerLEAng = i.ControllerLeft == null ? "null,null,null" : i.ControllerLeft.eulerAngles.ToString("F3");
+            PointerPos = i.Pointer._endPoint == Vector3.zero ? "null,null,null" : i.Pointer._endPoint.ToString("F3");
+            PointerVis = i.Pointer.insideOtherCone  ? "1" : "0";
+            StickyCircle = i.StickyCircle.GetAveragePoint() == Vector3.zero ? "null,null,null" : i.StickyCircle.center.ToString("F3");
+            StickyCircleVis = i.StickyCircle.alpha < 1f ? "1" : "0";
+            //speaking
 
             line += "," + HeadPos.Trim(remove) + "," + HeadEAng.Trim(remove) + "," +
-                    ControllerPos.Trim(remove) + "," + ControllerEAng.Trim(remove) + "," +
-                    PointerPos.Trim(remove);
+                    ControllerRPos.Trim(remove) + "," + ControllerREAng.Trim(remove) + "," +
+                    ControllerLPos.Trim(remove) + "," + ControllerLEAng.Trim(remove) + "," +
+                    PointerPos.Trim(remove) + "," + StickyCircle.Trim(remove) + "," + StickyCircleVis.Trim(remove);
         }
-    
+        
         writer.WriteLine(line);
 
     }
@@ -82,8 +95,6 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     public void NewData(string name) {
 
         closeWriter();
-
-        
 
         string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder +"\\" + name + ".csv";
         writer = new StreamWriter(path, true);

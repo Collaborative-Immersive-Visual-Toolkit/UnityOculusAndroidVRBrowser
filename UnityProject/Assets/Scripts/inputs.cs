@@ -6,15 +6,27 @@ public class inputs : MonoBehaviour
 {
 
         [SerializeField]
-        private Transform _controller = null;
-        public Transform Controller
+        private Transform _controllerRight = null;
+        public Transform ControllerRight
         {
             get 
             {
-               _controller = DeepChildSearch(gameObject, "hand_right");
-                return _controller; 
+                _controllerRight = DeepChildSearch(gameObject, "hand_right");
+                return _controllerRight; 
             }
                  
+        }
+
+        [SerializeField]
+        private Transform _controllerLeft = null;
+        public Transform ControllerLeft
+        {
+            get
+            {
+                _controllerLeft = DeepChildSearch(gameObject, "hand_left");
+                return _controllerLeft;
+            }
+
         }
 
 
@@ -30,19 +42,51 @@ public class inputs : MonoBehaviour
 
         }
 
-
         [SerializeField]
-        private Transform _pointer;
-        public Transform Pointer
+        private RemoteLaser _pointer;
+        public RemoteLaser Pointer
         {
             get
             {
-                _pointer = DeepChildSearch(gameObject, "Pointer");
-                return _pointer;
+
+                Transform t = DeepChildSearch(gameObject, "Laser Pointer");
+
+                if (t != null)
+                {
+                _pointer = t.GetComponent<RemoteLaser>();
+                    return _pointer;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
 
         }
 
+        [SerializeField]
+        private stickyCircleRemote _stickyCircle;
+        public stickyCircleRemote StickyCircle
+        {
+            get
+            {
+
+                Transform t = DeepChildSearch(gameObject, "StickyCircle");
+
+                if (t != null)
+                {
+                    _stickyCircle = t.GetComponent<stickyCircleRemote>();
+                    return _stickyCircle;
+                }
+                else
+                {
+                    return null;
+                }
+                
+            }
+
+        }
 
 
     public Transform DeepChildSearch(GameObject g, string childName) {

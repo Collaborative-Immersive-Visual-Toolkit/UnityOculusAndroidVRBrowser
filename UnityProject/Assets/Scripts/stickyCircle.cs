@@ -62,7 +62,11 @@ public class stickyCircle : MonoBehaviour
     public void capture(Vector3 point)
     {
 
-        if (stickyPointsList == null) stickyPointsList = new List<Vector3>();
+        if (stickyPointsList == null)
+        {
+            stickyPointsList = new List<Vector3>();
+            counter = 3;
+        }
 
         //limit the number of sample to plus or minus 3 per second 
         counter += 1;
@@ -82,9 +86,8 @@ public class stickyCircle : MonoBehaviour
 
     public void cleanList() {
 
-        stickyPointsList = new List<Vector3>();
-        lineRenderer.positionCount = 0;
-        //lineRenderer.SetPositions(circlePos);
+        stickyPointsList =null;
+        lineRenderer.positionCount = 0;        
         timeLeft = -1f;
     }
    
@@ -229,6 +232,7 @@ public class stickyCircle : MonoBehaviour
         if (timeLeft < 0)
         {
             lineRenderer.positionCount = 0;
+            center = Vector3.zero;
         }
         else {
             alpha = timeLeft / 3f;

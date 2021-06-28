@@ -19,10 +19,10 @@ public class RemoteLaser : MonoBehaviourPun
     public GameObject stickyPointerPrefab;
     private GameObject stickyPointer;
 
-    private bool insideOtherCone;
+    public bool insideOtherCone;
 
     private Vector3 _startPoint;
-    private Vector3 _endPoint;
+    public Vector3 _endPoint;
     private bool _hitTarget;
     private bool sticky;
     private bool reorient;
@@ -100,6 +100,7 @@ public class RemoteLaser : MonoBehaviourPun
             {
                 lineRenderer.enabled = false;
                 Pointer.SetActive(false);
+                _endPoint = Vector3.zero;
             }
 
             return;
@@ -128,6 +129,7 @@ public class RemoteLaser : MonoBehaviourPun
                 {
                     lineRenderer.enabled = false;
                     Pointer.SetActive(false);
+                    _endPoint = Vector3.zero;
                 }
             }
         }
@@ -161,7 +163,11 @@ public class RemoteLaser : MonoBehaviourPun
     {
 
         if(circlepos != circle.pos) circle.updateLineRender(circlepos);
-        if (circlealpha != circle.alpha)  circle.UpdateAlpha(circlealpha);
+        if (circlealpha != circle.alpha)
+        {
+            circle.UpdateMaterial(circlealpha);
+            circle.UpdateAlpha(circlealpha);
+        }
 
     }
 
