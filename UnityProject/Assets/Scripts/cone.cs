@@ -9,15 +9,13 @@ public class cone : MonoBehaviourPun
 {
     public bool disabled = false;
     public Transform head;
-
     public TextAsset jsonTextFile;
-
     private ConeVectors c;
-
     public LineRenderer lr;
-
     private List<Vector3> OldPositions;
     public bool visible = true;
+
+    public bool simulated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,31 +23,39 @@ public class cone : MonoBehaviourPun
         //Load text from a JSON file (Assets/Resources/Text/jsonFile01.json)
         //var jsonTextFile = Resources.Load<TextAsset>("vectors_cone_20_77");
 
-        if (MasterManager.GameSettings.Observer)
+        if (MasterManager.GameSettings.Observer && !simulated)
         {
             lr.positionCount = 0;
             return;
         }
 
-        if (head == null) {
+        if (head == null && !simulated) {
 
             GameObject parent =  GameObject.Find("OVRPlayerController");
 
             head =  DeepChildSearch(parent, "CenterEyeAnchor");
 
+        }  //the simulated cone does not require an avatar, but will use the transform of the object 
+        // also simulated does not send any event trough the network 
+        else if (simulated)
+        {
+
+            head = this.transform;
+
         }
+
 
         c = ConeVectors.CreateFromJSON(jsonTextFile);
 
         c.init(head,lr);
 
-
+      
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (MasterManager.GameSettings.Observer)
+        if (MasterManager.GameSettings.Observer && !simulated)
         {
             return;
         }
@@ -79,6 +85,7 @@ public class cone : MonoBehaviourPun
     
     public void RaiseVisualConeChangeEvent(object[] data)
     {
+        if (simulated) return; //if is a simulated cone without an avatar we do not need to send events 
 
         PhotonNetwork.RaiseEvent(MasterManager.GameSettings.VisualConeChange, data, Photon.Realtime.RaiseEventOptions.Default, SendOptions.SendReliable);
 

@@ -8,31 +8,54 @@ using UnityEngine;
 public class stickyCircle : MonoBehaviour
 {
     private List<Vector3> stickyPointsList;
-
     float[] pos = { 0f, 0.125f, 0.25f, 0.375f, 0.5f, 0.625f, 0.75f, 0.875f, 1f, 1.125f, 1.25f, 1.375f, 1.5f, 1.625f, 1.75f, 1.875f };
-
     public Vector3[] circlePos = new Vector3[16];
-
     LineRenderer lineRenderer;
     private float timeLeft;
     private int counter=0;
-
-
     public Vector3 center;
-
-    //gradient 
     private float from = 0.001f;
     private float to = 0.999f;
     private float howfar = 0f;
     private float middle = 1f;
-
     private bool redraw = true;
-
     public float alpha;
+    public Material[] Visible;
+    public Material[] NonVisible;
+    public bool insideOtherCone;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+
+    }
+    
+    void Update()
+    {
+
+        if (stickyPointsList != null && stickyPointsList.Count > 6 && redraw)
+        {
+            create();
+            redraw = false;
+        }
+
+        if (lineRenderer.positionCount > 0)
+        {
+            if (howfar > 1f) howfar = 0f;
+            howfar += 0.005f;
+
+            middle = Mathf.Lerp(from, to, howfar);
+
+            lineRenderer.materials[0].SetFloat("_Middle", middle);
+
+            UpdateMaterial();
+        }
+
+        if (timeLeft > -1f)
+        {
+            countdown();
+        }
+
 
     }
 
@@ -43,14 +66,14 @@ public class stickyCircle : MonoBehaviour
 
         //limit the number of sample to plus or minus 3 per second 
         counter += 1;
-        if (counter > 5)
+        if (counter > 3)
         {
             stickyPointsList.Add(point);
             counter = 0;
             redraw = true;
         }
 
-        if (stickyPointsList.Count == 30) {
+        if (stickyPointsList.Count == 15) {
 
             stickyPointsList.RemoveRange(0, 1);
         }
@@ -60,16 +83,16 @@ public class stickyCircle : MonoBehaviour
     public void cleanList() {
 
         stickyPointsList = new List<Vector3>();
-        lineRenderer.positionCount = circlePos.Length;
-        lineRenderer.SetPositions(circlePos);
-
+        lineRenderer.positionCount = 0;
+        //lineRenderer.SetPositions(circlePos);
+        timeLeft = -1f;
     }
    
     public void create() {
    
             GenerateCircle();
             updateLineRender();
-        alpha = 1;
+            alpha = 1;
             lineRenderer.materials[0].SetFloat("_Alpha", alpha);
     }
 
@@ -191,6 +214,14 @@ public class stickyCircle : MonoBehaviour
         timeLeft = 3f;
     }
 
+    private void UpdateMaterial()
+    {
+
+        if (insideOtherCone)  lineRenderer.materials = Visible;         
+        else lineRenderer.materials = NonVisible;
+     
+    }
+    
     private void countdown() {
         
         timeLeft -= Time.deltaTime;
@@ -207,30 +238,4 @@ public class stickyCircle : MonoBehaviour
 
     }
    
-    void Update()
-    {
-
-        if (timeLeft > -1f)
-        {
-            countdown();
-        }
-
-        if (stickyPointsList != null && stickyPointsList.Count > 6 && redraw)
-        {
-            create();
-            redraw = false;
-        }
-
-        if (lineRenderer.positionCount > 0 )
-        {
-            if (howfar > 1f) howfar = 0f;
-            howfar += 0.005f;
-
-            middle = Mathf.Lerp(from, to, howfar);
-
-            lineRenderer.materials[0].SetFloat("_Middle", middle);
-        }
-    }
-
-
 }

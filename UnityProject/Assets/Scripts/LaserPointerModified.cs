@@ -19,10 +19,8 @@ public class LaserPointerModified : OVRCursor
 
     public GameObject cursorVisual;
     public float maxLength = 10.0f;
-
     public LaserBeamBehavior _laserBeamBehavior;
     bool m_restoreOnInputAcquired = false;
-
     public GameObject stickyPointerPrefab;
     private GameObject stickyPointer;
     private bool sticky;
@@ -57,21 +55,13 @@ public class LaserPointerModified : OVRCursor
     private LineRenderer lineRenderer;
     private bool insideOtherCone;
     public int layerMask = 1 << 10;
-
     RaycastHit hit1 = new RaycastHit();
-
     RaycastHit hit2 = new RaycastHit();
-
     private Color c;
-
     public Material[] Visible;
-    
     public Material[] NonVisible;
-
     public stickyCircle circle;
-
     public bool reorient;
-
     private bool wasOnWhenHitTarget=false;
 
     bool checkIfInside(Vector3 point)
@@ -230,6 +220,10 @@ public class LaserPointerModified : OVRCursor
     private void stickyCircleUpdate(Vector3 _endPoint)
     {
 
+        stickyinsideOtherCone = checkIfInside(circle.center);
+        circle.insideOtherCone = stickyinsideOtherCone;
+        
+
         if (isUI || disableSticky)
         {
 
@@ -239,29 +233,30 @@ public class LaserPointerModified : OVRCursor
         else if (laserBeamBehavior == LaserBeamBehavior.OnWhenHitTarget)
         {
 
-            if (!wasOnWhenHitTarget) {
+            if (!wasOnWhenHitTarget) circle.cleanList(); //if this is a new press we delete the previous positions
+            
 
-                circle.cleanList();
-            }
-                
-            if (!insideOtherCone & !sticky)
-            {
-                sticky = true;
-                circle.capture(_endPoint);
+            //if (!insideOtherCone & !sticky)
+            //{
+            //    sticky = true;
+            //    circle.capture(_endPoint);
 
+            //}
+            //else if (!insideOtherCone & sticky)
+            //{
+            //    circle.capture(_endPoint);
 
-            }
-            else if (!insideOtherCone & sticky)
-            {
-                circle.capture(_endPoint);
+            //}
+            //else if (insideOtherCone & sticky)
+            //{
+            //    circle.DestroySlowly(); // remove this 
+            //    sticky = false;
 
-            }
-            else if (insideOtherCone & sticky)
-            {
-                circle.DestroySlowly();
-                sticky = false;
+            //}
 
-            }
+            if (!sticky) sticky = true; // we turn sticky on if is not
+
+            circle.capture(_endPoint); // we capture the points
 
             wasOnWhenHitTarget = true;
 
@@ -269,7 +264,6 @@ public class LaserPointerModified : OVRCursor
         else if (laserBeamBehavior == LaserBeamBehavior.Off & sticky)
         {
 
-            stickyinsideOtherCone = checkIfInside(circle.center);
 
             if (stickyinsideOtherCone && sticky)
             {
@@ -278,10 +272,8 @@ public class LaserPointerModified : OVRCursor
 
             }
 
-            if (wasOnWhenHitTarget) {
-
-                wasOnWhenHitTarget = false;
-            }
+            if (wasOnWhenHitTarget) wasOnWhenHitTarget = false;
+            
         }
 
     }
@@ -346,10 +338,11 @@ public class LaserPointerModified : OVRCursor
     private void UpdateMaterial() {
 
         if (updateMaterial)
-        {         
+        {
             if (insideOtherCone) lineRenderer.materials = Visible;
             else lineRenderer.materials = NonVisible;
         }
+
 
     }
 

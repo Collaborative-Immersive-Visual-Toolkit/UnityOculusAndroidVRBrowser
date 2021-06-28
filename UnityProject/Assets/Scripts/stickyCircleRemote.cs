@@ -10,26 +10,20 @@ public class stickyCircleRemote : MonoBehaviourPun
     public float alpha;
     public Vector3[] pos;
     LineRenderer lineRenderer;
-
     RaycastHit hit1 = new RaycastHit();
     RaycastHit hit2 = new RaycastHit();
     public int layerMask;
-
     public GameObject reorient;
     ReorientManager rom;
     float timeToGo;
-
-    // The target marker.
     public Transform target;
     private Transform Head;
     private Transform RemoteHead;
     private OVRPlayerController ovrpc;
-
-    // Angular speed in radians per sec.
-    public float speed = 1.0f;
     private GameObject player;
-
     private bool renable = false;
+    public Material[] Visible;
+    public Material[] NonVisible;
 
     void FixedUpdate()
     {
@@ -61,6 +55,10 @@ public class stickyCircleRemote : MonoBehaviourPun
             ovrpc.enabled = true;
         }
 
+        if (alpha < 0.1f)
+        {
+            lineRenderer.positionCount = 0;
+        }
     }
 
     private void Awake()
@@ -177,9 +175,6 @@ public class stickyCircleRemote : MonoBehaviourPun
 
     }
 
-
-
-
     public Transform DeepChildSearch(GameObject g, string childName)
     {
 
@@ -208,6 +203,12 @@ public class stickyCircleRemote : MonoBehaviourPun
         return null;
     }
 
+    private void UpdateMaterial()
+    {
 
+        //if (insideOtherCone) lineRenderer.materials = Visible;
+        //else lineRenderer.materials = NonVisible;
+
+    }
 
 }
