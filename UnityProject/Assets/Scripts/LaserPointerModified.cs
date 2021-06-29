@@ -235,7 +235,6 @@ public class LaserPointerModified : OVRCursor
 
             if (!wasOnWhenHitTarget) circle.cleanList(); //if this is a new press we delete the previous positions
             
-
             //if (!insideOtherCone & !sticky)
             //{
             //    sticky = true;

@@ -95,12 +95,12 @@ public class RemoteLaser : MonoBehaviourPun
     {
         if (laserBeamBehavior == LaserBeamBehavior.Off)
         {
-            
+            _endPoint = Vector3.zero;
+
             if (lineRenderer.enabled)
             {
                 lineRenderer.enabled = false;
-                Pointer.SetActive(false);
-                _endPoint = Vector3.zero;
+                Pointer.SetActive(false);         
             }
 
             return;
@@ -125,11 +125,12 @@ public class RemoteLaser : MonoBehaviourPun
             }
             else
             {
+                _endPoint = Vector3.zero;
+
                 if (lineRenderer.enabled)
                 {
                     lineRenderer.enabled = false;
-                    Pointer.SetActive(false);
-                    _endPoint = Vector3.zero;
+                    Pointer.SetActive(false);                
                 }
             }
         }

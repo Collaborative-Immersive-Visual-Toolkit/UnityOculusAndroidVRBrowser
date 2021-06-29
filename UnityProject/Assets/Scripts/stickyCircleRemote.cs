@@ -25,6 +25,7 @@ public class stickyCircleRemote : MonoBehaviourPun
     public Material[] Visible;
     public Material[] NonVisible;
     public Vector3 center;
+    public bool circleVisible;
 
     void FixedUpdate()
     {
@@ -92,6 +93,7 @@ public class stickyCircleRemote : MonoBehaviourPun
 
         alpha = circleAlpha;
         lineRenderer.materials[0].SetFloat("_Alpha", alpha);
+        
 
     }
 
@@ -209,8 +211,14 @@ public class stickyCircleRemote : MonoBehaviourPun
     public void UpdateMaterial(float alpha)
     {
 
-        if (alpha<1) lineRenderer.materials = Visible;
-        else lineRenderer.materials = NonVisible;
+        if (alpha < 1) {
+            lineRenderer.materials = Visible;
+            circleVisible = true;
+        }
+        else {
+            lineRenderer.materials = NonVisible;
+            circleVisible = false;
+        }
 
     }
 

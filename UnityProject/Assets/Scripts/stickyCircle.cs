@@ -233,13 +233,29 @@ public class stickyCircle : MonoBehaviour
         {
             lineRenderer.positionCount = 0;
             center = Vector3.zero;
+            zerocriclepos();
         }
         else {
             alpha = timeLeft / 3f;
             lineRenderer.materials[0].SetFloat("_Alpha", alpha);
             stickyPointsList = null;
+            
         }
 
     }
+
+    private void zerocriclepos()
+    {
+
+        circlePos = new Vector3[16];
+
+        for (int i = 0; i < 16; i++) {
+
+            circlePos[i] = Vector3.zero;
+
+        }
+
+    }
+    
    
 }
