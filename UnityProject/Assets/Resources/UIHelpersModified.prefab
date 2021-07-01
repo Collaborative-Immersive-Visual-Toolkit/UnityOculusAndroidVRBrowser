@@ -203,6 +203,11 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   center: {x: 0, y: 0, z: 0}
   alpha: 0
+  Visible:
+  - {fileID: 2100000, guid: c3575e91b142a9f40bf476791f3eef01, type: 2}
+  NonVisible:
+  - {fileID: 2100000, guid: 708317dba215f4a4ca7d181260d4064b, type: 2}
+  insideOtherCone: 0
 --- !u!1 &6602755729300171409
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +219,7 @@ GameObject:
   - component: {fileID: 6608736651279304289}
   - component: {fileID: 6499079021276161989}
   m_Layer: 0
-  m_Name: UIHelpers
+  m_Name: UIHelpersModified
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

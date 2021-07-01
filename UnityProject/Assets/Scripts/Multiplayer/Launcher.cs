@@ -26,6 +26,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     PhotonView photonView;
 
+    public string RoomName;
 
     void Start()
     {
@@ -56,11 +57,13 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         Debug.Log("[PUN] connected with Nickname: " + PhotonNetwork.LocalPlayer.NickName + "\n UserID: " + PhotonNetwork.LocalPlayer.UserId);
 
-        Debug.Log("[PUN] joining room " + MasterManager.GameSettings.RoomName);
+        //Debug.Log("[PUN] joining room " + MasterManager.GameSettings.RoomName);
+        Debug.Log("[PUN] joining room " + RoomName);
 
         RoomOptions options = new RoomOptions();
         options.PublishUserId = true;
-        PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, options, TypedLobby.Default);
+        //PhotonNetwork.JoinOrCreateRoom(MasterManager.GameSettings.RoomName, options, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(RoomName, options, TypedLobby.Default);
     }
 
     void IMatchmakingCallbacks.OnJoinedRoom()
@@ -123,9 +126,15 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         Debug.Log("[PUN] instantiate LocalAvatar");
 
-        GameObject OVRPlayerController = GameObject.Find("OVRPlayerController");
-        photonView = OVRPlayerController.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
-        PhotonTransformView photonTransformView = OVRPlayerController.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
+        GameObject player = GameObject.Find("OVRPlayerController");
+
+        //check if an avatar attached to the OVR player controller already exist
+        Transform attachedLocalAvatar = player.transform.FindDeepChild("LocalAvatar");
+        if (attachedLocalAvatar != null) Destroy(attachedLocalAvatar.gameObject);
+        
+
+        photonView = player.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
+        PhotonTransformView photonTransformView = player.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
         photonTransformView.m_SynchronizeRotation = false;
         photonView.ObservedComponents = new List<Component>();
         photonView.ObservedComponents.Add(photonTransformView);
@@ -169,7 +178,22 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void LocalAvatarInstantiated() {
 
-        localAvatarsMenu.SetActive(true);
+
+        if (MasterManager.GameSettings._devmode)
+        {
+
+            if (localAvatarsMenu == null)
+            {
+
+                GameObject player = GameObject.Find("OVRPlayerController");
+
+                Transform t = player.transform.FindDeepChild("panels");
+
+                localAvatarsMenu = t.gameObject;
+            }
+
+            localAvatarsMenu.SetActive(true);
+        }
 
         StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 

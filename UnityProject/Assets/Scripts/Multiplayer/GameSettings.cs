@@ -84,9 +84,11 @@ public class GameSettings : ScriptableObject
     [SerializeField]
     public byte DeletePlaceHolders = 6;
 
-
     [SerializeField]
     public bool _observer = true;
+
+    [SerializeField]
+    public bool _devmode = true;
 
     public bool Observer
     {

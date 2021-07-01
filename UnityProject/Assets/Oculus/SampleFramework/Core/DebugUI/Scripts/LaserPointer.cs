@@ -117,14 +117,14 @@ public class LaserPointer : OVRCursor
 
     private void LateUpdate()
     {
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger)>=0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
-        {
-            laserBeamBehavior = LaserBeamBehavior.OnWhenHitTarget;
-        }
-        else {
+        //if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger)>=0.5f || OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger) >= 0.5f)
+        //{
+        //    laserBeamBehavior = LaserBeamBehavior.OnWhenHitTarget;
+        //}
+        //else {
 
-            laserBeamBehavior = LaserBeamBehavior.Off;
-        }
+        //    laserBeamBehavior = LaserBeamBehavior.Off;
+        //}
 
 
 
