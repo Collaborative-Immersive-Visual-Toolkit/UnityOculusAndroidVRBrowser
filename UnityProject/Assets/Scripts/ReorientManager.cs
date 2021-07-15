@@ -13,4 +13,6 @@ public class ReorientManager : MonoBehaviour
 
         scr.ReorientAvatar();
     }
+
+ 
 }

@@ -23,7 +23,9 @@ MonoBehaviour:
   LaserPointerChange: 11
   Reorient: 31
   VisualConeChange: 12
+  EndOfTrialEvent: 15
   HideUnhideLayer: 4
   SpawnPlaceholder: 5
   DeletePlaceHolders: 6
-  _observer: 0
+  _observer: 1
+  _devmode: 1

@@ -19,6 +19,10 @@ TagManager:
   - VRUIRadio
   - VRUIButtonList
   - OthersStickyCircle
+  - Notification
+  - remoteavatar
+  - octagon
+  - uihelpers
   layers:
   - Default
   - TransparentFX

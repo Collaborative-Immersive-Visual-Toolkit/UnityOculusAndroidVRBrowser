@@ -36,14 +36,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         PhotonNetwork.AuthValues = new AuthenticationValues();
 
         if (MasterManager.GameSettings.Observer) {
-
             PhotonNetwork.NickName ="Observer";
             PhotonNetwork.AuthValues.UserId = "1";
         }
         else
         {
-            PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;           
-         
+            PhotonNetwork.NickName = MasterManager.GameSettings.Nickname;                
         }
      
         PhotonNetwork.GameVersion = MasterManager.GameSettings.Gameversion;
@@ -132,7 +130,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Transform attachedLocalAvatar = player.transform.FindDeepChild("LocalAvatar");
         if (attachedLocalAvatar != null) Destroy(attachedLocalAvatar.gameObject);
         
-
         photonView = player.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
         PhotonTransformView photonTransformView = player.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
         photonTransformView.m_SynchronizeRotation = false;
@@ -358,7 +355,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         }
 
         //destroy UiHelpers
-        Destroy(GameObject.Find("UIHelpers"));
+        DestroyImmediate(GameObject.Find("UIHelpersModified"));
 
         //enable observer recorder
         avatarRecorder.enabled = true;
@@ -462,4 +459,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         return null;
     }
+
+    void OnDisable()
+    {
+        PhotonNetwork.Disconnect();
+    }
+
 }

@@ -168,6 +168,19 @@ public class LaserPointerModified : OVRCursor
         }
     }
 
+    public bool toggleStickyReturn()
+    {
+
+        disableSticky = !disableSticky;
+
+        if (disableSticky)
+        {
+            circle.DestroySlowly();
+        }
+
+        return !disableSticky;
+    }
+
     private void stickyPointerManager(Vector3 _endPoint) {
 
 
@@ -332,7 +345,17 @@ public class LaserPointerModified : OVRCursor
 
     public void toggleMaterialUpdate() {
         updateMaterial = !updateMaterial;
+        circle.toggleMaterialUpdate();
     }
+
+    public bool toggleMaterialUpdateReturn()
+    {
+        updateMaterial = !updateMaterial;
+        circle.toggleMaterialUpdate();
+
+        return updateMaterial;
+    }
+
 
     private void UpdateMaterial() {
 

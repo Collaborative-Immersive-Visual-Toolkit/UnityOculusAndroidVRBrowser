@@ -20,7 +20,7 @@ public class FirebaseManager : MonoBehaviour
 
     private string anonymousAuthentication = "/v1/accounts:signUp?key=";
 
-    private string realTimeDatabase = "https://collaborativevrdb-default-rtdb.europe-west1.firebasedatabase.app/";
+    public string realTimeDatabase ;
 
     private AuthenticateAnonymouseResponse authResponse = new AuthenticateAnonymouseResponse();
 

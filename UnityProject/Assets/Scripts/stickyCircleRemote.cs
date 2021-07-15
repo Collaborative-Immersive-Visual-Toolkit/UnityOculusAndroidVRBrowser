@@ -26,6 +26,10 @@ public class stickyCircleRemote : MonoBehaviourPun
     public Material[] NonVisible;
     public Vector3 center;
     public bool circleVisible;
+    private float from = 0.001f;
+    private float to = 0.999f;
+    private float howfar = 0f;
+    private float middle = 1f;
 
     void FixedUpdate()
     {
@@ -46,6 +50,9 @@ public class stickyCircleRemote : MonoBehaviourPun
                 }
             }
         }
+
+
+
     }
 
     private void Update()
@@ -220,6 +227,16 @@ public class stickyCircleRemote : MonoBehaviourPun
             circleVisible = false;
         }
 
+        if (lineRenderer.positionCount > 0)
+        {
+            if (howfar > 1f) howfar = 0f;
+            howfar += 0.005f;
+
+            middle = Mathf.Lerp(from, to, howfar);
+
+            lineRenderer.materials[0].SetFloat("_Middle", middle);
+
+        }
     }
 
 }

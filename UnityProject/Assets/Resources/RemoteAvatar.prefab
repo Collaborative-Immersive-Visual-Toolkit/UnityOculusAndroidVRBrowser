@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 9152328229255299341}
   m_Layer: 14
   m_Name: RemoteAvatar
-  m_TagString: Untagged
+  m_TagString: remoteavatar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,9 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ef69864013fb047ad26ddf1a83b479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 0}
+  _controllerRight: {fileID: 0}
+  _controllerLeft: {fileID: 0}
   _localHead: {fileID: 0}
   _pointer: {fileID: 0}
+  _stickyCircle: {fileID: 0}
 --- !u!114 &9152328229255299341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,6 +683,8 @@ MonoBehaviour:
   Pointer: {fileID: 2793612712247737238}
   stickyPointerPrefab: {fileID: 6369511576161345178, guid: a62dcef86f0e9aa4a97c64b730402eed,
     type: 3}
+  insideOtherCone: 0
+  _endPoint: {x: 0, y: 0, z: 0}
   Visible:
   - {fileID: 2100000, guid: c3575e91b142a9f40bf476791f3eef01, type: 2}
   NonVisible:
@@ -830,8 +834,9 @@ MonoBehaviour:
   layerMask: 0
   reorient: {fileID: 0}
   target: {fileID: 0}
-  speed: 1
   Visible:
   - {fileID: 2100000, guid: c3575e91b142a9f40bf476791f3eef01, type: 2}
   NonVisible:
   - {fileID: 2100000, guid: 7c6165ced6f326d42a795cab71195225, type: 2}
+  center: {x: 0, y: 0, z: 0}
+  circleVisible: 0

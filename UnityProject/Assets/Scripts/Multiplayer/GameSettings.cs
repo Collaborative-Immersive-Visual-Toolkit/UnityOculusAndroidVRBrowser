@@ -76,6 +76,9 @@ public class GameSettings : ScriptableObject
     public byte VisualConeChange = 12;
 
     [SerializeField]
+    public byte EndOfTrialEvent = 15;
+
+    [SerializeField]
     public byte HideUnhideLayer = 4;
 
     [SerializeField]

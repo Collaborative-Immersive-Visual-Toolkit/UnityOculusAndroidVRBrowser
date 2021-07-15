@@ -9,7 +9,20 @@ public class stickyCircle : MonoBehaviour
 {
     private List<Vector3> stickyPointsList;
     float[] pos = { 0f, 0.125f, 0.25f, 0.375f, 0.5f, 0.625f, 0.75f, 0.875f, 1f, 1.125f, 1.25f, 1.375f, 1.5f, 1.625f, 1.75f, 1.875f };
-    public Vector3[] circlePos = new Vector3[16];
+    public Vector3[] _circlePos = new Vector3[16];
+    private bool updateMaterial = true;
+    public Vector3[] circlePos {
+
+        get { 
+            return _circlePos; 
+        }
+        set {
+
+            _circlePos = value;
+            _circlePos = new Vector3[16];
+        }
+    }
+
     LineRenderer lineRenderer;
     private float timeLeft;
     private int counter=0;
@@ -24,6 +37,8 @@ public class stickyCircle : MonoBehaviour
     public Material[] NonVisible;
     public bool insideOtherCone;
 
+    public bool stickyCircleActive = true;
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -32,6 +47,7 @@ public class stickyCircle : MonoBehaviour
     
     void Update()
     {
+        if (!stickyCircleActive) return;
 
         if (stickyPointsList != null && stickyPointsList.Count > 6 && redraw)
         {
@@ -46,9 +62,10 @@ public class stickyCircle : MonoBehaviour
 
             middle = Mathf.Lerp(from, to, howfar);
 
-            lineRenderer.materials[0].SetFloat("_Middle", middle);
-
             UpdateMaterial();
+
+            lineRenderer.materials[0].SetFloat("_Middle", middle);
+          
         }
 
         if (timeLeft > -1f)
@@ -219,12 +236,16 @@ public class stickyCircle : MonoBehaviour
 
     private void UpdateMaterial()
     {
-
+        if (!updateMaterial) return;
         if (insideOtherCone)  lineRenderer.materials = Visible;         
         else lineRenderer.materials = NonVisible;
      
     }
-    
+    public void toggleMaterialUpdate() {
+        updateMaterial = !updateMaterial;
+
+    }
+
     private void countdown() {
         
         timeLeft -= Time.deltaTime;
@@ -237,9 +258,7 @@ public class stickyCircle : MonoBehaviour
         }
         else {
             alpha = timeLeft / 3f;
-            lineRenderer.materials[0].SetFloat("_Alpha", alpha);
-            stickyPointsList = null;
-            
+            lineRenderer.materials[0].SetFloat("_Alpha", alpha);  
         }
 
     }
@@ -256,6 +275,19 @@ public class stickyCircle : MonoBehaviour
         }
 
     }
-    
-   
+
+    public void toggleStickyCircleVisibility() {
+
+        stickyCircleActive = !stickyCircleActive;
+
+        if (!stickyCircleActive) {
+
+            lineRenderer.positionCount = 0;
+            center = Vector3.zero;
+            zerocriclepos();
+
+        }
+    }
+
+
 }

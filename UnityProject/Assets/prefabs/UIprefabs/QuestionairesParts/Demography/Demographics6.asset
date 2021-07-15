@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Demographics 6/7
   description: 'Please give us some information about yourself '
   questions:
-  - question: Place of Birth
+  - question: Location
     helpText: Use the below radio buttons to chose your place of birth
     uielement: 1
     valuebool: 0
