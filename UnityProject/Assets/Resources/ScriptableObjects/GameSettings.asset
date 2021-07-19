@@ -27,5 +27,6 @@ MonoBehaviour:
   HideUnhideLayer: 4
   SpawnPlaceholder: 5
   DeletePlaceHolders: 6
+  VisualizationChange: 33
   _observer: 1
   _devmode: 1

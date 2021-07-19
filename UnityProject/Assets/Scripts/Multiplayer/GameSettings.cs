@@ -88,10 +88,39 @@ public class GameSettings : ScriptableObject
     public byte DeletePlaceHolders = 6;
 
     [SerializeField]
+    public byte VisualizationChange = 33;
+
+    [SerializeField]
+    public byte UiHelperSwitch = 34;
+
+    [SerializeField]
     public bool _observer = true;
 
     [SerializeField]
     public bool _devmode = true;
+
+    //todocondition
+    /*
+    [SerializeField]
+    public string Vis =
+    
+
+        [SerializeField]
+    public string Condition {
+
+        get
+        {
+
+
+        }
+        set
+        {
+
+
+        }
+
+    }*/
+
 
     public bool Observer
     {

@@ -248,7 +248,7 @@ PrefabInstance:
     - target: {fileID: 6499467163045336003, guid: dd1a23e95ce72c94f820a67481919e57,
         type: 3}
       propertyPath: joyPadClickButton
-      value: 16384
+      value: 16385
       objectReference: {fileID: 0}
     - target: {fileID: 6602755729300171409, guid: dd1a23e95ce72c94f820a67481919e57,
         type: 3}
@@ -693,12 +693,12 @@ PrefabInstance:
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 136
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
@@ -859,6 +859,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlFour
+      value: StackBarChart
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlThree
+      value: BoxAndWhiskers
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlTwo
+      value: Histograms
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlOne
+      value: BoxAndWhiskers2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlSix
+      value: Scatterplot1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlSeven
+      value: Scatterplot2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlEight
+      value: Instructions
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlFive
+      value: Oscar
+      objectReference: {fileID: 0}
     - target: {fileID: 2309001791050524855, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_Name
@@ -872,12 +904,17 @@ PrefabInstance:
     - target: {fileID: 6190138770098792391, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190138770098792391, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: StackBarChart
       objectReference: {fileID: 0}
     - target: {fileID: 6190138770145151950, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7649169199518369961, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
@@ -951,6 +988,7 @@ GameObject:
   - component: {fileID: 1350780341}
   - component: {fileID: 1350780342}
   - component: {fileID: 1350780343}
+  - component: {fileID: 1350780344}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1027,7 +1065,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350780336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc07e7815b3a86b4bb0fea42ff80c6ec, type: 3}
   m_Name: 
@@ -1052,7 +1090,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350780336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98dfa3acceb278a48acfce5aa6e619e8, type: 3}
   m_Name: 
@@ -1061,6 +1099,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   invoked: 0
+--- !u!114 &1350780344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350780336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b8830e747b388478a6b0672cfc26bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1372919872
 GameObject:
   m_ObjectHideFlags: 0

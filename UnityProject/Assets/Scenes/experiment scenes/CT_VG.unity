@@ -708,6 +708,10 @@ PrefabInstance:
       propertyPath: urlEight
       value: Instructions_Gender.html
       objectReference: {fileID: 0}
+    - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: urlFour
+      value: StackBarChart_Gender.html
+      objectReference: {fileID: 0}
     - target: {fileID: 2309001791050524855, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_Name
@@ -771,7 +775,12 @@ PrefabInstance:
     - target: {fileID: 6190138770098792391, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190138770098792391, guid: 5e39f165d0f497f4d8b2c387469750ae,
+        type: 3}
+      propertyPath: m_Name
+      value: StackBarChart
       objectReference: {fileID: 0}
     - target: {fileID: 6190138770116428198, guid: 5e39f165d0f497f4d8b2c387469750ae,
         type: 3}

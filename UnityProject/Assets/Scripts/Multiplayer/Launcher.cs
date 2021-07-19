@@ -129,7 +129,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //check if an avatar attached to the OVR player controller already exist
         Transform attachedLocalAvatar = player.transform.FindDeepChild("LocalAvatar");
         if (attachedLocalAvatar != null) Destroy(attachedLocalAvatar.gameObject);
-        
+       
         photonView = player.AddComponent<PhotonView>();//Add a photonview to the OVR player controller 
         PhotonTransformView photonTransformView = player.AddComponent<PhotonTransformView>();//Add a photonTransformView to the OVR player controller 
         photonTransformView.m_SynchronizeRotation = false;
