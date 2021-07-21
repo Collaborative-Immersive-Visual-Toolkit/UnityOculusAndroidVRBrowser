@@ -28,9 +28,19 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public string RoomName;
 
-    void Start()
+    private void Awake()
     {
         Resources.LoadAll("ScriptableObjects");
+
+        if (MasterManager.GameSettings.Observer)
+        {
+            Connect();
+        }
+    }
+
+    public void Connect()
+    {
+        
         Debug.Log("[PUN] connecting to server");
 
         PhotonNetwork.AuthValues = new AuthenticationValues();
@@ -101,7 +111,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         }
     }
 
-    public override void OnDisconnected(DisconnectCause cause)
+    /*public override void OnDisconnected(DisconnectCause cause)
     {
         
         Debug.Log("[PUN] Disconnected -->" + cause);
@@ -115,7 +125,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         
         Debug.Log("[PUN] LeftRoom" );
 
+        OnConnectedToMaster();
     }
+    */
+
+
+
 
     //AVATAR
     //local avatar

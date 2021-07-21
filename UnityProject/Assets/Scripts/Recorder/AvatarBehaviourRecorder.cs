@@ -45,21 +45,23 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     private void OnEnable()
     {
 
-        //this was creating lag
-        /*Time.captureFramerate = frameRate;*/
-        //sampleFrequency = 1f / frameRate;
+        fileName = MasterManager.GameSettings.Condition;
 
     }
 
     void Update()
     {
+       
+
         if (Time.unscaledTime > nextSampleTime)
         {
             nextSampleTime += sampleFrequency;
 
             if (ram.inputs.Count > 1 && ram.inputs.Count <= 2 && !recording)
             {
-                Record();
+
+               Record();
+
             }
             else if (ram.inputs.Count > 2)
             {

@@ -49,11 +49,12 @@ public class BrowserView : MonoBehaviour
         Browser,
         Youtube,
     }
-    
+
+
     /// <summary>
     /// There's no normal browser substring because it is anything but the youtube.com/tv one.
     /// </summary>
-    private const string YoutubeSubstring = "http://bl.ocks.org/DStruths/raw/9c042e3a6b66048b5bd4/?raw=true";
+    private const string YoutubeSubstring = "";
 
     public static readonly Dictionary<BrowserHistoryType, string> DefaultUrls =
         new Dictionary<BrowserHistoryType, string>()
@@ -61,7 +62,7 @@ public class BrowserView : MonoBehaviour
             {BrowserHistoryType.Browser, YoutubeSubstring},
             {BrowserHistoryType.Youtube,  YoutubeSubstring},
         };
-
+    
 
 
     // CALL THIS TO ADD KEYS TO BROWSER    
@@ -203,6 +204,8 @@ public class BrowserView : MonoBehaviour
         CallAjc("LoadURL", new object[] {url});
 
     }
+
+
 
     public void InvokeGoBack()
     {
@@ -412,6 +415,13 @@ public class BrowserView : MonoBehaviour
     
     public void SwitchSessionTo( BrowserHistoryType browserHistoryType)
     {
+        Dictionary<BrowserHistoryType, string> DefaultUrls =
+        new Dictionary<BrowserHistoryType, string>()
+        {
+                {BrowserHistoryType.Browser, startUrl},
+                {BrowserHistoryType.Youtube,  startUrl},
+        };
+
         CallAjc("ChangeSessionAndLoadUrlIfUnopened", new object[]{browserHistoryType.ToString().ToLower(), DefaultUrls[browserHistoryType]});
         _currentBrowserHistoryType = browserHistoryType;
 
@@ -451,11 +461,14 @@ public class BrowserView : MonoBehaviour
 
     private void OnGeckoViewReady()
     {
-        // call override to allow navigating to youtube tv
-        // SetYoutubeUserAgentOverride();
+       
+
+
+    // call override to allow navigating to youtube tv
+    // SetYoutubeUserAgentOverride();
         SwitchSessionTo(BrowserHistoryType.Browser);
         ActivateGeckoSession();
-        LoadURL(startUrl);
+        //LoadURL(startUrl);
     }
 
   
@@ -583,7 +596,8 @@ public class BrowserView : MonoBehaviour
             Debug.Log("CallAjc");
             Debug.Log(paramies);
         }
-    } 
+    }
+
 
     public void SetInputFieldUrl(string url)
     {
@@ -600,6 +614,7 @@ public class BrowserView : MonoBehaviour
     {
         OnProgressUpdate?.Invoke(progress);
         ProgressText.text = progress.ToString();
+  
     }
 
     public void CanGoBack(bool canGoBack)
@@ -699,7 +714,7 @@ public class BrowserView : MonoBehaviour
 
         public void updateProgress(int progress)
         {
-//        Debug.Log("update progress called ");
+            //Debug.Log("update progress called ");
             UnityThread.executeInUpdate(() => BrowserView.UpdateProgress(progress));
 
         }

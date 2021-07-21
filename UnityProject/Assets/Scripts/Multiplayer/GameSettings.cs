@@ -100,26 +100,23 @@ public class GameSettings : ScriptableObject
     public bool _devmode = true;
 
     //todocondition
-    /*
-    [SerializeField]
-    public string Vis =
-    
 
-        [SerializeField]
+    [SerializeField]
+    public string Vis = "VS";
+
+    [SerializeField]
+    public string Ui = "BC";
+
+    [SerializeField]
     public string Condition {
 
         get
         {
-
-
-        }
-        set
-        {
-
+            return Vis + "_" + Ui;
 
         }
 
-    }*/
+    }
 
 
     public bool Observer

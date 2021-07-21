@@ -28,5 +28,8 @@ MonoBehaviour:
   SpawnPlaceholder: 5
   DeletePlaceHolders: 6
   VisualizationChange: 33
+  UiHelperSwitch: 34
   _observer: 1
-  _devmode: 1
+  _devmode: 0
+  Vis: VS
+  Ui: BC

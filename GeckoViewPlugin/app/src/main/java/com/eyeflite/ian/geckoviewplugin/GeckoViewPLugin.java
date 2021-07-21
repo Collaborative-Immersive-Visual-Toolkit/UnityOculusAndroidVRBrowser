@@ -581,7 +581,7 @@ public class GeckoViewPLugin extends Fragment implements GeckoSession.Navigation
         a.runOnUiThread(new Runnable() {public void run() {
             UnityCallback.updateProgress(progress);
         }});
-    }
+    }OnPageVisited
 
     @Override
     public void onSecurityChange(GeckoSession session, SecurityInformation securityInfo) {
