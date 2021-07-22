@@ -136,9 +136,16 @@ public class GameSettings : ScriptableObject
     
     public string DataFolder {
 
-        get { 
-            return _dataFolder +System.DateTime.Now.ToString("_MMM_ddd_HH_mm"); 
-        }
+        get {
+
+                if (_dataFolder == "Data")
+                {
+                    _dataFolder = _dataFolder + System.DateTime.Now.ToString("_MMM_ddd_HH_mm");
+                }
+
+                return _dataFolder;
+            
+            }
 
     }
 }
