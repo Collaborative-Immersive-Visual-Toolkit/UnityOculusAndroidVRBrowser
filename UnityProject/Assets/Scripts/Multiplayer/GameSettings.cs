@@ -101,24 +101,7 @@ public class GameSettings : ScriptableObject
 
     //todocondition
 
-    [SerializeField]
-    public string Vis = "VS";
-
-    [SerializeField]
-    public string Ui = "BC";
-
-    [SerializeField]
-    public string Condition {
-
-        get
-        {
-            return Vis + "_" + Ui;
-
-        }
-
-    }
-
-
+  
     public bool Observer
     {
         get {
@@ -154,7 +137,7 @@ public class GameSettings : ScriptableObject
     public string DataFolder {
 
         get { 
-            return _dataFolder +System.DateTime.Now.ToString("_MMM_ddd_HH"); 
+            return _dataFolder +System.DateTime.Now.ToString("_MMM_ddd_HH_mm"); 
         }
 
     }

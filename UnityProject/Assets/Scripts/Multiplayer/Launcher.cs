@@ -96,7 +96,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         }
 
         if (MasterManager.GameSettings.Observer) ObserverInstantiation();
-        else InstantiateLocalAvatar();
+        else 
+            InstantiateLocalAvatar();
     }
 
     void IOnEventCallback.OnEvent(EventData photonEvent)

@@ -97,7 +97,7 @@ public class UiHelperManager : MonoBehaviourPun
         if (!MaterialActive) MaterialActive = lpm.toggleMaterialUpdateReturn();
         if (!StickyCircleActive) StickyCircleActive = lpm.toggleStickyReturn();
 
-        MasterManager.GameSettings.Ui = "CT";
+  
     }
 
     private void Load2()
@@ -106,7 +106,6 @@ public class UiHelperManager : MonoBehaviourPun
         if (MaterialActive) MaterialActive = lpm.toggleMaterialUpdateReturn();
         if (StickyCircleActive) StickyCircleActive = lpm.toggleStickyReturn();
         
-        MasterManager.GameSettings.Ui = "CB";
 
     }
 }

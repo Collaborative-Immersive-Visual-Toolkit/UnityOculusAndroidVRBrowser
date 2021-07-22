@@ -206,6 +206,7 @@ MonoBehaviour:
   _localHead: {fileID: 0}
   _pointer: {fileID: 0}
   _stickyCircle: {fileID: 0}
+  _speaking: {fileID: 0}
 --- !u!114 &9152328229255299341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +230,7 @@ GameObject:
   - component: {fileID: 3299936173363892020}
   - component: {fileID: 5694081785848980643}
   - component: {fileID: 5180538320144758592}
+  - component: {fileID: 67970151528155451}
   m_Layer: 14
   m_Name: Audio Source
   m_TagString: Untagged
@@ -366,6 +368,21 @@ MonoBehaviour:
     MinDelaySoft: 200
     MaxDelaySoft: 400
     MaxDelayHard: 1000
+--- !u!114 &67970151528155451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847214126697133449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4b3cc0652e3db498cbbbfb156908a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 5694081785848980643}
+  isSpeaking: 0
+  minimumLevel: 0.0001
 --- !u!1 &2793612712247737238
 GameObject:
   m_ObjectHideFlags: 0

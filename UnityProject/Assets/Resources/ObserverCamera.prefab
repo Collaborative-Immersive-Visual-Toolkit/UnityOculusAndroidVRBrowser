@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8262808619112194061}
   - component: {fileID: 82003257399023586}
   - component: {fileID: 254397392415479521}
+  - component: {fileID: 5839189757471930117}
   m_Layer: 0
   m_Name: ObserverCamera
   m_TagString: Untagged
@@ -204,3 +205,16 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5839189757471930117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262808619112194060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4b3cc0652e3db498cbbbfb156908a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 82003257399023586}

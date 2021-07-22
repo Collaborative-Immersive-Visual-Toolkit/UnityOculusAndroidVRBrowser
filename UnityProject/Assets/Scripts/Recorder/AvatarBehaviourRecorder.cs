@@ -38,20 +38,15 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     string StickyCircle;
     string StickyCircleVis;
     string Relocate;
+    string Userspeaking;
 
     private float nextSampleTime = 0.0f;
     public float sampleFrequency = 0.04f;
 
-    private void OnEnable()
-    {
-
-        fileName = MasterManager.GameSettings.Condition;
-
-    }
-
     void Update()
     {
-       
+
+#if UNITY_EDITOR
 
         if (Time.unscaledTime > nextSampleTime)
         {
@@ -88,19 +83,21 @@ public class AvatarBehaviourRecorder : MonoBehaviour
                 PointerVis = i.Pointer.insideOtherCone && PointerPos  != "null,null,null" ? "1" : "0";
                 StickyCircle = i.StickyCircle.GetAveragePoint() == Vector3.zero ? "null,null,null" : i.StickyCircle.center.ToString("F3");
                 StickyCircleVis = i.StickyCircle.circleVisible ? "1" : "0";
+                Userspeaking = i.Speaking.isSpeaking ? "1" : "0";
 
-
-                line += "," + PlayerPos.Trim(remove)+","+
+                line += "," + PlayerPos.Trim(remove) + "," +
                               HeadPos.Trim(remove) + "," + HeadEAng.Trim(remove) + "," +
                               ControllerRPos.Trim(remove) + "," + ControllerREAng.Trim(remove) + "," +
                               ControllerLPos.Trim(remove) + "," + ControllerLEAng.Trim(remove) + "," +
                               PointerPos.Trim(remove) + "," + PointerVis.Trim(remove) + "," +
-                              StickyCircle.Trim(remove) + "," + StickyCircleVis.Trim(remove);
+                              StickyCircle.Trim(remove) + "," + StickyCircleVis.Trim(remove) + "," +
+                              Userspeaking.Trim(remove);
 
             }
 
             writer.WriteLine(line);
         }
+#endif
     }
 
     private void Record()
@@ -122,11 +119,11 @@ public class AvatarBehaviourRecorder : MonoBehaviour
             "U1PosX, U1PosY, U1PosZ, U1HeadX, U1HeadY, U1HeadZ, U1HeadEulerX, U1HeadEulerY, U1LocalHeadEulerZ, " +
             "U1ControllerRX, U1ControllerRY, U1ControllerRZ, U1ControllerEulerRX, U1ControllerEulerRY, U1ControllerEulerRZ," +
             "U1ControllerLX, U1ControllerLY, U1ControllerLZ, U1ControllerEulerLX, U1ControllerEulerLY, U1ControllerEulerLZ," +
-            "U1PointerX, U1PointerY, U1PointerZ, U1PointerVis, U1StickyPointerX, U1StickyPointerY, U1StickyPointerZ, U1StickyPointerVis," +
+            "U1PointerX, U1PointerY, U1PointerZ, U1PointerVis, U1StickyPointerX, U1StickyPointerY, U1StickyPointerZ, U1StickyPointerVis, U1Speaking," +
             "U2PosX, U2PosY, U2PosZ, U2HeadX, U2HeadY, U2HeadZ, U2HeadEulerX, U2HeadEulerY, U2LocalHeadEulerZ, " +
             "U2ControllerRX, U2ControllerRY, U2ControllerRZ, U2ControllerEulerRX, U2ControllerEulerRY, U2ControllerEulerRZ," +
             "U2ControllerLX, U2ControllerLY, U2ControllerLZ, U2ControllerEulerLX, U2ControllerEulerLY, U2ControllerEulerLZ," +
-            "U2PointerX, U2PointerY, U2PointerZ, U2PointerVis, U2StickyPointerX, U2StickyPointerY, U2StickyPointerZ, U2StickyPointerVis");
+            "U2PointerX, U2PointerY, U2PointerZ, U2PointerVis, U2StickyPointerX, U2StickyPointerY, U2StickyPointerZ, U2StickyPointerVis, U2Speaking");
 
         startTime = Time.unscaledTime;
 

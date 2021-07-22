@@ -89,6 +89,29 @@ public class inputs : MonoBehaviour
         }
 
 
+        [SerializeField]
+        private speaking _speaking;
+        public speaking Speaking
+        {
+            get
+            {
+
+                Transform t = DeepChildSearch(gameObject, "Audio Source");
+
+                if (t != null)
+                {
+                    _speaking = t.GetComponent<speaking>();
+                    return _speaking;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+
+        }
+
     public Transform DeepChildSearch(GameObject g, string childName) {
 
         Transform child = null;
