@@ -23,6 +23,7 @@ TagManager:
   - remoteavatar
   - octagon
   - uihelpers
+  - owncone
   layers:
   - Default
   - TransparentFX

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class speaking : MonoBehaviour
 {
     public AudioSource audioSource;
@@ -10,6 +11,8 @@ public class speaking : MonoBehaviour
     float[] clipSampleData = new float[1024];
     public bool isSpeaking = false;
     public float minimumLevel = 0.001f;
+
+    public RecorderObject r;
 
     void Update()
     {
@@ -30,6 +33,10 @@ public class speaking : MonoBehaviour
 #endif
     }
 
-
+    void OnAudioFilterRead(float[] data, int channels)
+    {
+        if (r != null) 
+            r.WriteFrameAudioData(data); 
+    }
 }
 

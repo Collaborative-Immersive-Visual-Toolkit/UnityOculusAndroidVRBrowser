@@ -23,6 +23,8 @@ MonoBehaviour:
   LaserPointerChange: 11
   Reorient: 31
   VisualConeChange: 12
+  StartRecordAudio: 36
+  StopRecordAudio: 37
   EndOfTrialEvent: 15
   HideUnhideLayer: 4
   SpawnPlaceholder: 5

@@ -1,4 +1,5 @@
-﻿using Photon.Voice.PUN;
+﻿using Photon.Pun;
+using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using System;
 using System.Collections;
@@ -6,8 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using ExitGames.Client.Photon;
+using UnityEngine.UI;
+using Photon.Realtime;
 
-public class PartecipantsVoiceRecorder : MonoBehaviour
+public class PartecipantsVoiceRecorder : MonoBehaviourPun
 {
     BinaryWriter writer;
 
@@ -15,12 +19,42 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
 
     bool recording = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public Text label;
+        
+    private void OnEnable()
     {
 #if UNITY_EDITOR
+        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClientEventReceived;
         PhotonVoiceNetwork.Instance.RemoteVoiceAdded += HandleRemoteVoicAdded;
-#endif       
+#endif
+    }
+
+    private void OnDisable()
+    {
+#if UNITY_EDITOR
+        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClientEventReceived;
+        PhotonVoiceNetwork.Instance.RemoteVoiceAdded -= HandleRemoteVoicAdded;
+#endif
+    }
+
+    private void NetworkingClientEventReceived(EventData obj)
+    {
+        if (obj.Code == MasterManager.GameSettings.StartRecordAudio)
+        {
+
+            object[] data = (object[])obj.CustomData;
+
+            StartRecordingByPlayerId(data[0]);
+
+        }
+        else if (obj.Code == MasterManager.GameSettings.StopRecordAudio) 
+        {
+
+            object[] data = (object[])obj.CustomData;
+
+            StopRecordingByPlayerId(data[0]);
+
+        }
     }
 
     private void HandleRemoteVoicAdded(RemoteVoiceLink obj)
@@ -32,20 +66,104 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
 
         ro.obj = obj;
 
+
+
         list.Add(ro);
 
     }
 
-    public void StartRecording() {
+    public void ToggleRecording() {
+
+        object[] data = new object[] { PhotonNetwork.LocalPlayer.UserId };
+
+
+        if (recording) 
+        {
+            recording = false;
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.StopRecordAudio, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+            label.text = "Insight Record";
+        }
+        else 
+        {
+            recording = true;
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.StartRecordAudio, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+            label.text = "Stop Record Insight";
+        }
+
+    }
+
+    public void StartRecordingByPlayerId(object playerId)
+    {
 
         if (recording) return;
 
-        foreach (RecorderObject r in list) 
-            r.StartRecording();
-
+     
+        Player player =null;
         
+        GameObject go;
+
+        foreach (Player p in PhotonNetwork.PlayerList) {
+
+
+            if (p.UserId == (string)playerId) {
+
+                player = p;
+
+                Debug.Log(p.ActorNumber);
+        
+
+            }
+
+        }
+
+        if (player == null) return;
+
+
+        foreach (RecorderObject r in list)
+        {
+            if (r.obj.PlayerId == player.ActorNumber)
+            {
+                r.g = GameObject.Find(player.NickName);
+                r.StartRecording();
+            } 
+                
+        }
+            
         recording = true;
 
+    }
+
+    public void StopRecordingByPlayerId(object playerId)
+    {
+
+        if (!recording) return;
+
+        Player player = null;
+
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+
+            if (p.UserId == (string)playerId)
+            {
+
+                player = p;
+            }
+
+        }
+
+        if (player == null) return;
+
+        foreach (RecorderObject r in list)
+        {
+            if (r.obj.PlayerId == player.ActorNumber)
+            {
+               
+                r.SaveAndCloseFile();
+            }
+
+        }
+
+        recording = false;
 
     }
 
@@ -55,6 +173,7 @@ public class PartecipantsVoiceRecorder : MonoBehaviour
             r.SaveAndCloseFile();
     }
 
+   
 }
 
 public class RecorderObject 
@@ -63,40 +182,63 @@ public class RecorderObject
 
     public RemoteVoiceLink obj;
 
+    int count = 0;
+
+    public bool recording = false;
+
+    public GameObject g;
+
+    private speaking s;
+
     public void StartRecording()
     {
 
         Debug.Log("[voice recording object] Open File Stream");
 
+        recording = true;
 
         //Create and open file for the stream in RemoteVoiceAdded handler.
 
-        string fileName = obj.PlayerId.ToString();
+        string fileName = generateFilename();
 
         string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\" + fileName + ".wav";
 
         stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-        //register opening and closing events
+        s = g.GetComponentInChildren<speaking>();
 
-        //obj.FloatFrameDecoded += WriteFrameAudioData;
-
+        s.r = this;
 
         obj.RemoteVoiceRemoved += SaveAndCloseFile;
 
+
+    }
+
+    public string generateFilename() {
+
+        count += 1;
+
+        string fileName = "insight_" +count.ToString()+"_"+ obj.PlayerId.ToString();
+
+        return fileName;
     }
 
     public void SaveAndCloseFile()
     {
+        recording = false;
+
+        if (s != null)  s.r = null;
+
         //Save and close the file in RemoteVoiceRemoved handler.
-        stream.Close();
+        if (stream != null)  stream.Close();
 
         Debug.Log("[voice recording object] Closing File Stream");
     }
 
-    private void WriteFrameAudioData(float[] obj)
+    public void WriteFrameAudioData(float[] obj)
     {
-        if ( stream != null) stream.AppendWaveData(obj);
+        if ( stream != null) 
+            stream.AppendWaveData(obj);
 
     }
 
@@ -112,7 +254,7 @@ public static class BinaryWriterToWavExtensions
 
     private const int HeaderSize = 44;
 
-    private const int Hz = 12000; //frequency or sampling rate
+    private const int Hz =48000; //frequency or sampling rate
 
     private const float RescaleFactor = 32767; //to convert float to Int16
 

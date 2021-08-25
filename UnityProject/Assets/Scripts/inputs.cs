@@ -43,6 +43,29 @@ public class inputs : MonoBehaviour
         }
 
         [SerializeField]
+        private RemoteVisualCone _cone;
+        public RemoteVisualCone Cone
+        {
+            get
+            {
+
+                Transform t = DeepChildSearch(gameObject, "VisualCone");
+
+                if (t != null)
+                {
+                    _cone = t.GetComponent<RemoteVisualCone>();
+                    return _cone;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+
+        }
+
+        [SerializeField]
         private RemoteLaser _pointer;
         public RemoteLaser Pointer
         {

@@ -76,6 +76,12 @@ public class GameSettings : ScriptableObject
     public byte VisualConeChange = 12;
 
     [SerializeField]
+    public byte StartRecordAudio = 36;
+
+    [SerializeField]
+    public byte StopRecordAudio = 37;
+
+    [SerializeField]
     public byte EndOfTrialEvent = 15;
 
     [SerializeField]

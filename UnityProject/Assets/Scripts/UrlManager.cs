@@ -35,9 +35,6 @@ public class UrlManager : MonoBehaviourPun
     private void Update()
     {
 
-        if (MasterManager.GameSettings.Observer)
-        {
-
             if (Input.GetKeyDown("1"))
             {
                 LoadVis1();
@@ -47,7 +44,7 @@ public class UrlManager : MonoBehaviourPun
                 LoadVis2();
             }
 
-        }
+        
     }
 
     public void LoadVis1() 

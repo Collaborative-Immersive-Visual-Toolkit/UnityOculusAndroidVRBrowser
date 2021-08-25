@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9147d9ec42f70654b8dd2f561e21964b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circlePos:
+  _circlePos:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -208,6 +208,7 @@ MonoBehaviour:
   NonVisible:
   - {fileID: 2100000, guid: 708317dba215f4a4ca7d181260d4064b, type: 2}
   insideOtherCone: 0
+  stickyCircleActive: 1
 --- !u!1 &6602755729300171409
 GameObject:
   m_ObjectHideFlags: 0

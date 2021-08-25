@@ -86,7 +86,7 @@ public class data_loader : MonoBehaviourPun
     public void Next() {
 
 #if UNITY_EDITOR
-        if(partecipantsVoiceRecorder!=null) partecipantsVoiceRecorder.StartRecording();
+        /*if(partecipantsVoiceRecorder!=null) partecipantsVoiceRecorder.StartRecording();*/
 #endif  
         if (dataPrefabsQueue.Count > 0)
         {

@@ -252,6 +252,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         yield return voiceView.RecorderInUse.TransmitEnabled = true;
         voiceView.RecorderInUse.StartRecording();
 
+
     }
 
     //remote Avatar
@@ -364,7 +365,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         Destroy(GameObject.Find("OVRPlayerController"));
 
         //destroy the player cone
-        GameObject octagon = GameObject.Find("octagon");
+        GameObject octagon = GameObject.Find("cone");
         if (octagon != null) {
             cone c = octagon.GetComponent<cone>();
             c.disabled = true;

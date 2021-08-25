@@ -28,7 +28,11 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     string PlayerPos;
     string HeadPos;
-    string HeadEAng;
+    string HeadForward;
+    string HeadUp;
+    string HeadCone;
+    string HeadConeVisibility;
+    string OtherHeadConeVisibility;
     string ControllerRPos;
     string ControllerREAng;
     string ControllerLPos;
@@ -39,6 +43,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     string StickyCircleVis;
     string Relocate;
     string Userspeaking;
+    static string null3 = "null,null,null";
 
     private float nextSampleTime = 0.0f;
     public float sampleFrequency = 0.04f;
@@ -73,8 +78,12 @@ public class AvatarBehaviourRecorder : MonoBehaviour
             foreach (inputs i in ram.inputs)
             {
                 PlayerPos = i.gameObject.transform.position.ToString("F3");
-                HeadPos = i.LocalHead == null ? "null,null,null" : i.LocalHead.position.ToString("F3");
-                HeadEAng = i.LocalHead == null ? "null,null,null" : i.LocalHead.eulerAngles.ToString("F3");
+                HeadPos = i.LocalHead == null ? "null,null,null" : i.LocalHead.position.ToString("F3");               
+                HeadForward = i.LocalHead == null ? "null,null,null" : i.LocalHead.forward.ToString("F3");
+                //HeadUp = i.LocalHead == null ? "null" : i.LocalHead.up.ToString("F3");
+                HeadCone = i.Cone == null ? "null" : Vector2ArrayToString(i.Cone.uvpos.ToArray());
+                HeadConeVisibility = i.Cone.userVisible ? "1" : "0";
+                OtherHeadConeVisibility = i.Cone.otherUserVisible ? "1" : "0";
                 ControllerRPos = i.ControllerRight == null ? "null,null,null" : i.ControllerRight.position.ToString("F3");
                 ControllerREAng = i.ControllerRight == null ? "null,null,null" : i.ControllerRight.eulerAngles.ToString("F3");
                 ControllerLPos = i.ControllerLeft == null ? "null,null,null" : i.ControllerLeft.position.ToString("F3");
@@ -86,7 +95,8 @@ public class AvatarBehaviourRecorder : MonoBehaviour
                 Userspeaking = i.Speaking.isSpeaking ? "1" : "0";
 
                 line += "," + PlayerPos.Trim(remove) + "," +
-                              HeadPos.Trim(remove) + "," + HeadEAng.Trim(remove) + "," +
+                              HeadPos.Trim(remove) + "," + HeadForward.Trim(remove) + "," + 
+                              HeadCone.Trim(remove) + "," + HeadConeVisibility.Trim(remove) + "," + OtherHeadConeVisibility.Trim(remove) + "," +
                               ControllerRPos.Trim(remove) + "," + ControllerREAng.Trim(remove) + "," +
                               ControllerLPos.Trim(remove) + "," + ControllerLEAng.Trim(remove) + "," +
                               PointerPos.Trim(remove) + "," + PointerVis.Trim(remove) + "," +
@@ -100,6 +110,15 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 #endif
     }
 
+    private static string Vector2ArrayToString(Vector2[] array) {
+
+        string sarray = "";
+
+        foreach(Vector2 a in array) sarray += a.ToString("F3");
+
+        return sarray.Replace(',', ';').Replace(')',':').Replace("(","");
+    }
+   
     private void Record()
     {
         
@@ -116,14 +135,14 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         writer = new StreamWriter(path, true);
 
         writer.WriteLine("time, " +
-            "U1PosX, U1PosY, U1PosZ, U1HeadX, U1HeadY, U1HeadZ, U1HeadEulerX, U1HeadEulerY, U1LocalHeadEulerZ, " +
-            "U1ControllerRX, U1ControllerRY, U1ControllerRZ, U1ControllerEulerRX, U1ControllerEulerRY, U1ControllerEulerRZ," +
-            "U1ControllerLX, U1ControllerLY, U1ControllerLZ, U1ControllerEulerLX, U1ControllerEulerLY, U1ControllerEulerLZ," +
-            "U1PointerX, U1PointerY, U1PointerZ, U1PointerVis, U1StickyPointerX, U1StickyPointerY, U1StickyPointerZ, U1StickyPointerVis, U1Speaking," +
-            "U2PosX, U2PosY, U2PosZ, U2HeadX, U2HeadY, U2HeadZ, U2HeadEulerX, U2HeadEulerY, U2LocalHeadEulerZ, " +
-            "U2ControllerRX, U2ControllerRY, U2ControllerRZ, U2ControllerEulerRX, U2ControllerEulerRY, U2ControllerEulerRZ," +
-            "U2ControllerLX, U2ControllerLY, U2ControllerLZ, U2ControllerEulerLX, U2ControllerEulerLY, U2ControllerEulerLZ," +
-            "U2PointerX, U2PointerY, U2PointerZ, U2PointerVis, U2StickyPointerX, U2StickyPointerY, U2StickyPointerZ, U2StickyPointerVis, U2Speaking");
+            "U1PosX,U1PosY,U1PosZ,U1HeadX,U1HeadY,U1HeadZ,U1HeadForwardX,U1HeadForwardY,U1LocalHeadForwardZ,U1HeadCone,U1HeadConeVisibility,U1OtherHeadConeVisibility," +
+            "U1ControllerRX,U1ControllerRY,U1ControllerRZ,U1ControllerEulerRX,U1ControllerEulerRY,U1ControllerEulerRZ," +
+            "U1ControllerLX,U1ControllerLY,U1ControllerLZ,U1ControllerEulerLX,U1ControllerEulerLY,U1ControllerEulerLZ," +
+            "U1PointerX,U1PointerY,U1PointerZ,U1PointerVis,U1StickyPointerX,U1StickyPointerY,U1StickyPointerZ,U1StickyPointerVis,U1Speaking," +
+            "U2PosX,U2PosY,U2PosZ,U2HeadX,U2HeadY,U2HeadZ,U2HeadForwardX,U2HeadForwardY,U2LocalHeadForwardZ,U2HeadCone,U2HeadConeVisibility,U2OtherHeadConeVisibility," +
+            "U2ControllerRX,U2ControllerRY,U2ControllerRZ,U2ControllerEulerRX,U2ControllerEulerRY,U2ControllerEulerRZ," +
+            "U2ControllerLX,U2ControllerLY,U2ControllerLZ,U2ControllerEulerLX,U2ControllerEulerLY,U2ControllerEulerLZ," +
+            "U2PointerX,U2PointerY,U2PointerZ,U2PointerVis,U2StickyPointerX,U2StickyPointerY,U2StickyPointerZ,U2StickyPointerVis,U2Speaking");
 
         startTime = Time.unscaledTime;
 

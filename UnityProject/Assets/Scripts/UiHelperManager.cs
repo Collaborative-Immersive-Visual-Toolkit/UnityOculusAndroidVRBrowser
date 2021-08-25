@@ -16,7 +16,7 @@ public class UiHelperManager : MonoBehaviourPun
     public void toggleOwnCone()
     {
 
-        GameObject obj = GameObject.FindGameObjectWithTag("octagon");
+        GameObject obj = GameObject.FindGameObjectWithTag("owncone");
 
         if (obj != null)
         {
@@ -39,11 +39,23 @@ public class UiHelperManager : MonoBehaviourPun
             if (rvc != null)
             {
                 rvc.SwitchVis();
-                return;
+               
             }
 
-            cone c = obj.GetComponentInChildren<cone>();
-            if (c != null) c.SwitchVis();
+            /*cone c = obj.GetComponentInChildren<cone>();
+            if (c != null) c.SwitchVis();*/
+        }
+
+
+        ///this is just for recording purposes 
+        GameObject objc = GameObject.FindGameObjectWithTag("owncone");
+
+        if (objc!= null)
+        {
+
+            cone c = objc.GetComponent<cone>();
+            c.SwitchOthersVis();
+
         }
     }
 
