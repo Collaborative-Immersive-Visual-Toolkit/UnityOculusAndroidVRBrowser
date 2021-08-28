@@ -2,10 +2,18 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+
+#if UNITY_EDITOR
+using UnityEditor.Recorder;
+using UnityEditor;
+#endif
 
 
 public class AvatarBehaviourRecorder : MonoBehaviour
 {
+    string path;
+
     StreamWriter writer;
 
     string line;
@@ -43,11 +51,19 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     string StickyCircleVis;
     string Relocate;
     string Userspeaking;
+    string UserInsight;
     static string null3 = "null,null,null";
 
     private float nextSampleTime = 0.0f;
     public float sampleFrequency = 0.04f;
 
+
+#if UNITY_EDITOR
+    private RecorderWindow GetRecorderWindow()
+    {
+        return (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
+    }
+#endif
     void Update()
     {
 
@@ -88,11 +104,12 @@ public class AvatarBehaviourRecorder : MonoBehaviour
                 ControllerREAng = i.ControllerRight == null ? "null,null,null" : i.ControllerRight.eulerAngles.ToString("F3");
                 ControllerLPos = i.ControllerLeft == null ? "null,null,null" : i.ControllerLeft.position.ToString("F3");
                 ControllerLEAng = i.ControllerLeft == null ? "null,null,null" : i.ControllerLeft.eulerAngles.ToString("F3");
-                PointerPos = i.Pointer._endPoint == Vector3.zero ? "null,null,null" : i.Pointer._endPoint.ToString("F3");
+                PointerPos = i.Pointer._endPoint == Vector3.zero || i.Pointer.isUI ? "null,null,null" : i.Pointer._endPoint.ToString("F3");
                 PointerVis = i.Pointer.insideOtherCone && PointerPos  != "null,null,null" ? "1" : "0";
                 StickyCircle = i.StickyCircle.GetAveragePoint() == Vector3.zero ? "null,null,null" : i.StickyCircle.center.ToString("F3");
                 StickyCircleVis = i.StickyCircle.circleVisible ? "1" : "0";
                 Userspeaking = i.Speaking.isSpeaking ? "1" : "0";
+                UserInsight = i.Insights.recording ? "1" : "0";
 
                 line += "," + PlayerPos.Trim(remove) + "," +
                               HeadPos.Trim(remove) + "," + HeadForward.Trim(remove) + "," + 
@@ -101,7 +118,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
                               ControllerLPos.Trim(remove) + "," + ControllerLEAng.Trim(remove) + "," +
                               PointerPos.Trim(remove) + "," + PointerVis.Trim(remove) + "," +
                               StickyCircle.Trim(remove) + "," + StickyCircleVis.Trim(remove) + "," +
-                              Userspeaking.Trim(remove);
+                              Userspeaking.Trim(remove) + "," + UserInsight.Trim(remove);
 
             }
 
@@ -124,6 +141,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         
             recording = true;
             this.NewData(fileName);
+            StartUnityRecorder();
         
     }
 
@@ -131,18 +149,18 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
         if (writer != null) closeWriter();
 
-        string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder +"\\" + name + ".csv";
+        path = MasterManager.GameSettings.DataFolder +"\\" + name + ".csv";
         writer = new StreamWriter(path, true);
 
         writer.WriteLine("time, " +
             "U1PosX,U1PosY,U1PosZ,U1HeadX,U1HeadY,U1HeadZ,U1HeadForwardX,U1HeadForwardY,U1LocalHeadForwardZ,U1HeadCone,U1HeadConeVisibility,U1OtherHeadConeVisibility," +
             "U1ControllerRX,U1ControllerRY,U1ControllerRZ,U1ControllerEulerRX,U1ControllerEulerRY,U1ControllerEulerRZ," +
             "U1ControllerLX,U1ControllerLY,U1ControllerLZ,U1ControllerEulerLX,U1ControllerEulerLY,U1ControllerEulerLZ," +
-            "U1PointerX,U1PointerY,U1PointerZ,U1PointerVis,U1StickyPointerX,U1StickyPointerY,U1StickyPointerZ,U1StickyPointerVis,U1Speaking," +
+            "U1PointerX,U1PointerY,U1PointerZ,U1PointerVis,U1StickyPointerX,U1StickyPointerY,U1StickyPointerZ,U1StickyPointerVis,U1Speaking,U1InsightRecording," +
             "U2PosX,U2PosY,U2PosZ,U2HeadX,U2HeadY,U2HeadZ,U2HeadForwardX,U2HeadForwardY,U2LocalHeadForwardZ,U2HeadCone,U2HeadConeVisibility,U2OtherHeadConeVisibility," +
             "U2ControllerRX,U2ControllerRY,U2ControllerRZ,U2ControllerEulerRX,U2ControllerEulerRY,U2ControllerEulerRZ," +
             "U2ControllerLX,U2ControllerLY,U2ControllerLZ,U2ControllerEulerLX,U2ControllerEulerLY,U2ControllerEulerLZ," +
-            "U2PointerX,U2PointerY,U2PointerZ,U2PointerVis,U2StickyPointerX,U2StickyPointerY,U2StickyPointerZ,U2StickyPointerVis,U2Speaking");
+            "U2PointerX,U2PointerY,U2PointerZ,U2PointerVis,U2StickyPointerX,U2StickyPointerY,U2StickyPointerZ,U2StickyPointerVis,U2Speaking,U2InsightRecording");
 
         startTime = Time.unscaledTime;
 
@@ -151,11 +169,13 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     void OnDisable()
     {
         closeWriter();
+        StopUnityRecorder();
     }
 
     void OnApplicationQuit()
     {
-        closeWriter(); 
+        closeWriter();
+        StopUnityRecorder();
     }
 
     public void closeWriter() {
@@ -166,6 +186,37 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
         writer = null;
 
+    }
+
+
+    public void StartUnityRecorder() {
+#if UNITY_EDITOR
+        RecorderWindow recorderWindow = GetRecorderWindow();
+
+        if (!recorderWindow.IsRecording())
+        {
+            recorderWindow.StartRecording();
+        }
+
+        foreach (inputs i in ram.inputs)
+        {
+            i.VoiceRecorder.StartRecording();
+        }
+
+#endif
+    }
+
+    public void StopUnityRecorder() {
+#if UNITY_EDITOR
+        RecorderWindow recorderWindow = GetRecorderWindow();
+        if (recorderWindow.IsRecording())
+            recorderWindow.StopRecording();
+
+        foreach (inputs i in ram.inputs)
+        {
+            i.VoiceRecorder.SaveAndCloseFile();
+        }
+#endif
     }
 
 }

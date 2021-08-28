@@ -429,7 +429,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private void DataFolderCreation() {
 
-        string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\";
+        string path = MasterManager.GameSettings.DataFolder + "\\";
 
         if(!Directory.Exists(path)) Directory.CreateDirectory(path);
 

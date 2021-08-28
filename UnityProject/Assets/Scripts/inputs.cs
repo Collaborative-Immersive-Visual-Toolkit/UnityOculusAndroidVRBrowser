@@ -111,7 +111,6 @@ public class inputs : MonoBehaviour
 
         }
 
-
         [SerializeField]
         private speaking _speaking;
         public speaking Speaking
@@ -135,28 +134,63 @@ public class inputs : MonoBehaviour
 
         }
 
-    public Transform DeepChildSearch(GameObject g, string childName) {
-
-        Transform child = null;
-
-        for (int i = 0; i< g.transform.childCount; i++) {
-
-            Transform currentchild = g.transform.GetChild(i);
-
-            if (currentchild.gameObject.name == childName)
+        [SerializeField]
+        private Insights _insight;
+        public Insights Insights
+        {
+            get
             {
-
-                return currentchild;
-            }
-            else {
-
-                child = DeepChildSearch(currentchild.gameObject, childName);
-
-                if (child != null) return child;
+                _insight = gameObject.GetComponent<Insights>();
+                return _insight;
             }
 
         }
 
-        return null;
-    }
+        [SerializeField]
+        private RecorderObject _voiceRecorder;
+        public RecorderObject VoiceRecorder
+        {
+            get
+            {
+
+                Transform t = DeepChildSearch(gameObject, "Audio Source");
+
+                if (t != null)
+                {
+                    _voiceRecorder = t.GetComponent<RecorderObject>();
+                    return _voiceRecorder;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+
+        }
+
+        public Transform DeepChildSearch(GameObject g, string childName) {
+
+            Transform child = null;
+
+            for (int i = 0; i< g.transform.childCount; i++) {
+
+                Transform currentchild = g.transform.GetChild(i);
+
+                if (currentchild.gameObject.name == childName)
+                {
+
+                    return currentchild;
+                }
+                else {
+
+                    child = DeepChildSearch(currentchild.gameObject, childName);
+
+                    if (child != null) return child;
+                }
+
+            }
+
+            return null;
+        }
 }

@@ -18,7 +18,7 @@ public class RecorderAll : MonoBehaviour
 
         string fileName = "all";
 
-        string path = Application.dataPath + "\\" + MasterManager.GameSettings.DataFolder + "\\" + fileName + ".wav";
+        string path = MasterManager.GameSettings.DataFolder + "\\" + fileName + ".wav";
 
         stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 

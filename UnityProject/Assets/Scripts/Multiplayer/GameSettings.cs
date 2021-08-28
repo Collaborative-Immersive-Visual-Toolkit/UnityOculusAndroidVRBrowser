@@ -100,6 +100,15 @@ public class GameSettings : ScriptableObject
     public byte UiHelperSwitch = 34;
 
     [SerializeField]
+    public byte ConeOn = 38;
+
+    [SerializeField]
+    public byte OwnConeOn = 39;
+
+    [SerializeField]
+    public byte ConeOff = 40;
+
+    [SerializeField]
     public bool _observer = true;
 
     [SerializeField]
@@ -138,15 +147,17 @@ public class GameSettings : ScriptableObject
         }
     }
 
-    private string _dataFolder = "Data";
-    
+    public string _dataFolder = "Data";
+
+    [SerializeField]
     public string DataFolder {
 
         get {
 
                 if (_dataFolder == "Data")
                 {
-                    _dataFolder = _dataFolder + System.DateTime.Now.ToString("_MMM_ddd_HH_mm");
+                    
+                    _dataFolder = Application.dataPath.Replace("/Assets", "/Data") + System.DateTime.Now.ToString("_MMM_ddd_HH_mm");
                 }
 
                 return _dataFolder;

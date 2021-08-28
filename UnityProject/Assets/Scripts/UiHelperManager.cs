@@ -28,6 +28,36 @@ public class UiHelperManager : MonoBehaviourPun
 
     }
 
+    public void SwitchOnOwnCone()
+    {
+
+        GameObject obj = GameObject.FindGameObjectWithTag("owncone");
+
+        if (obj != null)
+        {
+
+            cone c = obj.GetComponent<cone>();
+            if(!c.visible) c.SwitchVis();
+
+        }
+
+    }
+
+    public void SwitchOffOwnCone()
+    {
+
+        GameObject obj = GameObject.FindGameObjectWithTag("owncone");
+
+        if (obj != null)
+        {
+
+            cone c = obj.GetComponent<cone>();
+            if (c.visible) c.SwitchVis();
+
+        }
+
+    }
+
     public void toggleOthersCone()
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("remoteavatar");
@@ -55,6 +85,64 @@ public class UiHelperManager : MonoBehaviourPun
 
             cone c = objc.GetComponent<cone>();
             c.SwitchOthersVis();
+
+        }
+    }
+
+    public void SwitchOnOthersCone()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("remoteavatar");
+
+        foreach (GameObject obj in objs)
+        {
+
+            RemoteVisualCone rvc = obj.GetComponentInChildren<RemoteVisualCone>();
+            if (rvc != null)
+            {
+                if(!rvc.visible) rvc.SwitchVis();
+
+            }
+
+        }
+
+
+        ///this is just for recording purposes 
+        GameObject objc = GameObject.FindGameObjectWithTag("owncone");
+
+        if (objc != null)
+        {
+
+            cone c = objc.GetComponent<cone>();
+            if( !c.otherVisible) c.SwitchOthersVis();
+
+        }
+    }
+
+    public void SwitchOffOthersCone()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("remoteavatar");
+
+        foreach (GameObject obj in objs)
+        {
+
+            RemoteVisualCone rvc = obj.GetComponentInChildren<RemoteVisualCone>();
+            if (rvc != null)
+            {
+                if (rvc.visible) rvc.SwitchVis();
+
+            }
+
+        }
+
+
+        ///this is just for recording purposes 
+        GameObject objc = GameObject.FindGameObjectWithTag("owncone");
+
+        if (objc != null)
+        {
+
+            cone c = objc.GetComponent<cone>();
+            if (c.otherVisible) c.SwitchOthersVis();
 
         }
     }
@@ -99,6 +187,22 @@ public class UiHelperManager : MonoBehaviourPun
                 Load2();
             }
 
+        }
+        else if (obj.Code == MasterManager.GameSettings.ConeOff)
+        {
+            SwitchOffOthersCone();
+            SwitchOffOwnCone();
+
+        }
+        else if (obj.Code == MasterManager.GameSettings.ConeOn)
+        {
+            SwitchOnOthersCone();
+            SwitchOffOwnCone();
+        }
+        else if (obj.Code == MasterManager.GameSettings.OwnConeOn)
+        {
+            SwitchOnOthersCone();
+            SwitchOnOwnCone();
         }
 
     }

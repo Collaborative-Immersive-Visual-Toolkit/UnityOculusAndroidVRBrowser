@@ -25,6 +25,25 @@ public class UiHelperRemoteControll : MonoBehaviourPun
             PhotonNetwork.RaiseEvent(MasterManager.GameSettings.UiHelperSwitch, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
         }
+        else if (Input.GetKeyDown("q"))
+        {
+            Debug.Log("ConeOff");
+            object[] data = new object[] {};
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.ConeOff, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+        }
+        else if (Input.GetKeyDown("w"))
+        {
+            object[] data = new object[] {};
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.ConeOn, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+        }
+        else if (Input.GetKeyDown("e"))
+        {
+            object[] data = new object[] {};
+            PhotonNetwork.RaiseEvent(MasterManager.GameSettings.OwnConeOn, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+        }
 
 #endif
 

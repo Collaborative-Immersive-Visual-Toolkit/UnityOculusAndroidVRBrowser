@@ -26,6 +26,7 @@ public class RemoteLaser : MonoBehaviourPun
     private bool _hitTarget;
     private bool sticky;
     private bool reorient;
+    public bool isUI;
 
     private Color c;
 
@@ -60,17 +61,18 @@ public class RemoteLaser : MonoBehaviourPun
 
             object[] data = (object[])obj.CustomData;
 
-            if ((string)data[8] == gameObject.transform.parent.gameObject.name)
+            if ((string)data[9] == gameObject.transform.parent.gameObject.name)
             {
 
                 _startPoint = (Vector3)data[0];
                 _endPoint = (Vector3)data[1];
-                _hitTarget = (bool)data[2]; 
-                sticky = (bool)data[3];
-                laserBeamBehavior = (LaserBeamBehavior)data[4];
-                insideOtherCone = (bool)data[5];
-                circlepos = (Vector3[])data[6];
-                circlealpha = (float)data[7];
+                _hitTarget = (bool)data[2];
+                isUI = (bool)data[3];
+                sticky = (bool)data[4];
+                laserBeamBehavior = (LaserBeamBehavior)data[5];
+                insideOtherCone = (bool)data[6];
+                circlepos = (Vector3[])data[7];
+                circlealpha = (float)data[8];
 
                 UpdatePointer();
                 UpdateLaserBeam();

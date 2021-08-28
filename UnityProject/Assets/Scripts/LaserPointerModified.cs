@@ -154,7 +154,7 @@ public class LaserPointerModified : OVRCursor
             if (cursorVisual) cursorVisual.SetActive(false);
         }
 
-        object[] data = new object[] { _startPoint, _endPoint, _hitTarget, sticky, laserBeamBehavior, insideOtherCone, circle.circlePos, circle.alpha, PhotonNetwork.NickName };
+        object[] data = new object[] { _startPoint, _endPoint, _hitTarget, isUI, sticky, laserBeamBehavior, insideOtherCone, circle.circlePos, circle.alpha, PhotonNetwork.NickName };
         gameObject.SendMessage("RaiseLaserChangeEvent", data, SendMessageOptions.DontRequireReceiver);
 
     }
@@ -355,7 +355,6 @@ public class LaserPointerModified : OVRCursor
 
         return updateMaterial;
     }
-
 
     private void UpdateMaterial() {
 

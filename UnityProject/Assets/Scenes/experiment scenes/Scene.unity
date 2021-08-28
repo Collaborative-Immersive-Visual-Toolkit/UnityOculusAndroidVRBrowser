@@ -341,6 +341,7 @@ GameObject:
   - component: {fileID: 476690130}
   - component: {fileID: 476690129}
   - component: {fileID: 476690128}
+  - component: {fileID: 476690131}
   m_Layer: 5
   m_Name: VRUI-Button_Outline
   m_TagString: VRUIButton
@@ -411,7 +412,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350780341}
+      - m_Target: {fileID: 476690131}
         m_MethodName: ToggleRecording
         m_Mode: 1
         m_Arguments:
@@ -459,6 +460,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476690126}
   m_CullTransparentMesh: 0
+--- !u!114 &476690131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476690126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc1099e28f89a7841892f68131ac8ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: {fileID: 1736681786}
 --- !u!1001 &739317780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -644,12 +658,12 @@ PrefabInstance:
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
@@ -1464,7 +1478,6 @@ GameObject:
   - component: {fileID: 1350780340}
   - component: {fileID: 1350780342}
   - component: {fileID: 1350780344}
-  - component: {fileID: 1350780341}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1534,19 +1547,6 @@ MonoBehaviour:
   fileName: Task2
   ram: {fileID: 1350780339}
   sampleFrequency: 0.04
---- !u!114 &1350780341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1350780336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee026c96d3369a4da6ef8a7378df76e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 1736681786}
 --- !u!114 &1350780342
 MonoBehaviour:
   m_ObjectHideFlags: 0

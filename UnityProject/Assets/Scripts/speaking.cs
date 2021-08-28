@@ -12,8 +12,6 @@ public class speaking : MonoBehaviour
     public bool isSpeaking = false;
     public float minimumLevel = 0.001f;
 
-    public RecorderObject r;
-
     void Update()
     {
 #if UNITY_EDITOR
@@ -33,10 +31,5 @@ public class speaking : MonoBehaviour
 #endif
     }
 
-    void OnAudioFilterRead(float[] data, int channels)
-    {
-        if (r != null) 
-            r.WriteFrameAudioData(data); 
-    }
 }
 

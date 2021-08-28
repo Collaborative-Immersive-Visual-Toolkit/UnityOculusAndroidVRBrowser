@@ -26,8 +26,6 @@ public class data_loader : MonoBehaviourPun
 
     public AvatarBehaviourRecorder avatarRecorder;
 
-    public PartecipantsVoiceRecorder partecipantsVoiceRecorder;
-
     public RemoteAvatarsManager ram;
     /*
     [Tooltip("Gamepad button to act as gaze click")]
