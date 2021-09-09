@@ -43,8 +43,11 @@ public class UrlManager : MonoBehaviourPun
             {
                 LoadVis2();
             }
+            else if (Input.GetKeyDown("3"))
+            {
+                LoadVis3();
+            }
 
-        
     }
 
     public void LoadVis1() 
@@ -157,6 +160,62 @@ public class UrlManager : MonoBehaviourPun
         }
     }
 
+    public void LoadVis3()
+    {
+
+
+        if (MasterManager.GameSettings.Observer)
+        {
+
+
+            changeMaterial(screenOne.gameObject, "Materials/" + urlOne + "_Third");
+            changeMaterial(screenTwo.gameObject, "Materials/" + urlTwo + "_Third");
+            changeMaterial(screenThree.gameObject, "Materials/" + urlThree + "_Third");
+            changeMaterial(screenFour.gameObject, "Materials/" + urlFour + "_Third");
+            changeMaterial(screenFive.gameObject, "Materials/" + urlFive + "_Third");
+            changeMaterial(screenSix.gameObject, "Materials/" + urlSix + "_Third");
+            changeMaterial(screenSeven.gameObject, "Materials/" + urlSeven + "_Third");
+            changeMaterial(screenEight.gameObject, "Materials/" + urlEight + "_Third");
+
+
+        }
+        else
+        {
+            if (!screenOne.enabled)
+            {
+
+                screenOne.startUrl = mainUrl + urlOne + "_Third.html";
+                screenTwo.startUrl = mainUrl + urlTwo + "_Third.html";
+                screenThree.startUrl = mainUrl + urlThree + "_Third.html";
+                screenFour.startUrl = mainUrl + urlFour + "_Third.html";
+                screenFive.startUrl = mainUrl + urlFive + "_Third.html";
+                screenSix.startUrl = mainUrl + urlSix + "_Third.html";
+                screenSeven.startUrl = mainUrl + urlSeven + "_Third.html";
+                screenEight.startUrl = mainUrl + urlEight + "_Third.html";
+
+                screenOne.enabled = true;
+                screenTwo.enabled = true;
+                screenThree.enabled = true;
+                screenFour.enabled = true;
+                screenFive.enabled = true;
+                screenSix.enabled = true;
+                screenSeven.enabled = true;
+                screenEight.enabled = true;
+            }
+            else
+            {
+
+                screenOne.LoadURL(mainUrl + urlOne + "_Third.html");
+                screenTwo.LoadURL(mainUrl + urlTwo + "_Third.html");
+                screenThree.LoadURL(mainUrl + urlThree + "_Third.html");
+                screenFour.LoadURL(mainUrl + urlFour + "_Third.html");
+                screenFive.LoadURL(mainUrl + urlFive + "_Third.html");
+                screenSix.LoadURL(mainUrl + urlSix + "_Third.html");
+                screenSeven.LoadURL(mainUrl + urlSeven + "_Third.html");
+                screenEight.LoadURL(mainUrl + urlEight + "_Third.html");
+            }
+        }
+    }
     public void changeMaterial(GameObject g, string s) {
 
         Material[] a = new Material[1];
