@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Pun;
-
+using System;
+using System.IO;
 
 public class UrlManager : MonoBehaviourPun
 {
 
     public Launcher l;
 
+    public const string keywordsCoordinatesFileName = "keywords_coordinates.json";
+
+    private keywordsCoordinates keyCo;
 
     public BrowserView screenOne;
     public BrowserView screenTwo;
@@ -31,6 +35,33 @@ public class UrlManager : MonoBehaviourPun
 
     public string mainUrl;
 
+    private void Start()
+    {
+
+
+#if UNITY_EDITOR
+        string keywordsCoordinatesPath = Path.Combine(Application.streamingAssetsPath, keywordsCoordinatesFileName);
+
+#elif UNITY_ANDROID
+
+        string keywordsCoordinatesPath =  Path.Combine(Application.persistentDataPath, keywordsCoordinatesFileName);
+
+        //soluation is to manually copy the file to -> adb push <local file> <remote location>
+
+#endif
+
+        if (!File.Exists(keywordsCoordinatesPath))
+        {
+            Debug.LogError("Could not find " + keywordsCoordinatesPath);
+        }
+        else {
+
+            string jsonString = File.ReadAllText(keywordsCoordinatesPath);
+            keyCo = keywordsCoordinates.CreateFromJSON(jsonString);
+        }
+
+
+    }
 
     private void Update()
     {
@@ -216,6 +247,7 @@ public class UrlManager : MonoBehaviourPun
             }
         }
     }
+
     public void changeMaterial(GameObject g, string s) {
 
         Material[] a = new Material[1];
@@ -223,3 +255,88 @@ public class UrlManager : MonoBehaviourPun
         g.GetComponent<MeshRenderer>().materials = a;
     }
 }
+
+
+[Serializable]
+public class keywordsCoordinates
+{
+
+    public Page BoxAndWhiskers;
+    public Page BoxAndWhiskers_Gender;
+    public Page BoxAndWhiskers_Third;
+
+    public Page BoxAndWhiskers2;
+    public Page BoxAndWhiskers2_Gender;
+    public Page BoxAndWhiskers2_Third;
+
+    public Page Histograms;
+    public Page Histograms_Gender;
+    public Page Histograms_Third;
+
+    public Page Oscar;
+    public Page Oscar_Gender;
+    public Page Oscar_Third;
+
+    public Page Scatterplot1;
+    public Page Scatterplot1_Gender;
+    public Page Scatterplot1_Third;
+
+    public Page Scatterplot2;
+    public Page Scatterplot2_Gender;
+    public Page Scatterplot2_Third;
+
+    public Page StackBarChart;
+    public Page StackBarChart_Gender;
+    public Page StackBarChart_Third;
+
+    public static keywordsCoordinates CreateFromJSON(string jsonString)
+    {   
+        return JsonUtility.FromJson<keywordsCoordinates>(jsonString);
+
+    }
+
+}
+
+[Serializable]
+public class Page
+{
+   public PageElement[] graphs;
+   public string[] keys;
+   public RectCorners[] rect;
+   public PageElement[] scatter;
+   public PageElement[] xaxeslabels;
+   public PageElement[] xticks;
+   public PageElement[] yaxeslabels;
+   public PageElement[] yticks;
+   public mapofIndexes[] mapofIndexes;
+      
+}
+
+[Serializable]
+public class mapofIndexes
+{
+    public float[] indexes;
+    public string[] keywords;
+  
+}
+
+
+[Serializable]
+public class PageElement
+{
+    public float bottom;
+    public float left;
+    public string name;
+    public float right;
+    public float top;
+}
+
+[Serializable]
+public class RectCorners
+{
+    public float bottom;
+    public float left;
+    public float right;
+    public float top;
+}
+

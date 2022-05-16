@@ -1,12 +1,15 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Audio;
 using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using GoogleCloudStreamingSpeechToText;
+using UnityEngine.UI;
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
@@ -36,6 +39,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         {
             Connect();
         }
+
     }
 
     public void Connect()
@@ -151,7 +155,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         photonTransformView.m_SynchronizeRotation = false;
         photonView.ObservedComponents = new List<Component>();
         photonView.ObservedComponents.Add(photonTransformView);
-        photonView.Synchronization = ViewSynchronization.UnreliableOnChange; // set observeoption to unreliableonchange
+        photonView.Synchronization = ViewSynchronization.UnreliableOnChange; // set observe option to unreliable onchange
 
         //instantiate the local avatr
         GameObject TrackingSpace = GameObject.Find("TrackingSpace");
@@ -241,6 +245,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         ////add recorder to the element that has the photonView
         Recorder recorder = photonView.gameObject.AddComponent<Recorder>();
         recorder.DebugEchoMode = true;
+        recorder.UseOnAudioFilterRead = true;
+        recorder.FrameDuration = Photon.Voice.OpusCodec.FrameDuration.Frame20ms;
+        recorder.SamplingRate = POpusCodec.Enums.SamplingRate.Sampling48000;
+        recorder.MicrophoneType = Recorder.MicType.Photon;
+        recorder.SetAndroidNativeMicrophoneSettings(true, true, true);
+        recorder.RestartRecording(true);
 
         ////add Photonvoice view to the local avatar
         PhotonVoiceView voiceView = photonView.gameObject.AddComponent<PhotonVoiceView>();
@@ -252,6 +262,14 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         yield return voiceView.RecorderInUse.TransmitEnabled = true;
         voiceView.RecorderInUse.StartRecording();
 
+        ///try the google speech
+        GameObject empty = new GameObject();
+        CustomStreamingRecognizer customsr = empty.AddComponent<CustomStreamingRecognizer>();
+        customsr.Initialize();
+        customsr.enableDebugLogging = true;
+        GameObject player = GameObject.Find("OVRPlayerController");
+        Transform t = player.transform.FindDeepChild("Speech2Text");
+        if (t != null) customsr.t = t.GetComponent<Text>();
 
     }
 
@@ -389,12 +407,19 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //add audio source
         AudioSource audioSource = localObserver.GetComponent<AudioSource>();
 
+        
         ////add speaker to the element which holds the audio source 
         Speaker speaker = audioSource.gameObject.AddComponent<Speaker>();
 
         ////add recorder to the element that has the photonView
         Recorder recorder = localObserver.gameObject.AddComponent<Recorder>();
         recorder.DebugEchoMode = false;
+        recorder.UseOnAudioFilterRead = true;
+        recorder.FrameDuration = Photon.Voice.OpusCodec.FrameDuration.Frame20ms;
+        recorder.SamplingRate = POpusCodec.Enums.SamplingRate.Sampling48000;
+        recorder.MicrophoneType = Recorder.MicType.Photon;
+        recorder.SetAndroidNativeMicrophoneSettings(true, true, true);
+        recorder.RestartRecording(true);
 
         ////add Photonvoice view to the local avatar
         PhotonVoiceView voiceView = localObserver.gameObject.AddComponent<PhotonVoiceView>();
@@ -406,6 +431,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         yield return voiceView.RecorderInUse.TransmitEnabled = true;
         voiceView.RecorderInUse.StartRecording();
 
+        ///try the google speech
+        GameObject empty = new GameObject();
+        CustomStreamingRecognizer customsr = empty.AddComponent<CustomStreamingRecognizer>();
+        customsr.enableDebugLogging = true;
+        customsr.Initialize();
 
     }
 
@@ -477,7 +507,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         return null;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         PhotonNetwork.Disconnect();
     }

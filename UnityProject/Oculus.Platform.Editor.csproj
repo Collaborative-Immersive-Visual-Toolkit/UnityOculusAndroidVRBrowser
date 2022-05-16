@@ -47,7 +47,6 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2019.4.0f1</UnityVersion>
@@ -268,31 +267,79 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="MessageLibrary">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/SimpleWebBrowser/Plugins/MessageLibrary.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/SimpleWebBrowser/Plugins/MessageLibrary.dll</HintPath>
     </Reference>
     <Reference Include="SharedMemory">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/SimpleWebBrowser/Plugins/x86_x64/SharedMemory.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Assets/SimpleWebBrowser/Plugins/x86_x64/SharedMemory.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Api.CommonProtos">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Api.CommonProtos.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Api.Gax">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Api.Gax.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Api.Gax.Grpc">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Api.Gax.Grpc.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Cloud.Speech.V1">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Cloud.Speech.V1.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.LongRunning">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.LongRunning.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Auth">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Grpc.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core.Api">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Grpc.Core.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.oshoham.unity-google-cloud-streaming-speech-to-text@0.1.8/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -649,16 +696,16 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>C:/Users/Riccardo/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

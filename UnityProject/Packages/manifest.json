@@ -1,5 +1,15 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.oshoham.unity-google-cloud-streaming-speech-to-text"
+      ]
+    }
+  ],
   "dependencies": {
+    "com.oshoham.unity-google-cloud-streaming-speech-to-text": "0.1.8",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ads": "3.4.7",
@@ -16,7 +26,7 @@
     "com.unity.timeline": "1.2.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.xr.management": "3.2.13",
-    "com.unity.xr.oculus": "1.4.0",
+    "com.unity.xr.oculus": "1.5.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
