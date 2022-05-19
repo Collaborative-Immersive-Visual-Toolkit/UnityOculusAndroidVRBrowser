@@ -4,6 +4,12 @@ using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using System;
+using UnityEngine.Events;
+
+[System.Serializable] 
+public class PushConePoints : UnityEvent<List<Vector3>> { }
+
+
 
 public class cone : MonoBehaviourPun
 {
@@ -20,6 +26,8 @@ public class cone : MonoBehaviourPun
     public MeshRenderer mr;
 
     public bool simulated = false;
+    public PushConePoints pushPoints;
+
 
     // Start is called before the first frame update
     void Start()
@@ -91,8 +99,6 @@ public class cone : MonoBehaviourPun
             c.updateMesh(mf);
         }
 
-
-
         if (OldPositions != c.positions)
         {
             var data = c.SerializeData();
@@ -100,6 +106,8 @@ public class cone : MonoBehaviourPun
         }
         OldPositions = c.positions;
 
+        pushPoints.Invoke(c.positions);
+       
     }
 
     public void SwitchVis()
@@ -167,7 +175,7 @@ public class cone : MonoBehaviourPun
 public class ConeVectors
 {
     public Vector3[] vectorsList;
-    
+
     public int[] trianglesList;
 
     public Transform head;
@@ -189,7 +197,7 @@ public class ConeVectors
 
     //gradient 
     private float from = 0.001f;
-    private float to= 0.999f;
+    private float to = 0.999f;
     private float howfar = 0f;
     private bool direction = true;
     private float alpha = 1f;
@@ -246,28 +254,28 @@ public class ConeVectors
 
         while (i > 0)
         {
-            i--;        
+            i--;
             if (Physics.Raycast(head.position, directions[i], out hits[i], 8f, layerMask))
             {
                 if (hits[i].collider.gameObject.name == "inverse") {
 
                     if (hits[i].point.y > 1) {
 
-                        positions.Add(new Vector3(hits[i].point.x,1.959f, hits[i].point.z));                       
+                        positions.Add(new Vector3(hits[i].point.x, 1.959f, hits[i].point.z));
 
                     }
                     else {
 
-                        positions.Add(new Vector3(hits[i].point.x,0.625f, hits[i].point.z));
+                        positions.Add(new Vector3(hits[i].point.x, 0.625f, hits[i].point.z));
                     }
-                    
+
                 }
                 else
                 {
-                    
+
                     positions.Add(hits[i].point);
-                }              
-                distances+=hits[i].distance;
+                }
+                distances += hits[i].distance;
             }
 
         }
@@ -301,17 +309,17 @@ public class ConeVectors
     }
 
     public void RaycastForward()
-    {     
+    {
         int i = vectorsList.Length;
         RaycastHit hit = new RaycastHit();
-   
-        if (Physics.Raycast(head.position, head.forward, out hit,6f, layerMask))
+
+        if (Physics.Raycast(head.position, head.forward, out hit, 6f, layerMask))
         {
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = hit.point;
-            sphere.transform.localScale = new Vector3(.1f,.1f,.1f) ;
+            sphere.transform.localScale = new Vector3(.1f, .1f, .1f);
             currenthit = hit;
-        }     
+        }
 
     }
 
@@ -326,9 +334,9 @@ public class ConeVectors
 
     public void clearLineRender(LineRenderer lr)
     {
-       
-            lr.positionCount = 0;
-        
+
+        lr.positionCount = 0;
+
 
     }
 
@@ -343,7 +351,7 @@ public class ConeVectors
 
         newVertices[0] = head.transform.position;
 
-        for (int j = 1; j < 21; j++)  newVertices[j] = positions[j - 1];
+        for (int j = 1; j < 21; j++) newVertices[j] = positions[j - 1];
 
         for (int j = 0; j < 21; j++) newVertices[j] = mf.gameObject.transform.InverseTransformPoint(newVertices[j]);
 

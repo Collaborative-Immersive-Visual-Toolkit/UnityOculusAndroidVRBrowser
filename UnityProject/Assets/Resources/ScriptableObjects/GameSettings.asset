@@ -31,6 +31,9 @@ MonoBehaviour:
   DeletePlaceHolders: 6
   VisualizationChange: 33
   UiHelperSwitch: 34
-  _observer: 1
+  ConeOn: 38
+  OwnConeOn: 39
+  ConeOff: 40
+  _observer: 0
   _devmode: 0
-  _dataFolder: Data
+  _dataFolder: C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Data_May_Wed_11_21

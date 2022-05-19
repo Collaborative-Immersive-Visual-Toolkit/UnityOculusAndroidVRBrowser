@@ -5,15 +5,17 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using System;
 using System.IO;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class ChangeVisualization : UnityEvent<visualization> { }
+
 
 public class UrlManager : MonoBehaviourPun
 {
 
+
     public Launcher l;
-
-    public const string keywordsCoordinatesFileName = "keywords_coordinates.json";
-
-    private keywordsCoordinates keyCo;
 
     public BrowserView screenOne;
     public BrowserView screenTwo;
@@ -35,33 +37,9 @@ public class UrlManager : MonoBehaviourPun
 
     public string mainUrl;
 
-    private void Start()
-    {
+    public List<BoxCollider> BoxColliders;
 
-
-#if UNITY_EDITOR
-        string keywordsCoordinatesPath = Path.Combine(Application.streamingAssetsPath, keywordsCoordinatesFileName);
-
-#elif UNITY_ANDROID
-
-        string keywordsCoordinatesPath =  Path.Combine(Application.persistentDataPath, keywordsCoordinatesFileName);
-
-        //soluation is to manually copy the file to -> adb push <local file> <remote location>
-
-#endif
-
-        if (!File.Exists(keywordsCoordinatesPath))
-        {
-            Debug.LogError("Could not find " + keywordsCoordinatesPath);
-        }
-        else {
-
-            string jsonString = File.ReadAllText(keywordsCoordinatesPath);
-            keyCo = keywordsCoordinates.CreateFromJSON(jsonString);
-        }
-
-
-    }
+    public ChangeVisualization changeVisualization;
 
     private void Update()
     {
@@ -69,20 +47,25 @@ public class UrlManager : MonoBehaviourPun
             if (Input.GetKeyDown("1"))
             {
                 LoadVis1();
+                
             }
             else if (Input.GetKeyDown("2"))
             {
                 LoadVis2();
+                
             }
             else if (Input.GetKeyDown("3"))
             {
                 LoadVis3();
-            }
+                
+             }
 
     }
 
     public void LoadVis1() 
     {
+        changeVisualization.Invoke(visualization.visualization1);
+
         if (MasterManager.GameSettings.Observer)
         {
 
@@ -97,6 +80,8 @@ public class UrlManager : MonoBehaviourPun
         }
         else
         {
+
+#if UNITY_ANDROID && !UNITY_EDITOR
             if (!screenOne.enabled)
             {
 
@@ -130,13 +115,26 @@ public class UrlManager : MonoBehaviourPun
                 screenSeven.LoadURL(mainUrl + urlSeven + ".html");
                 screenEight.LoadURL(mainUrl + urlEight + ".html");
             }
+#elif UNITY_EDITOR
+
+            changeMaterial(screenOne.gameObject, "Materials/" + urlOne );
+            changeMaterial(screenTwo.gameObject, "Materials/" + urlTwo );
+            changeMaterial(screenThree.gameObject, "Materials/" + urlThree );
+            changeMaterial(screenFour.gameObject, "Materials/" + urlFour );
+            changeMaterial(screenFive.gameObject, "Materials/" + urlFive );
+            changeMaterial(screenSix.gameObject, "Materials/" + urlSix );
+            changeMaterial(screenSeven.gameObject, "Materials/" + urlSeven );
+            changeMaterial(screenEight.gameObject, "Materials/" + urlEight );
+#endif
+
         }
+
 
     }
 
     public void LoadVis2()
     {
-
+        changeVisualization.Invoke(visualization.visualization2);
 
         if (MasterManager.GameSettings.Observer)
         {
@@ -155,6 +153,8 @@ public class UrlManager : MonoBehaviourPun
         }
         else
         {
+
+#if UNITY_ANDROID && !UNITY_EDITOR
             if (!screenOne.enabled)
             {
 
@@ -188,12 +188,24 @@ public class UrlManager : MonoBehaviourPun
                 screenSeven.LoadURL(mainUrl + urlSeven + "_Gender.html");
                 screenEight.LoadURL(mainUrl + urlEight + "_Gender.html");
             }
+#elif UNITY_EDITOR
+
+
+            changeMaterial(screenOne.gameObject, "Materials/" + urlOne + "_Gender");
+            changeMaterial(screenTwo.gameObject, "Materials/" + urlTwo + "_Gender");
+            changeMaterial(screenThree.gameObject, "Materials/" + urlThree + "_Gender");
+            changeMaterial(screenFour.gameObject, "Materials/" + urlFour + "_Gender");
+            changeMaterial(screenFive.gameObject, "Materials/" + urlFive + "_Gender");
+            changeMaterial(screenSix.gameObject, "Materials/" + urlSix + "_Gender");
+            changeMaterial(screenSeven.gameObject, "Materials/" + urlSeven + "_Gender");
+            changeMaterial(screenEight.gameObject, "Materials/" + urlEight + "_Gender");
+#endif
         }
     }
 
     public void LoadVis3()
     {
-
+        changeVisualization.Invoke(visualization.visualization3);
 
         if (MasterManager.GameSettings.Observer)
         {
@@ -212,6 +224,8 @@ public class UrlManager : MonoBehaviourPun
         }
         else
         {
+
+#if UNITY_ANDROID && !UNITY_EDITOR
             if (!screenOne.enabled)
             {
 
@@ -245,6 +259,18 @@ public class UrlManager : MonoBehaviourPun
                 screenSeven.LoadURL(mainUrl + urlSeven + "_Third.html");
                 screenEight.LoadURL(mainUrl + urlEight + "_Third.html");
             }
+#elif UNITY_EDITOR
+
+            changeMaterial(screenOne.gameObject, "Materials/" + urlOne + "_Third");
+            changeMaterial(screenTwo.gameObject, "Materials/" + urlTwo + "_Third");
+            changeMaterial(screenThree.gameObject, "Materials/" + urlThree + "_Third");
+            changeMaterial(screenFour.gameObject, "Materials/" + urlFour + "_Third");
+            changeMaterial(screenFive.gameObject, "Materials/" + urlFive + "_Third");
+            changeMaterial(screenSix.gameObject, "Materials/" + urlSix + "_Third");
+            changeMaterial(screenSeven.gameObject, "Materials/" + urlSeven + "_Third");
+            changeMaterial(screenEight.gameObject, "Materials/" + urlEight + "_Third");
+#endif
+
         }
     }
 
@@ -254,89 +280,5 @@ public class UrlManager : MonoBehaviourPun
         a[0] = Resources.Load(s, typeof(Material)) as Material;
         g.GetComponent<MeshRenderer>().materials = a;
     }
-}
-
-
-[Serializable]
-public class keywordsCoordinates
-{
-
-    public Page BoxAndWhiskers;
-    public Page BoxAndWhiskers_Gender;
-    public Page BoxAndWhiskers_Third;
-
-    public Page BoxAndWhiskers2;
-    public Page BoxAndWhiskers2_Gender;
-    public Page BoxAndWhiskers2_Third;
-
-    public Page Histograms;
-    public Page Histograms_Gender;
-    public Page Histograms_Third;
-
-    public Page Oscar;
-    public Page Oscar_Gender;
-    public Page Oscar_Third;
-
-    public Page Scatterplot1;
-    public Page Scatterplot1_Gender;
-    public Page Scatterplot1_Third;
-
-    public Page Scatterplot2;
-    public Page Scatterplot2_Gender;
-    public Page Scatterplot2_Third;
-
-    public Page StackBarChart;
-    public Page StackBarChart_Gender;
-    public Page StackBarChart_Third;
-
-    public static keywordsCoordinates CreateFromJSON(string jsonString)
-    {   
-        return JsonUtility.FromJson<keywordsCoordinates>(jsonString);
-
-    }
-
-}
-
-[Serializable]
-public class Page
-{
-   public PageElement[] graphs;
-   public string[] keys;
-   public RectCorners[] rect;
-   public PageElement[] scatter;
-   public PageElement[] xaxeslabels;
-   public PageElement[] xticks;
-   public PageElement[] yaxeslabels;
-   public PageElement[] yticks;
-   public mapofIndexes[] mapofIndexes;
-      
-}
-
-[Serializable]
-public class mapofIndexes
-{
-    public float[] indexes;
-    public string[] keywords;
-  
-}
-
-
-[Serializable]
-public class PageElement
-{
-    public float bottom;
-    public float left;
-    public string name;
-    public float right;
-    public float top;
-}
-
-[Serializable]
-public class RectCorners
-{
-    public float bottom;
-    public float left;
-    public float right;
-    public float top;
 }
 

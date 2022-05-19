@@ -265,6 +265,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         ///try the google speech
         GameObject empty = new GameObject();
         CustomStreamingRecognizer customsr = empty.AddComponent<CustomStreamingRecognizer>();
+        SearchKeyWordsScreen Search = GameObject.Find("Wall").GetComponent<SearchKeyWordsScreen>();
+        customsr.onFinalResult.AddListener(Search.getSpeechToText);
         customsr.Initialize();
         customsr.enableDebugLogging = true;
         GameObject player = GameObject.Find("OVRPlayerController");

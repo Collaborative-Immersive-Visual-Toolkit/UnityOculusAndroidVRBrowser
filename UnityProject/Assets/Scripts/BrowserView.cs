@@ -437,10 +437,8 @@ public class BrowserView : MonoBehaviour
 
 #if UNITY_EDITOR
 
-        if (MasterManager.GameSettings.Observer)
-        {
             _overlay.enabled = false;
-        }
+
 
 #elif UNITY_ANDROID
         UnityThread.initUnityThread();
