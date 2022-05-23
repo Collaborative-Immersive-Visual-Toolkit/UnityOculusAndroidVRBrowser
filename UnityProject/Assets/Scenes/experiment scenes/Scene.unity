@@ -268,6 +268,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1023767012, guid: dd1a23e95ce72c94f820a67481919e57, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1023767014, guid: dd1a23e95ce72c94f820a67481919e57, type: 3}
       propertyPath: g
       value: 
@@ -599,6 +603,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 322283078686135690, guid: 90ebc0bf95d1a64408beebd6fe107be0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 780847520069426466, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -662,12 +671,12 @@ PrefabInstance:
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 136
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
@@ -814,6 +823,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 742872362, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
       propertyPath: Cone
+      value: 
+      objectReference: {fileID: 1491488350}
+    - target: {fileID: 742872362, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: ConeMesh
       value: 
       objectReference: {fileID: 1491488350}
     - target: {fileID: 1256820939, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}

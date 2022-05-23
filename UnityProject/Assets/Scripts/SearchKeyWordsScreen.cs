@@ -20,11 +20,12 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public MeshCollider ConeMesh;
 
 
+
     private void Start()
     {
 
-
 #if UNITY_EDITOR
+
         string keywordsCoordinatesPath = Path.Combine(Application.streamingAssetsPath, keywordsCoordinatesFileName);
 
 #elif UNITY_ANDROID
@@ -37,7 +38,9 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
         if (!File.Exists(keywordsCoordinatesPath))
         {
+
             Debug.LogError("Could not find " + keywordsCoordinatesPath);
+
         }
         else
         {
@@ -85,9 +88,10 @@ public class SearchKeyWordsScreen : MonoBehaviour
             oldS2T = currentS2T;
 
         }
-
+        
+        points.clearPointNotInCone(ConeMesh);
         points.clearExpiredPoints();
-
+        
     }
 
     public void screenFocus(List<Vector3> points)
@@ -102,7 +106,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
                 if (urlManager.BoxColliders[i].bounds.Contains(points[j]))
                 {
-                    Debug.Log("looking at screen:" + urlManager.BoxColliders[i].gameObject.name + " index : " + i.ToString());
+                  
                     currentScreenFocus.Add(i);
                     break;
                 }
@@ -115,69 +119,87 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public void getSpeechToText(string speechToTextOutput)
     {
         oldS2T = currentS2T;
-        currentS2T = speechToTextOutput;
+        currentS2T = speechToTextOutput.ToLower();
     }
 
     private void SearchCoordinates()
     {
         
+        Vector3[] ps = new Vector3[4];
+        bool[] psbool = new bool[4];
 
         for (int j = 0; j < currentScreenFocus.Count; j++)
         {
 
             int screenNumber = currentScreenFocus[j];
 
-            Vector3[] ps = new Vector3[4];
-
             Page p = keyCo.currentVisualization[screenNumber];
 
-            int index = searchKeysInString(p);
+            List<IndexAndLength> indexes = searchKeysInString(p);
 
-            if (index >= 0)
+            for (int k = 0; k < indexes.Count; k++)
             {
-                mapofIndexes map = keyCo.currentVisualization[screenNumber].mapofIndexes[index];
+                int index = indexes[k].index;
 
-                for (int i = 0; i < map.indexes.Length; i++)
+                if (index >= 0)
                 {
+                    mapofIndexes map = keyCo.currentVisualization[screenNumber].mapofIndexes[index];
 
-                    PageElement e = p.getElment(map.keywords[i], map.indexes[i]);
-
-                    BoxCollider c = urlManager.BoxColliders[screenNumber];
-
-                    ps = convert2DtoLocalToGlobal(e, c);
-
-                    Vector3 average = (ps[0] + ps[1] + ps[2] + ps[3])/4;
-
-                    if (checkIfInside(average))
+                    for (int i = 0; i < map.indexes.Length; i++)
                     {
-                        points.AddAPoint(ps[0]);
-                        points.AddAPoint(ps[1]);
-                        points.AddAPoint(ps[2]);
-                        points.AddAPoint(ps[3]);
+
+                        PageElement e = p.getElment(map.keywords[i], map.indexes[i]);
+
+                        BoxCollider c = urlManager.BoxColliders[screenNumber];
+                        
+                        ps = convert2DtoLocalToGlobal(e, c);
+
+                        for (int t = 0; t < ps.Length; t++) {
+
+                            Vector3 point = ps[t];
+
+                            psbool[t] = checkIfInside(point);
+  
+                        }
+
+                        if (psbool.All(x => x)) {
+
+                            for (int t = 0; t < ps.Length; t++)
+                            {
+                                Vector3 point = ps[t];
+
+                                points.AddAPoint(point); 
+                            }
+
+                        }
+                        
 
                     }
-
                 }
             }
-
         }
     }
 
     public bool checkIfInside(Vector3 point)
     {
 
-        Vector3 direction = new Vector3(0, 1, 0);
+        Ray rayup = new Ray(point, Vector3.up);
+        Ray raydown = new Ray(point, Vector3.down);
+        RaycastHit outhitup;
+        RaycastHit outhitdown;
 
-        if (Physics.Raycast(point, direction, Mathf.Infinity) &&
-            Physics.Raycast(point, -direction, Mathf.Infinity))
+        bool hitup = ConeMesh.Raycast(rayup, out outhitup, Mathf.Infinity);
+        
+        if (hitup)
         {
-            return true;
+            bool hitdown = ConeMesh.Raycast(raydown, out outhitdown, Mathf.Infinity);
+            if(hitdown) return true;
+            else return false;
         }
-
         else return false;
     }
 
-    public int searchKeysInString(Page p)
+    public List<IndexAndLength> searchKeysInString(Page p)
     {
 
 
@@ -195,27 +217,56 @@ public class SearchKeyWordsScreen : MonoBehaviour
                 IndexAndLength newEntry = new IndexAndLength();
                 newEntry.index= i;
                 newEntry.length = key.Length;
+                newEntry.word = key;
 
                 indexes.Add(newEntry);
 
             }
         }
 
-        //sort based on keyword length 
-        indexes.OrderBy(o => o.length).ToList();
+        indexes = FilteredKeywords(indexes);
 
-        if (indexes.Count > 0)
-        {
-            Debug.Log("found keyword:" + keys[indexes[0].index] );
-            return indexes[0].index;
-        }
-        else {
 
-            return -1;
-        }
+        return indexes;
 
         
     }
+
+    public List<IndexAndLength> FilteredKeywords(List<IndexAndLength> keywords) {
+
+        if (keywords.Count == 0) return keywords;
+
+        List<IndexAndLength> outputkeywords = new List<IndexAndLength>();
+
+        //sort based on keyword length 
+        keywords.OrderBy(o => o.length).ToList();
+
+        //the first one is always addedd
+        outputkeywords.Add(keywords[0]); 
+
+        //check if shoryter keywords are within larger keywords
+        for (int i=1;i< keywords.Count;i++) {
+
+            bool iscontained = false;
+
+            for (int j = 0; j < outputkeywords.Count; j++) {
+
+                if (outputkeywords[j].word.Contains(keywords[i].word))
+                {
+                    iscontained = true;
+
+                    break;
+                }
+
+            }
+
+            if (!iscontained) outputkeywords.Add(keywords[i]);
+
+        }
+
+        return outputkeywords;
+    }
+
 
     public Vector3[] convert2DtoLocalToGlobal(PageElement e, BoxCollider c) {
 
@@ -250,59 +301,14 @@ public class SearchKeyWordsScreen : MonoBehaviour
     }
 }
 
-public class DetectedPoints
-{
-
-    public List<DetectedPoint> points = new List<DetectedPoint>();
-
-    public float expirytime = 10f;
-
-    public void AddAPoint(Vector3 point) {
-
-        DetectedPoint newpoint = new DetectedPoint();
-
-        newpoint.Assign(point);
-
-        points.Add(newpoint);
-
-    }
-
-    public void clearExpiredPoints()
-    {
-  
-        points.RemoveAll(r => Time.time - r.time > expirytime);
-
-    }
-
-}
-
-public class DetectedPoint {
-
-    public Vector3 point;
-    public float time;
-    public GameObject g; 
 
 
-    public void Assign(Vector3 p) {
-
-        point = p;
-        time = Time.time;
-        g = GameObject.CreatePrimitive(PrimitiveType.Sphere) as GameObject;
-        g.transform.position = point;
-        g.transform.localScale = new Vector3(0.025f, 0.025f, 0.025f);
-        Material m = g.GetComponent<Renderer>().material;
-        m.color = Color.red;
-        g.GetComponent<Renderer>().material = m;
-    }
-   
-}
 
 public class IndexAndLength
 {
-    public int index { get; set; }
-    public int length { get; set; }
-
-
+    public int index;
+    public int length;
+    public string word;
 
 }
 
