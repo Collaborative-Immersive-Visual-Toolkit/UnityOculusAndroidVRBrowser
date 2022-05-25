@@ -20,7 +20,6 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public MeshCollider ConeMesh;
 
 
-
     private void Start()
     {
 
@@ -94,6 +93,11 @@ public class SearchKeyWordsScreen : MonoBehaviour
         
     }
 
+    void OnDrawGizmos()
+    {
+        if (Application.isPlaying) points.Line();
+    }
+    
     public void screenFocus(List<Vector3> points)
     {
 
@@ -267,7 +271,6 @@ public class SearchKeyWordsScreen : MonoBehaviour
         return outputkeywords;
     }
 
-
     public Vector3[] convert2DtoLocalToGlobal(PageElement e, BoxCollider c) {
 
         Vector3[] ps = new Vector3[4];
@@ -300,9 +303,6 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
     }
 }
-
-
-
 
 public class IndexAndLength
 {
