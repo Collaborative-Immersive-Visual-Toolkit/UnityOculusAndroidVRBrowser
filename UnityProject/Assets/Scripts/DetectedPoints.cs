@@ -77,7 +77,7 @@ public class DetectedPoints : MonoBehaviour
         else return false;
     }
 
-    public void Line()
+    public void GizmoLine()
     {
 
         if (points.Count > 2)
@@ -94,8 +94,8 @@ public class DetectedPoints : MonoBehaviour
 
             Vector3 directionPerpendicular = Vector3.Cross(direction, n).normalized;
 
-            Gizmos.DrawRay(origin, directionPerpendicular * 2f);
-            Gizmos.DrawRay(origin, -directionPerpendicular * 2f);
+            //Gizmos.DrawRay(origin, directionPerpendicular * 2f);
+            //Gizmos.DrawRay(origin, -directionPerpendicular * 2f);
 
             float rX = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))).Max();
 
@@ -106,7 +106,7 @@ public class DetectedPoints : MonoBehaviour
     }
 
 
-    Vector3 Normal(Vector3 a, Vector3 b, Vector3 c)
+    public Vector3 Normal(Vector3 a, Vector3 b, Vector3 c)
     {
         // Find vectors corresponding to two of the sides of the triangle.
         Vector3 side1 = b - a;
@@ -116,7 +116,7 @@ public class DetectedPoints : MonoBehaviour
         return Vector3.Cross(side1, side2).normalized;
     }
 
-    private static void DrawEllipse(Vector3 pos, Vector3 forward, Vector3 up, float radiusX, float radiusY, int segments, Color color, float duration = 0)
+    public static void DrawEllipse(Vector3 pos, Vector3 forward, Vector3 up, float radiusX, float radiusY, int segments, Color color, float duration = 0, LineRenderer lr = null)
     {
         float angle = 0f;
         Quaternion rot = Quaternion.LookRotation(forward, up);
@@ -130,7 +130,14 @@ public class DetectedPoints : MonoBehaviour
 
             if (i > 0)
             {
-                Debug.DrawLine(rot * lastPoint + pos, rot * thisPoint + pos, color, duration);
+                if (lr == null)
+                {
+                    Debug.DrawLine(rot * lastPoint + pos, rot * thisPoint + pos, color, duration);
+                } else
+                {
+                    lr.SetPosition(i, rot * lastPoint + pos);
+                }
+                
             }
 
             lastPoint = thisPoint;

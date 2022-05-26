@@ -18,7 +18,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
     private DetectedPoints points = new DetectedPoints();
 
     public MeshCollider ConeMesh;
-
+    private LineRenderer lineRenderer;
 
     private void Start()
     {
@@ -48,6 +48,9 @@ public class SearchKeyWordsScreen : MonoBehaviour
             keyCo = keywordsCoordinates.CreateFromJSON(jsonString);
             Debug.Log("semantic bounding boxes loaded");
         }
+
+        //set the line renderer
+        lineRenderer = GetComponent<LineRenderer>();
 
         //keyCo.setVisualization(visualization.visualization1);
         //currentScreenFocus = new List<int>();
@@ -85,19 +88,43 @@ public class SearchKeyWordsScreen : MonoBehaviour
         {
             SearchCoordinates();
             oldS2T = currentS2T;
-
         }
-        
         points.clearPointNotInCone(ConeMesh);
         points.clearExpiredPoints();
-        
+        //visualise the ellipse
+        updateLineRender();
     }
 
     void OnDrawGizmos()
     {
-        if (Application.isPlaying) points.Line();
+        //if (Application.isPlaying) points.GizmoLine();
     }
-    
+
+    private void updateLineRender()
+    {
+        
+        List<DetectedPoint> pss = points.points;
+        
+        if (pss.Count > 2)
+        {
+            List<Vector3> ps = pss.Select(r => r.point).ToList<Vector3>();
+            Vector3 origin;
+
+            Vector3 direction = Vector3.zero;
+
+            Fit.LineFast(ps, out origin, ref direction, 1, true);
+            Vector3 n = points.Normal(ps[0], ps[1], ps[2]);
+            Vector3 directionPerpendicular = Vector3.Cross(direction, n).normalized;
+            //Gizmos.DrawRay(origin, directionPerpendicular * 2f);
+            //Gizmos.DrawRay(origin, -directionPerpendicular * 2f);
+
+            float rX = pss.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))).Max();
+
+            float rY = pss.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
+            DetectedPoints.DrawEllipse(origin, n, direction, rY, rX, 21, Color.red, 0, lineRenderer);
+        }
+    }
+
     public void screenFocus(List<Vector3> points)
     {
 
@@ -128,42 +155,33 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
     private void SearchCoordinates()
     {
-        
         Vector3[] ps = new Vector3[4];
         bool[] psbool = new bool[4];
-
+        Debug.Log(currentScreenFocus);
         for (int j = 0; j < currentScreenFocus.Count; j++)
         {
-
             int screenNumber = currentScreenFocus[j];
-
             Page p = keyCo.currentVisualization[screenNumber];
-
             List<IndexAndLength> indexes = searchKeysInString(p);
-
             for (int k = 0; k < indexes.Count; k++)
             {
                 int index = indexes[k].index;
-
                 if (index >= 0)
                 {
                     mapofIndexes map = keyCo.currentVisualization[screenNumber].mapofIndexes[index];
-
                     for (int i = 0; i < map.indexes.Length; i++)
                     {
-
                         PageElement e = p.getElment(map.keywords[i], map.indexes[i]);
 
                         BoxCollider c = urlManager.BoxColliders[screenNumber];
-                        
-                        ps = convert2DtoLocalToGlobal(e, c);
 
+                        ps = convert2DtoLocalToGlobal(e, c);
                         for (int t = 0; t < ps.Length; t++) {
 
                             Vector3 point = ps[t];
-
                             psbool[t] = checkIfInside(point);
-  
+
+
                         }
 
                         if (psbool.All(x => x)) {
@@ -171,8 +189,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
                             for (int t = 0; t < ps.Length; t++)
                             {
                                 Vector3 point = ps[t];
-
-                                points.AddAPoint(point); 
+                                points.AddAPoint(point);
                             }
 
                         }
