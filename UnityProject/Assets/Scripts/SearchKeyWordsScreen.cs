@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+
+[RequireComponent(typeof(LineRenderer))]
+
 public class SearchKeyWordsScreen : MonoBehaviour
 {
     public UrlManager urlManager;
@@ -18,7 +21,8 @@ public class SearchKeyWordsScreen : MonoBehaviour
     private DetectedPoints points = new DetectedPoints();
 
     public MeshCollider ConeMesh;
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
+
 
     private void Start()
     {
@@ -49,36 +53,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
             Debug.Log("semantic bounding boxes loaded");
         }
 
-        //set the line renderer
-        lineRenderer = GetComponent<LineRenderer>();
-
-        //keyCo.setVisualization(visualization.visualization1);
-        //currentScreenFocus = new List<int>();
-        //currentScreenFocus.Add(6);
-        //currentS2T = "budget";
-        //SearchCoordinates();
-        //currentS2T = "profitability";
-        //SearchCoordinates();
-        //currentS2T = "worldwide gross";
-        //SearchCoordinates();
-        //currentS2T = "metascore";
-        //SearchCoordinates();
-
-        //keyCo.setVisualization(visualization.visualization1);
-        //currentScreenFocus = new List<int>();
-        //currentScreenFocus.Add(0);
-        //currentS2T = "warner bros";
-        //SearchCoordinates();
-        //currentS2T = "lionsgate";
-        //SearchCoordinates();
-
-        //keyCo.setVisualization(visualization.visualization1);
-        //currentScreenFocus = new List<int>();
-        //currentScreenFocus.Add(5);
-        //currentS2T = "budget";
-        //SearchCoordinates();
-        //currentS2T = "profitability";
-        //SearchCoordinates();
+        if (lineRenderer != null) points.lineRenderer = lineRenderer;
 
     }
 
@@ -91,38 +66,12 @@ public class SearchKeyWordsScreen : MonoBehaviour
         }
         points.clearPointNotInCone(ConeMesh);
         points.clearExpiredPoints();
-        //visualise the ellipse
-        updateLineRender();
+        points.Elipse();
     }
 
     void OnDrawGizmos()
     {
-        //if (Application.isPlaying) points.GizmoLine();
-    }
-
-    private void updateLineRender()
-    {
-        
-        List<DetectedPoint> pss = points.points;
-        
-        if (pss.Count > 2)
-        {
-            List<Vector3> ps = pss.Select(r => r.point).ToList<Vector3>();
-            Vector3 origin;
-
-            Vector3 direction = Vector3.zero;
-
-            Fit.LineFast(ps, out origin, ref direction, 1, true);
-            Vector3 n = points.Normal(ps[0], ps[1], ps[2]);
-            Vector3 directionPerpendicular = Vector3.Cross(direction, n).normalized;
-            //Gizmos.DrawRay(origin, directionPerpendicular * 2f);
-            //Gizmos.DrawRay(origin, -directionPerpendicular * 2f);
-
-            float rX = pss.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))).Max();
-
-            float rY = pss.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
-            DetectedPoints.DrawEllipse(origin, n, direction, rY, rX, 21, Color.red, 0, lineRenderer);
-        }
+        //if (Application.isPlaying) points.GizmoElipse();
     }
 
     public void screenFocus(List<Vector3> points)
