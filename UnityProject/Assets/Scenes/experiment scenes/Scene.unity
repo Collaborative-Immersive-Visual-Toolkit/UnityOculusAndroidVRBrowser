@@ -392,6 +392,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a073e5134ceea6498a81fd1b55ea027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &606970310 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1663940454, guid: 5e39f165d0f497f4d8b2c387469750ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1256820929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69046f1e852bf814e878cf02c490736f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &739317780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -703,12 +715,12 @@ PrefabInstance:
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
@@ -847,6 +859,10 @@ PrefabInstance:
       propertyPath: head
       value: 
       objectReference: {fileID: 739317781}
+    - target: {fileID: 1663940454, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
+      propertyPath: interpolateElipse
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1663940454, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
       propertyPath: pushPoints.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1164,6 +1180,7 @@ GameObject:
   - component: {fileID: 2122517102}
   - component: {fileID: 2122517101}
   - component: {fileID: 2122517100}
+  - component: {fileID: 2122517103}
   m_Layer: 0
   m_Name: Ellipses
   m_TagString: Untagged
@@ -1185,8 +1202,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   urlManager: {fileID: 1634841612}
   keywordsCoordinatesFileName: keywords_coordinates.json
+  points: {fileID: 2122517103}
   ConeMesh: {fileID: 1491488350}
   lineRenderer: {fileID: 2122517101}
+  pushPoints:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!120 &2122517101
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1299,3 +1320,34 @@ Transform:
   m_Father: {fileID: 213381919}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2122517103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122517099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433c27ad9f47e654fbefd73c20e1ccab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expirytime: 15
+  segmentsLenght: 20
+  ElipsePoints: []
+  lineRenderer: {fileID: 0}
+  pushPoints:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 606970310}
+        m_TargetAssemblyTypeName: cone, Assembly-CSharp
+        m_MethodName: GetVoiceElipsePoints
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

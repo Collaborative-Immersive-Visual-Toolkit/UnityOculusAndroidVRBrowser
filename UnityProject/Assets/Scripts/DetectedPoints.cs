@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Security.Cryptography;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class PushElipsesPoints : UnityEvent<List<Vector3>> { }
 
 
 public class DetectedPoints : MonoBehaviour
@@ -9,13 +16,21 @@ public class DetectedPoints : MonoBehaviour
 
     public List<DetectedPoint> points = new List<DetectedPoint>();
 
-    public float expirytime = 5f;
+    public float expirytime = 15f;
 
-    public int segmentsLenght = 21;
+    public int segmentsLenght = 20;
 
     public Vector3[] ElipsePoints;
 
     public LineRenderer lineRenderer;
+
+    private List<Vector3> oldlistID = new List<Vector3>();
+
+    private MeshCollider ConeMeshSaved;
+
+    public PushElipsesPoints pushPoints;
+
+
     public void AddAPoint(Vector3 point)
     {
 
@@ -65,8 +80,10 @@ public class DetectedPoints : MonoBehaviour
 
     public bool checkIfInside(Vector3 point, MeshCollider ConeMesh)
     {
+        if (ConeMesh == null) return false;
+        else if (ConeMeshSaved == null) ConeMeshSaved = ConeMesh;
 
-        Ray rayup = new Ray(point, Vector3.up);
+       Ray rayup = new Ray(point, Vector3.up);
         Ray raydown = new Ray(point, Vector3.down);
         RaycastHit outhitup;
         RaycastHit outhitdown;
@@ -106,39 +123,113 @@ public class DetectedPoints : MonoBehaviour
 
             float rY = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
 
-            DrawEllipseDebug(origin, n, direction, rY, rX, 21, Color.red);
+            DrawEllipseDebug(origin, n, direction, rY, rX, 20, Color.red);
         }
     }
 
     public void Elipse()
-    {
+    {   
+        
+        List<Vector3> ps = points.Select(r => r.point).ToList<Vector3>();
 
-        if (points.Count > 2)
+        if (points.Count > 2 && !oldlistID.SequenceEqual(ps))
         {
-            List<Vector3> ps = points.Select(r => r.point).ToList<Vector3>();
 
+            oldlistID = ps;
+                
             Vector3 origin;
 
             Vector3 direction = Vector3.zero;
 
-            Fit.LineFast(ps, out origin, ref direction, 1, false);
+
+            //principal component 
+
+            Fit.LineFast(ps, out origin, ref direction, 5, false);
 
             Vector3 n = Normal(ps[0], ps[1], ps[2]);
 
+
+            //ortogonal component 
             Vector3 directionPerpendicular = Vector3.Cross(direction, n).normalized;
 
+
+            //radius of elipse  
             float rX = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))).Max();
 
             float rY = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
 
+
+            int maxIteration = 10;
+
+            (rX,rY,maxIteration) = Optimize(rX, rY, direction, directionPerpendicular, maxIteration);
+
             CalculateEllipsePoints(origin, n, direction, rY, rX, segmentsLenght);
 
             UpdateLineRenderer();
+
+            pushPoints.Invoke(ElipsePoints.ToList<Vector3>());
+
+
         }
         else {
 
             ClearLineRenderer();
+
+            pushPoints.Invoke(new List<Vector3>());
         }
+    }
+
+    public (float rX, float rY, int maxIteration) Optimize(float rX, float rY,Vector3 direction, Vector3 directionPerpendicular, int maxIteration = 10) {
+
+        if(maxIteration<1) return (rX,rY,maxIteration);
+
+        maxIteration -= 1;
+
+        //find focal points from radius         
+        float focalDistance = Mathf.Sqrt(Mathf.Pow(rX, 2f) - Mathf.Pow(rY, 2f));
+
+        Vector3 f1 = direction.normalized * focalDistance;
+
+        Vector3 f2 = direction.normalized * focalDistance * -1;
+
+        Vector3 furthestPoint = points.Select(r => new { distance = Vector3.Distance(r.point, f1) + Vector3.Distance(r.point, f2), point = r.point })
+            .OrderBy(r => r.distance).Select(r => r.point).Last();
+
+        if (furthestPoint.magnitude < rX)
+        {
+            Debug.Log("No points out anymore");
+            return (rX, rY, maxIteration);
+        }
+
+        float Xc = Vector3.Dot(direction,furthestPoint);
+        float Yc = Vector3.Dot(directionPerpendicular, furthestPoint);
+
+        if (Xc / rX > Yc / rY)
+        {
+            float newrX = rX + rX / 30;
+            float newrY = rY + rY / 60;
+
+            if (checkIfInside(newrX * direction, ConeMeshSaved ) && checkIfInside(newrX * direction *-1, ConeMeshSaved)) rX = newrX;
+            if (checkIfInside(newrY * directionPerpendicular, ConeMeshSaved) && checkIfInside(newrY * directionPerpendicular*-1, ConeMeshSaved)) rY = newrY;
+            
+            Debug.Log("Increased X");
+            return Optimize(rX, rY, direction, directionPerpendicular, maxIteration);
+
+        }
+        else {
+
+            float newrX = rX + rX / 60;
+            float newrY = rY + rY / 30;
+
+            if (checkIfInside(newrX * direction, ConeMeshSaved) && checkIfInside(newrX * direction * -1, ConeMeshSaved)) rX = newrX;
+            if (checkIfInside(newrY * directionPerpendicular, ConeMeshSaved) && checkIfInside(newrY * directionPerpendicular * -1, ConeMeshSaved)) rY = newrY;
+
+            Debug.Log("Increased Y");
+            return Optimize(rX, rY, direction, directionPerpendicular, maxIteration);
+        }
+
+
+
     }
 
     public Vector3 Normal(Vector3 a, Vector3 b, Vector3 c)
@@ -221,6 +312,8 @@ public class DetectedPoints : MonoBehaviour
         lineRenderer.positionCount = 0;
 
     }
+
+
 }
 
 

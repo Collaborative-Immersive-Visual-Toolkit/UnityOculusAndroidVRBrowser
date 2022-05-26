@@ -28,6 +28,10 @@ public class cone : MonoBehaviourPun
     public bool simulated = false;
     public PushConePoints pushPoints;
 
+    //voice elipse
+    private List<Vector3> voiceElipsePoints;
+    public bool interpolateElipse;
+    public float tresholdInterpolation = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +94,7 @@ public class cone : MonoBehaviourPun
         {
             if (!lr.enabled) lr.enabled = true;
             if (mr.enabled) mr.enabled = false;
+            InterpolatePoints();
             c.updateLineRender(lr);
         }
         else if (r == ConeRendering.solid)
@@ -108,6 +113,26 @@ public class cone : MonoBehaviourPun
 
         pushPoints.Invoke(c.positions);
        
+    }
+
+    public void InterpolatePoints() {
+
+        if (!interpolateElipse) return;
+        else if (voiceElipsePoints == null) voiceElipsePoints = new List<Vector3>();
+        else if (voiceElipsePoints.Count == 0) return;
+        else {
+
+            if (c.positions.Count == voiceElipsePoints.Count)
+            {
+                c.Interpolate(voiceElipsePoints, tresholdInterpolation);
+            }
+            else {
+
+                Debug.Log("Cannot interpolate because different number of points");
+            }
+
+        }
+
     }
 
     public void SwitchVis()
@@ -169,6 +194,11 @@ public class cone : MonoBehaviourPun
         return null;
     }
 
+    public void GetVoiceElipsePoints(List<Vector3> points)
+    {
+
+        voiceElipsePoints = points;
+    }
 }
 
 [System.Serializable]
@@ -208,6 +238,7 @@ public class ConeVectors
     private static int octagon;
     private static int inverseOctagon;
     private int layerMask;
+
 
     public void init(Transform h, LineRenderer lr)
     {
@@ -279,6 +310,16 @@ public class ConeVectors
             }
 
         }
+
+    }
+
+    public void Interpolate(List<Vector3> positionToInt, float tresh ) {
+
+
+        for (int i = 0; i < positions.Count; i++) {
+
+            positions[i] = positions[i] * tresh + positionToInt[i] * (1 - tresh);
+        } 
 
     }
 
@@ -369,6 +410,17 @@ public class ConeVectors
 
     }
 
+    public static void ShiftLeft<T>(T[] arr, int shifts)
+    {
+        Array.Copy(arr, shifts, arr, 0, arr.Length - shifts);
+        Array.Clear(arr, arr.Length - shifts, shifts);
+    }
+
+    public static void ShiftRight<T>(T[] arr, int shifts)
+    {
+        Array.Copy(arr, 0, arr, shifts, arr.Length - shifts);
+        Array.Clear(arr, 0, shifts);
+    }
 }
 
 public enum ConeRendering

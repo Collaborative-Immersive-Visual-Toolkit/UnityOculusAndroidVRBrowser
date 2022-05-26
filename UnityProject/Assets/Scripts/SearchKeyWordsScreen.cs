@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [RequireComponent(typeof(LineRenderer))]
@@ -13,15 +14,18 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public UrlManager urlManager;
 
     private List<int> currentScreenFocus;
+    private Vector3 averagePoint;
     private string currentS2T="";
     private string oldS2T="";
 
     public string keywordsCoordinatesFileName = "keywords_coordinates.json";
     private keywordsCoordinates keyCo;
-    private DetectedPoints points = new DetectedPoints();
+    public DetectedPoints points ;
 
     public MeshCollider ConeMesh;
     public LineRenderer lineRenderer;
+
+    public PushElipsesPoints pushPoints;
 
 
     private void Start()
@@ -77,6 +81,15 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public void screenFocus(List<Vector3> points)
     {
 
+        averagePoint =  Vector3.zero;
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            averagePoint += points[i];
+        }
+
+        averagePoint /= points.Count;
+
         currentScreenFocus = new List<int>();
 
         for (int i = 0; i < urlManager.BoxColliders.Count; i++)
@@ -86,7 +99,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
                 if (urlManager.BoxColliders[i].bounds.Contains(points[j]))
                 {
-                  
+                    
                     currentScreenFocus.Add(i);
                     break;
                 }
@@ -118,33 +131,44 @@ public class SearchKeyWordsScreen : MonoBehaviour
                 if (index >= 0)
                 {
                     mapofIndexes map = keyCo.currentVisualization[screenNumber].mapofIndexes[index];
+
+                    map.coordinate = new List<computedcoordinate>();
+
                     for (int i = 0; i < map.indexes.Length; i++)
                     {
+                        computedcoordinate cc = new computedcoordinate();
+
                         PageElement e = p.getElment(map.keywords[i], map.indexes[i]);
 
                         BoxCollider c = urlManager.BoxColliders[screenNumber];
 
-                        ps = convert2DtoLocalToGlobal(e, c);
-                        for (int t = 0; t < ps.Length; t++) {
+                        cc.BoundingBox = convert2DtoLocalToGlobal(e, c);
 
-                            Vector3 point = ps[t];
-                            psbool[t] = checkIfInside(point);
+                        cc.averagePoint = (cc.BoundingBox[0] + cc.BoundingBox[1] + cc.BoundingBox[2] + cc.BoundingBox[3]) / 4;
 
+                        cc.distance = Vector3.Distance(cc.averagePoint, averagePoint);
 
-                        }
+                        cc.inside = new bool[4];
 
-                        if (psbool.All(x => x)) {
+                        for (int t = 0; t < cc.BoundingBox.Length; t++) {
 
-                            for (int t = 0; t < ps.Length; t++)
-                            {
-                                Vector3 point = ps[t];
-                                points.AddAPoint(point);
-                            }
+                            cc.inside[t] = checkIfInside(cc.BoundingBox[t]);
 
                         }
-                        
+
+                        map.coordinate.Add(cc);
 
                     }
+
+                    computedcoordinate closestcoordinate = map.coordinate.OrderBy(r => r.distance).First();
+
+                    for (int t = 0; t < closestcoordinate.BoundingBox.Length; t++)
+                    {
+                        Vector3 point = closestcoordinate.BoundingBox[t];
+                        if(closestcoordinate.inside[t]) points.AddAPoint(point);
+                    }
+
+                    
                 }
             }
         }
@@ -419,6 +443,17 @@ public class mapofIndexes
 {
     public int[] indexes;
     public string[] keywords;
+    public List<computedcoordinate> coordinate;
+
+}
+
+[serializable]
+public class computedcoordinate {
+
+    public float distance;
+    public Vector3 averagePoint;
+    public Vector3[] BoundingBox;
+    public bool[] inside;
 
 }
 
