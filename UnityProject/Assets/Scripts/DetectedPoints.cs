@@ -172,9 +172,9 @@ public class DetectedPoints : MonoBehaviour
 
             UpdateLineRenderer();
 
-            pushPoints.Invoke(ElipsePoints);
+            if (ElipsePoints!=null) pushPoints.Invoke(ElipsePoints);
 
-            CreateSphereOnFirstPoint();
+            //CreateSphereOnFirstPoint();
 
         }
         else {

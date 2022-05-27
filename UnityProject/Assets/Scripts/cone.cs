@@ -73,8 +73,11 @@ public class cone : MonoBehaviourPun
 
         c.init(head,lr);
 
-      
-    }
+        newvoiceElipsePoints = new List<Vector3>();
+        currentvoiceElipsePoints = new List<Vector3>();
+        oldvoiceElipsePoints = new List<Vector3>();
+
+}
 
     void prepareMeshFilterRenderer() {
 
