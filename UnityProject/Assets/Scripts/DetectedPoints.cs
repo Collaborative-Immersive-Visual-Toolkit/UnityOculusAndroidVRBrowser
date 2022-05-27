@@ -159,9 +159,9 @@ public class DetectedPoints : MonoBehaviour
             float rY = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
 
 
-            int maxIteration = 10;
-
-            (rX,rY,maxIteration) = Optimize(rX, rY, direction, directionPerpendicular, maxIteration);
+            //better fit the elipses 
+            //int maxIteration = 10;
+            //(rX,rY,maxIteration) = Optimize(rX, rY, direction, directionPerpendicular, maxIteration);
 
             CalculateEllipsePoints(origin, n, direction, rY, rX, segmentsLenght);
 
