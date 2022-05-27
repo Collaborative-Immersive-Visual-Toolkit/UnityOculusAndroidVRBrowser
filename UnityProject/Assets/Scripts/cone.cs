@@ -5,6 +5,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using System;
 using UnityEngine.Events;
+using System.Linq;
 
 [System.Serializable] 
 public class PushConePoints : UnityEvent<List<Vector3>> { }
@@ -32,6 +33,8 @@ public class cone : MonoBehaviourPun
     private List<Vector3> voiceElipsePoints;
     public bool interpolateElipse;
     public float tresholdInterpolation = 0.5f;
+    public int shift = 0;
+    public bool reverse = false;
 
     // Start is called before the first frame update
     void Start()
@@ -124,7 +127,7 @@ public class cone : MonoBehaviourPun
 
             if (c.positions.Count == voiceElipsePoints.Count)
             {
-                c.Interpolate(voiceElipsePoints, tresholdInterpolation);
+                c.Interpolate(voiceElipsePoints, tresholdInterpolation,shift, reverse);
             }
             else {
 
@@ -313,12 +316,27 @@ public class ConeVectors
 
     }
 
-    public void Interpolate(List<Vector3> positionToInt, float tresh ) {
+    public void Interpolate(List<Vector3> positionToInt, float tresh, int shift , bool reverse) {
+
+
+        //float[] distances = new float[positionToInt.Count];
+
+        //for (int i = 0; i < positions.Count; i++)
+        //{
+
+        //    distances[i] = Vector3.Distance(positionToInt[i], positions[0]) ;
+
+        //}
+
+        //int minIndex = Array.IndexOf(distances, distances.Min());
 
 
         for (int i = 0; i < positions.Count; i++) {
 
-            positions[i] = positions[i] * tresh + positionToInt[i] * (1 - tresh);
+            int shifted  = (i + shift + positions.Count) % positions.Count; // index rollover
+
+            positions[i] = positions[i] * tresh + positionToInt[shifted] * (1 - tresh);
+
         } 
 
     }
