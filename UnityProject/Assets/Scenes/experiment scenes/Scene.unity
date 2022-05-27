@@ -861,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 739317781}
     - target: {fileID: 1663940454, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
       propertyPath: shift
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1663940454, guid: 5e39f165d0f497f4d8b2c387469750ae, type: 3}
       propertyPath: reverse

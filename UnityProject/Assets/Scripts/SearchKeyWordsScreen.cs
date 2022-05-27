@@ -70,7 +70,6 @@ public class SearchKeyWordsScreen : MonoBehaviour
         }
         points.clearPointNotInCone(ConeMesh);
         points.clearExpiredPoints();
-        points.Elipse();
     }
 
     void OnDrawGizmos()
@@ -168,6 +167,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
                         if(closestcoordinate.inside[t]) points.AddAPoint(point);
                     }
 
+                    points.Elipse();
                     
                 }
             }

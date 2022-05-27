@@ -16,11 +16,11 @@ public class DetectedPoints : MonoBehaviour
 
     public List<DetectedPoint> points = new List<DetectedPoint>();
 
-    public float expirytime = 15f;
+    public float expirytime = 150000f;
 
     public int segmentsLenght = 20;
 
-    public Vector3[] ElipsePoints;
+    public List<Vector3> ElipsePoints;
 
     public LineRenderer lineRenderer;
 
@@ -44,11 +44,13 @@ public class DetectedPoints : MonoBehaviour
 
         points.Add(newpoint);
 
-
+        
     }
 
     public void clearExpiredPoints()
     {
+
+
         var rp = points.FindAll(r => Time.time - r.time > expirytime);
 
         for (int i = 0; i < rp.Count; i++)
@@ -56,7 +58,9 @@ public class DetectedPoints : MonoBehaviour
            Destroy(rp[i].g);
         }
 
-        points.RemoveAll(r => Time.time - r.time > expirytime);
+        int removed = points.RemoveAll(r => Time.time - r.time > expirytime);
+
+        if (removed > 0) Elipse();
 
     }
 
@@ -74,8 +78,9 @@ public class DetectedPoints : MonoBehaviour
             }
         }
 
-        points.RemoveAll(r =>  r.time == -1f);
+        int removed = points.RemoveAll(r =>  r.time == -1f);
 
+        if (removed > 0) Elipse();
     }
 
     public bool checkIfInside(Vector3 point, MeshCollider ConeMesh)
@@ -167,8 +172,9 @@ public class DetectedPoints : MonoBehaviour
 
             UpdateLineRenderer();
 
-            pushPoints.Invoke(ElipsePoints.ToList<Vector3>());
+            pushPoints.Invoke(ElipsePoints);
 
+            CreateSphereOnFirstPoint();
 
         }
         else {
@@ -177,6 +183,21 @@ public class DetectedPoints : MonoBehaviour
 
             pushPoints.Invoke(new List<Vector3>());
         }
+    }
+
+    public void CreateSphereOnFirstPoint() {
+
+        GameObject g = GameObject.Find("First Point");
+
+        if (gameObject != null) Destroy(g);
+
+        g = Instantiate(Resources.Load("sphere", typeof(GameObject))) as GameObject;
+
+        g.transform.position = ElipsePoints[0];
+
+        g.name = "First Point";
+
+
     }
 
     public (float rX, float rY, int maxIteration) Optimize(float rX, float rY,Vector3 direction, Vector3 directionPerpendicular, int maxIteration = 10) {
@@ -271,17 +292,32 @@ public class DetectedPoints : MonoBehaviour
         Quaternion rot = Quaternion.LookRotation(forward, up);
         Vector3 lastPoint = Vector3.zero;
         Vector3 thisPoint = Vector3.zero;
-        ElipsePoints = new Vector3[segments];
+        ElipsePoints = new List<Vector3>();
 
         for (int i = 0; i < segments ; i++)
         {
             thisPoint.x = Mathf.Sin(Mathf.Deg2Rad * angle) * radiusX;
             thisPoint.y = Mathf.Cos(Mathf.Deg2Rad * angle) * radiusY;
 
-            ElipsePoints[i] = (rot * thisPoint + pos) + forward;
+            ElipsePoints.Add( (rot * thisPoint + pos) + forward);
             
             angle += 360f / segments;
         }
+
+
+        //reorder
+        Vector3 top = ElipsePoints.OrderBy(x => x.y).Last();
+        int Index = ElipsePoints.FindIndex(x => x == top);
+        List<Vector3> ElipsePointsCopy = new List<Vector3>();
+        for (int i = 0; i < ElipsePoints.Count; i++)
+        {
+
+            int shifted = (i + Index + ElipsePoints.Count) % ElipsePoints.Count; // index rollover
+
+            ElipsePointsCopy.Add(ElipsePoints[shifted]);
+
+        }
+        ElipsePoints = ElipsePointsCopy;
     }
 
     public Vector3 ChooseSign(Vector3 pos, Vector3 forward) {
@@ -301,8 +337,8 @@ public class DetectedPoints : MonoBehaviour
 
     public void UpdateLineRenderer() {
 
-        lineRenderer.positionCount = ElipsePoints.Length;
-        lineRenderer.SetPositions(ElipsePoints);
+        lineRenderer.positionCount = ElipsePoints.Count;
+        lineRenderer.SetPositions(ElipsePoints.ToArray());
 
     }
 

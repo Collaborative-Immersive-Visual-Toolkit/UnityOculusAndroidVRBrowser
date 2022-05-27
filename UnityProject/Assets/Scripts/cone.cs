@@ -127,7 +127,7 @@ public class cone : MonoBehaviourPun
 
             if (c.positions.Count == voiceElipsePoints.Count)
             {
-                c.Interpolate(voiceElipsePoints, tresholdInterpolation,shift, reverse);
+                c.Interpolate(voiceElipsePoints, tresholdInterpolation,shift);
             }
             else {
 
@@ -200,6 +200,8 @@ public class cone : MonoBehaviourPun
     public void GetVoiceElipsePoints(List<Vector3> points)
     {
 
+        if (reverse) points.Reverse();
+
         voiceElipsePoints = points;
     }
 }
@@ -220,6 +222,8 @@ public class ConeVectors
     public RaycastHit currenthit;
 
     public List<Vector3> positions;
+
+    public List<Vector3> realpositions;
 
     public List<Vector2> uvpositions;
 
@@ -283,6 +287,7 @@ public class ConeVectors
         int i = vectorsList.Length;
         hits = new RaycastHit[i];
         positions = new List<Vector3>();
+        realpositions = new List<Vector3>();
         uvpositions = new List<Vector2>();
         distances = 0;
 
@@ -291,6 +296,8 @@ public class ConeVectors
             i--;
             if (Physics.Raycast(head.position, directions[i], out hits[i], 8f, layerMask))
             {
+                realpositions.Add(hits[i].point);
+
                 if (hits[i].collider.gameObject.name == "inverse") {
 
                     if (hits[i].point.y > 1) {
@@ -316,26 +323,17 @@ public class ConeVectors
 
     }
 
-    public void Interpolate(List<Vector3> positionToInt, float tresh, int shift , bool reverse) {
-
-
-        //float[] distances = new float[positionToInt.Count];
-
-        //for (int i = 0; i < positions.Count; i++)
-        //{
-
-        //    distances[i] = Vector3.Distance(positionToInt[i], positions[0]) ;
-
-        //}
-
-        //int minIndex = Array.IndexOf(distances, distances.Min());
+    public void Interpolate(List<Vector3> positionToInt, float tresh, int shift) {
 
 
         for (int i = 0; i < positions.Count; i++) {
 
             int shifted  = (i + shift + positions.Count) % positions.Count; // index rollover
 
-            positions[i] = positions[i] * tresh + positionToInt[shifted] * (1 - tresh);
+            positions[i] = realpositions[i] * tresh + positionToInt[shifted] * (1 - tresh);
+
+            if (positions[i].y > 1.959f) positions[i] = new Vector3(positions[i].x,1.959f, positions[i].z);
+            else if (positions[i].y < 0.625f) positions[i] = new Vector3(positions[i].x, 0.625f, positions[i].z);
 
         } 
 
