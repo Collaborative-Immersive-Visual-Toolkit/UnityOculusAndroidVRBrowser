@@ -30,11 +30,17 @@ public class cone : MonoBehaviourPun
     public PushConePoints pushPoints;
 
     //voice elipse
-    private List<Vector3> voiceElipsePoints;
+    private List<Vector3> newvoiceElipsePoints;
+    private List<Vector3> currentvoiceElipsePoints;
+    private List<Vector3> oldvoiceElipsePoints;
     public bool interpolateElipse;
     public float tresholdInterpolation = 0.5f;
     public int shift = 0;
     public bool reverse = false;
+
+    //interpolation 
+    private const int interpolationFramesCount = 10; // Number of frames to completely interpolate between the 2 positions
+    private int elapsedFrames = interpolationFramesCount;
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +99,8 @@ public class cone : MonoBehaviourPun
 
         c.ComputeRaycast();
 
+        InterpolateElipse();
+
         if (r == ConeRendering.intersection)
         {
             if (!lr.enabled) lr.enabled = true;
@@ -121,13 +129,13 @@ public class cone : MonoBehaviourPun
     public void InterpolatePoints() {
 
         if (!interpolateElipse) return;
-        else if (voiceElipsePoints == null) voiceElipsePoints = new List<Vector3>();
-        else if (voiceElipsePoints.Count == 0) return;
+        else if (newvoiceElipsePoints == null) newvoiceElipsePoints = new List<Vector3>();
+        else if (newvoiceElipsePoints.Count == 0) return;
         else {
 
-            if (c.positions.Count == voiceElipsePoints.Count)
+            if (c.positions.Count == newvoiceElipsePoints.Count)
             {
-                c.Interpolate(voiceElipsePoints, tresholdInterpolation,shift);
+                c.Interpolate(currentvoiceElipsePoints, tresholdInterpolation,shift);
             }
             else {
 
@@ -198,11 +206,63 @@ public class cone : MonoBehaviourPun
     }
 
     public void GetVoiceElipsePoints(List<Vector3> points)
-    {
-
+    {   
         if (reverse) points.Reverse();
 
-        voiceElipsePoints = points;
+
+        if (points.Count == 0)
+        {   
+            elapsedFrames = interpolationFramesCount; //stop interpolating
+            newvoiceElipsePoints = points;
+            currentvoiceElipsePoints = points;
+            oldvoiceElipsePoints = currentvoiceElipsePoints;
+            
+        }
+        else  if (oldvoiceElipsePoints.Count != points.Count) 
+        {   
+
+            elapsedFrames = interpolationFramesCount; //stop interpolating
+            currentvoiceElipsePoints = points;
+            newvoiceElipsePoints = points;
+            oldvoiceElipsePoints = points;
+
+        }
+        else
+        {
+
+            newvoiceElipsePoints = points;
+            elapsedFrames = 0;//start interpolating
+
+        }
+
+    }
+
+    public void InterpolateElipse() {
+
+        float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
+
+        if (interpolationRatio == 1) return;
+
+        else if (oldvoiceElipsePoints == null) {
+
+            elapsedFrames = interpolationFramesCount;
+            currentvoiceElipsePoints = newvoiceElipsePoints;
+            oldvoiceElipsePoints = newvoiceElipsePoints;
+            return;
+        }
+
+        for (int i = 0; i < currentvoiceElipsePoints.Count; i++)
+        {
+
+            currentvoiceElipsePoints[i] = newvoiceElipsePoints[i] *  interpolationRatio + oldvoiceElipsePoints[i] * (1 -interpolationRatio);
+
+        }
+
+        elapsedFrames = elapsedFrames == interpolationFramesCount ? interpolationFramesCount : elapsedFrames + 1;
+
+        oldvoiceElipsePoints = currentvoiceElipsePoints;
+     
+
     }
 }
 
@@ -246,6 +306,9 @@ public class ConeVectors
     private static int inverseOctagon;
     private int layerMask;
 
+    //interpolation 
+    private int interpolationFramesCount = 10; // Number of frames to completely interpolate between the 2 positions
+    public int elapsedFrames = 0;
 
     public void init(Transform h, LineRenderer lr)
     {
@@ -325,18 +388,21 @@ public class ConeVectors
 
     public void Interpolate(List<Vector3> positionToInt, float tresh, int shift) {
 
+        float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
+
 
         for (int i = 0; i < positions.Count; i++) {
 
             int shifted  = (i + shift + positions.Count) % positions.Count; // index rollover
 
-            positions[i] = realpositions[i] * tresh + positionToInt[shifted] * (1 - tresh);
+            positions[i] = realpositions[i] * (1 - tresh * interpolationRatio) + positionToInt[shifted] * (tresh * interpolationRatio);
 
             if (positions[i].y > 1.959f) positions[i] = new Vector3(positions[i].x,1.959f, positions[i].z);
             else if (positions[i].y < 0.625f) positions[i] = new Vector3(positions[i].x, 0.625f, positions[i].z);
 
-        } 
+        }
 
+        elapsedFrames = elapsedFrames  == interpolationFramesCount ? interpolationFramesCount : elapsedFrames + 1 ;  // reset elapsedFrames to zero after it reached (interpolationFramesCount + 1)
     }
 
     public void updateLineRender(LineRenderer lr) {
@@ -426,17 +492,6 @@ public class ConeVectors
 
     }
 
-    public static void ShiftLeft<T>(T[] arr, int shifts)
-    {
-        Array.Copy(arr, shifts, arr, 0, arr.Length - shifts);
-        Array.Clear(arr, arr.Length - shifts, shifts);
-    }
-
-    public static void ShiftRight<T>(T[] arr, int shifts)
-    {
-        Array.Copy(arr, 0, arr, shifts, arr.Length - shifts);
-        Array.Clear(arr, 0, shifts);
-    }
 }
 
 public enum ConeRendering
