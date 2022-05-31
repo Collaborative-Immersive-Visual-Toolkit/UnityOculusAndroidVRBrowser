@@ -336,6 +336,10 @@ public class keywordsCoordinates
     public Page StackBarChart_Gender;
     public Page StackBarChart_Third;
 
+    public Page Instructions;
+    public Page Instructions_Gender;
+    public Page Instructions_Third;
+
     public visualization VisualizationNumber;
 
     public Dictionary<int, Page> visualization1 = new Dictionary<int, Page>();
@@ -363,7 +367,7 @@ public class keywordsCoordinates
             { 4, Oscar },
             { 5, Scatterplot1 },
             { 6, Scatterplot2 },
-            
+            { 7, Instructions },
 
         };
 
@@ -376,7 +380,7 @@ public class keywordsCoordinates
             { 4, Oscar_Gender },
             { 5, Scatterplot1_Gender },
             { 6, Scatterplot2_Gender },
-
+            { 7, Instructions_Gender },
         };
 
         visualization3 = new Dictionary<int, Page>
@@ -388,6 +392,7 @@ public class keywordsCoordinates
             { 4, Oscar_Third },
             { 5, Scatterplot1_Third },
             { 6, Scatterplot2_Third },
+            { 7, Instructions_Third },
 
 
         };
