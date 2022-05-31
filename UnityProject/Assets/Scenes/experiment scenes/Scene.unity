@@ -715,12 +715,12 @@ PrefabInstance:
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4558794823577323799, guid: 90ebc0bf95d1a64408beebd6fe107be0,
         type: 3}
@@ -1363,3 +1363,5 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  renderCoordinates: 0
+  renderElipse: 0

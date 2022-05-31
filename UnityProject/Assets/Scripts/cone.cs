@@ -7,6 +7,7 @@ using System;
 using UnityEngine.Events;
 using System.Linq;
 
+
 [System.Serializable] 
 public class PushConePoints : UnityEvent<List<Vector3>> { }
 
@@ -288,6 +289,10 @@ public class ConeVectors
 
     public List<Vector3> realpositions;
 
+    public List<Vector3> reprojected;
+
+    public List<Vector3> normals;
+
     public List<Vector2> uvpositions;
 
     public float distances;
@@ -354,6 +359,7 @@ public class ConeVectors
         hits = new RaycastHit[i];
         positions = new List<Vector3>();
         realpositions = new List<Vector3>();
+        normals = new List<Vector3>();
         uvpositions = new List<Vector2>();
         distances = 0;
 
@@ -363,6 +369,7 @@ public class ConeVectors
             if (Physics.Raycast(head.position, directions[i], out hits[i], 8f, layerMask))
             {
                 realpositions.Add(hits[i].point);
+                normals.Add(hits[i].normal);
 
                 if (hits[i].collider.gameObject.name == "inverse") {
 
@@ -393,7 +400,6 @@ public class ConeVectors
 
         float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
 
-
         for (int i = 0; i < positions.Count; i++) {
 
             int shifted  = (i + shift + positions.Count) % positions.Count; // index rollover
@@ -405,7 +411,52 @@ public class ConeVectors
 
         }
 
+        Reproject();
+
         elapsedFrames = elapsedFrames  == interpolationFramesCount ? interpolationFramesCount : elapsedFrames + 1 ;  // reset elapsedFrames to zero after it reached (interpolationFramesCount + 1)
+    }
+
+    public void Reproject() {
+
+        //Vector3 Normal = findCurrentNormal()*-1;
+        int i = vectorsList.Length;
+        hits = new RaycastHit[i];
+        reprojected = new List<Vector3>();
+
+        while (i > 0)
+        {
+            i--;
+            if (Physics.Raycast(positions[i], head.forward, out hits[i], 1f, layerMask))
+            {
+                reprojected.Add(hits[i].point);
+            }
+            else {
+
+                reprojected.Add(positions[i]);
+            }
+        }
+
+        positions = reprojected;
+    }
+
+    public Vector3 findCurrentNormal() {
+        
+        var nset = new HashSet<Vector3>(normals.ToArray<Vector3>());
+
+        if (nset.Count == 1) return normals[0];
+
+        List<float> result = new List<float>();
+        List<Vector3> vectorResult = new List<Vector3>();
+
+        foreach (Vector3 n in nset) {
+            vectorResult.Add(n);
+            result.Add(Vector3.Dot(n, head.forward));
+        }
+
+        int indexmax = result.FindIndex(x => x == result.Max());
+
+        return vectorResult[indexmax];
+
     }
 
     public void updateLineRender(LineRenderer lr) {

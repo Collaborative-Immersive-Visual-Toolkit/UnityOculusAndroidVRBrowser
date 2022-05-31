@@ -35,5 +35,5 @@ MonoBehaviour:
   OwnConeOn: 39
   ConeOff: 40
   _observer: 0
-  _devmode: 0
+  _devmode: 1
   _dataFolder: C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/UnityProject/Data_May_Wed_11_21

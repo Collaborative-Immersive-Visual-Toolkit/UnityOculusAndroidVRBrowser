@@ -30,6 +30,9 @@ public class DetectedPoints : MonoBehaviour
 
     public PushElipsesPoints pushPoints;
 
+    public bool renderCoordinates = false;
+
+    public bool renderElipse = false;
 
     public void AddAPoint(Vector3 point)
     {
@@ -38,9 +41,12 @@ public class DetectedPoints : MonoBehaviour
 
         newpoint.Assign(point);
 
-        newpoint.g = Instantiate(Resources.Load("sphere", typeof(GameObject))) as GameObject;
+        if (renderCoordinates)
+        {
+            newpoint.g = Instantiate(Resources.Load("sphere", typeof(GameObject))) as GameObject;
 
-        newpoint.g.transform.position = point;
+            newpoint.g.transform.position = point;
+        }
 
         points.Add(newpoint);
 
@@ -50,12 +56,11 @@ public class DetectedPoints : MonoBehaviour
     public void clearExpiredPoints()
     {
 
-
         var rp = points.FindAll(r => Time.time - r.time > expirytime);
 
         for (int i = 0; i < rp.Count; i++)
         {
-           Destroy(rp[i].g);
+           if(rp[i].g!=null) Destroy(rp[i].g);
         }
 
         int removed = points.RemoveAll(r => Time.time - r.time > expirytime);
@@ -71,7 +76,7 @@ public class DetectedPoints : MonoBehaviour
         {
             if (!checkIfInside(points[i].point, ConeMesh))
             {
-                Destroy(points[i].g);
+                if (points[i].g != null) Destroy(points[i].g);
 
                 points[i].time = -1f;
 
@@ -337,8 +342,11 @@ public class DetectedPoints : MonoBehaviour
 
     public void UpdateLineRenderer() {
 
-        lineRenderer.positionCount = ElipsePoints.Count;
-        lineRenderer.SetPositions(ElipsePoints.ToArray());
+        if (renderElipse)
+        {
+            lineRenderer.positionCount = ElipsePoints.Count;
+            lineRenderer.SetPositions(ElipsePoints.ToArray());
+        }
 
     }
 

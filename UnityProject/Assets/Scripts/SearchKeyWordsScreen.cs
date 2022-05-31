@@ -79,6 +79,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
     public void screenFocus(List<Vector3> points)
     {
+        
 
         averagePoint =  Vector3.zero;
 
@@ -98,13 +99,14 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
                 if (urlManager.BoxColliders[i].bounds.Contains(points[j]))
                 {
-                    
                     currentScreenFocus.Add(i);
                     break;
                 }
 
             }
         }
+
+       
 
     }
 
@@ -200,14 +202,14 @@ public class SearchKeyWordsScreen : MonoBehaviour
         List<string> keys = p.keys;
         string key;
         List<IndexAndLength> indexes = new List<IndexAndLength>();
-
+        
         for (int i = 0; i < keys.Count; i++)
         {
             key = keys[i];
 
             if (currentS2T.Contains(key))
             {
-
+                Debug.Log(key);
                 IndexAndLength newEntry = new IndexAndLength();
                 newEntry.index= i;
                 newEntry.length = key.Length;
