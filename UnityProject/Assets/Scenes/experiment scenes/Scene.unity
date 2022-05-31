@@ -248,6 +248,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1634841612}
     - target: {fileID: 2122517103, guid: dd1a23e95ce72c94f820a67481919e57, type: 3}
+      propertyPath: renderElipse
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122517103, guid: dd1a23e95ce72c94f820a67481919e57, type: 3}
+      propertyPath: renderCoordinates
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122517103, guid: dd1a23e95ce72c94f820a67481919e57, type: 3}
       propertyPath: pushPoints.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 606970310}

@@ -266,6 +266,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         GameObject empty = new GameObject();
         CustomStreamingRecognizer customsr = empty.AddComponent<CustomStreamingRecognizer>();
         SearchKeyWordsScreen Search = GameObject.Find("Ellipses").GetComponent<SearchKeyWordsScreen>();
+        customsr.onInterimResult.AddListener(Search.getSpeechToText);
         customsr.onFinalResult.AddListener(Search.getSpeechToText);
         customsr.Initialize();
         customsr.enableDebugLogging = true;

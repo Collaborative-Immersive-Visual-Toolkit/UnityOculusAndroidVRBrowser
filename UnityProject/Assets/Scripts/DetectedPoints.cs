@@ -164,12 +164,12 @@ public class DetectedPoints : MonoBehaviour
 
 
             //radius of elipse  
-            float rX = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))).Max();
+            //float rX = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))).Max();
+            //float rY = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
 
-            float rY = points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))).Max();
+            float rX = standardDeviation(points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), direction))));
+            float rY = standardDeviation(points.Select(r => Mathf.Abs(Vector3.Dot((r.point - origin), directionPerpendicular))));
 
-
-            //better fit the elipses 
             //int maxIteration = 10;
             //(rX,rY,maxIteration) = Optimize(rX, rY, direction, directionPerpendicular, maxIteration);
 
@@ -188,6 +188,13 @@ public class DetectedPoints : MonoBehaviour
 
             pushPoints.Invoke(new List<Vector3>());
         }
+    }
+
+    public static float standardDeviation(IEnumerable<float> sequence)
+    {
+        float average = sequence.Average();
+        float sum = sequence.Sum(d => Mathf.Pow(d - average, 2));
+        return Mathf.Sqrt((float)sum / sequence.Count());
     }
 
     public void CreateSphereOnFirstPoint() {

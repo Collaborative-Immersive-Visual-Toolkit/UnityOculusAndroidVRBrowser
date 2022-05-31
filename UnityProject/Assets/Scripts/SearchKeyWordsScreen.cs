@@ -25,7 +25,6 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public MeshCollider ConeMesh;
     public LineRenderer lineRenderer;
 
-    public PushElipsesPoints pushPoints;
 
 
     private void Start()
