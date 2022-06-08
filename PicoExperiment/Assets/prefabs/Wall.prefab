@@ -71,6 +71,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  interpolateElipse: 1
+  tresholdInterpolation: 0.7
+  shift: 5
+  reverse: 1
 --- !u!120 &1663940453
 LineRenderer:
   m_ObjectHideFlags: 0
