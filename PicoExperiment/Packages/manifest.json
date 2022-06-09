@@ -1,5 +1,15 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.oshoham.unity-google-cloud-streaming-speech-to-text"
+      ]
+    }
+  ],
   "dependencies": {
+    "com.oshoham.unity-google-cloud-streaming-speech-to-text": "0.1.8",
     "com.tobii.xr.sdk": "file:../TobiiXRSDK_3.0.1.179",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
