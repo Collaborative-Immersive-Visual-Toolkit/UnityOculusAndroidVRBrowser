@@ -182,7 +182,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.picoxr": {
-      "version": "file:C:/Users/rb1619/Documents/GitHub/PicoXR_Platform_SDK-1.2.4_B72",
+      "version": "file:C:/Users/dannox/Desktop/GazeVR/UnityOculusAndroidVRBrowser/PicoXR_Platform_SDK-1.2.5_B81",
       "depth": 0,
       "source": "local",
       "dependencies": {
