@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.tobii.xr.sdk": {
+      "version": "file:../TobiiXRSDK_3.0.1.179",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.xr.management": "3.2.16"
+      }
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -182,7 +190,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.picoxr": {
-      "version": "file:C:/Users/dannox/Desktop/GazeVR/UnityOculusAndroidVRBrowser/PicoXR_Platform_SDK-1.2.5_B81",
+      "version": "file:../PicoXR_Platform_SDK-1.2.5_B81",
       "depth": 0,
       "source": "local",
       "dependencies": {
