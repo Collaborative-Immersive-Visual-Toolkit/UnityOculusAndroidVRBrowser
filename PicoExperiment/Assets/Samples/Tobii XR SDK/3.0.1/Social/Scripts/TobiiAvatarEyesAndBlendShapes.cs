@@ -48,7 +48,7 @@ namespace Tobii.XR.Examples.Social
 
         private void Update()
         {
-            _socialEyeData.Tick();
+            _socialEyeData.PicoTick();
             var worldGazePoint = _socialEyeData.WorldGazePoint;
             
             // Rotate each eye to look at the world gaze point.

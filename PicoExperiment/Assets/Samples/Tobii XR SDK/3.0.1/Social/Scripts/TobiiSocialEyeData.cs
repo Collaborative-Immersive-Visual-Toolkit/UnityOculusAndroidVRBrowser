@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using Unity.XR.PXR;
 
 namespace Tobii.XR.Examples.Social
 {
@@ -21,6 +21,11 @@ namespace Tobii.XR.Examples.Social
 
         private Vector3 _worldGazePoint; // The position in world space where the player is looking.
 
+
+        private float lbout=0;
+        private float rbout=0;
+        private Vector3 Origin;
+        private Vector3 Direction;
         public TobiiSocialEyeData(float minCutoff = 10f, float beta = 5f, float dCutoff = 1.0f)
         {
             // Set the parameters for the 1 Euro Filter. 90hz is chosen but it will automatically update with the correct frequency at runtime.
@@ -59,6 +64,45 @@ namespace Tobii.XR.Examples.Social
 
                     _lastFrameNumber = Time.frameCount;
                 }    
+            }
+        }
+
+        public void PicoTick()
+        {
+
+            // Get the latest gaze ray from the eye tracker.
+            var gazeRay = new TobiiXR_GazeRay();
+            PXR_EyeTracking.GetCombineEyeGazePoint(out gazeRay.Origin);
+            gazeRay.IsValid = PXR_EyeTracking.GetCombineEyeGazeVector(out gazeRay.Direction);
+            PXR_EyeTracking.GetLeftEyeGazeOpenness(out lbout);
+            PXR_EyeTracking.GetRightEyeGazeOpenness(out rbout);
+            IsLeftEyeBlinking = lbout == 0.0f ? true : false;
+            IsRightEyeBlinking = rbout == 0.0f ? true : false;
+
+            // If the gaze ray is invalid in the current frame, use the previously set world gaze point,
+            // but if too much time has passed, return the gaze ray to the forward direction.
+            if (!gazeRay.IsValid)
+            {
+                _lastValidGazeRayCounter += Time.deltaTime;
+                if (_lastValidGazeRayCounter >= InvalidGazeRayTimer)
+                {
+                    // Determine a filtered world space position in the forward direction of the camera
+                    var mainCamera = Camera.main.transform;
+                    _worldGazePoint = FilteredWorldGazePoint(mainCamera.position, mainCamera.forward, TargetDistance);
+                }
+            }
+            else
+            {
+                _lastValidGazeRayCounter = 0;
+
+                // Check if the frame has changed since the last call of this method, in order to avoid filtering duplicate data.
+                if (_lastFrameNumber != Time.frameCount)
+                {
+                    // Determine a filtered world space position where the person is looking.
+                    _worldGazePoint = FilteredWorldGazePoint(gazeRay.Origin, gazeRay.Direction, TargetDistance);
+
+                    _lastFrameNumber = Time.frameCount;
+                }
             }
         }
 
