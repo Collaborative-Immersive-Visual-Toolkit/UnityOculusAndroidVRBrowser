@@ -353,7 +353,6 @@ namespace GoogleCloudStreamingSpeechToText {
                         MaxAlternatives = 1,                     
                     },
                     InterimResults = returnInterimResults,
-                    SingleUtterance = true,
                 }
             });
 
