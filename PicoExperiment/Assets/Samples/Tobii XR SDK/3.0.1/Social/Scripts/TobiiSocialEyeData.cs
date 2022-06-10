@@ -18,7 +18,7 @@ namespace Tobii.XR.Examples.Social
         public bool IsRightEyeBlinking { get; private set; }
 
         public Vector3 WorldGazePoint => _worldGazePoint;
-
+        private Matrix4x4 matrix;
         private Vector3 _worldGazePoint; // The position in world space where the player is looking.
 
 
@@ -83,6 +83,9 @@ namespace Tobii.XR.Examples.Social
             // but if too much time has passed, return the gaze ray to the forward direction.
             if (!gazeRay.IsValid)
             {
+                //Debug.Log("---- Not valid");
+                //Debug.Log(gazeRay.Origin);
+                //Debug.Log(gazeRay.Direction);
                 _lastValidGazeRayCounter += Time.deltaTime;
                 if (_lastValidGazeRayCounter >= InvalidGazeRayTimer)
                 {
@@ -95,11 +98,27 @@ namespace Tobii.XR.Examples.Social
             {
                 _lastValidGazeRayCounter = 0;
 
+               
+
+                if (Camera.main)
+                {
+                    matrix = Matrix4x4.TRS(Camera.main.transform.position, Camera.main.transform.rotation, Vector3.one);
+                }
+                else
+                {
+                    matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one);
+                }
+
+                var RealOriginOffset = matrix.MultiplyPoint(gazeRay.Origin);
+                var DirectionOffset = matrix.MultiplyVector(gazeRay.Direction);
+                //Debug.Log("---- valid");
+                //Debug.Log(RealOriginOffset);
+                //Debug.Log(DirectionOffset);
                 // Check if the frame has changed since the last call of this method, in order to avoid filtering duplicate data.
                 if (_lastFrameNumber != Time.frameCount)
                 {
                     // Determine a filtered world space position where the person is looking.
-                    _worldGazePoint = FilteredWorldGazePoint(gazeRay.Origin, gazeRay.Direction, TargetDistance);
+                    _worldGazePoint = FilteredWorldGazePoint(RealOriginOffset, DirectionOffset, TargetDistance);
 
                     _lastFrameNumber = Time.frameCount;
                 }
