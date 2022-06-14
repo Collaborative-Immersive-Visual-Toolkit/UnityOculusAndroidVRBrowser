@@ -18,7 +18,7 @@ namespace Tobii.XR.Examples.Social
         [SerializeField] private SkinnedMeshRenderer mirroredFace;
 #pragma warning restore 649
 
-        private List<int> _blendShapeIndexes = new List<int>() {17, 18, 21, 22, 23, 61, 62};
+        private List<int> _blendShapeIndexes = new List<int>() {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
         private void LateUpdate()
         {
