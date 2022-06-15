@@ -22,6 +22,7 @@ limitations under the License.
 ************************************************************************************/
 using UnityEngine;
 
+
 [RequireComponent(typeof(AudioSource))]
 
 //-------------------------------------------------------------------------------------
@@ -60,6 +61,7 @@ public class OVRLipSyncContext : OVRLipSyncContextBase
     public KeyCode debugLaughterKey = KeyCode.H;
     public bool showLaughter = false;
     public float laughterScore = 0.0f;
+
 
     // * * * * * * * * * * * * *
     // Private members
@@ -281,7 +283,7 @@ public class OVRLipSyncContext : OVRLipSyncContextBase
     /// </summary>
     /// <param name="data">Data.</param>
     /// <param name="channels">Channels.</param>
-    void OnAudioFilterRead(float[] data, int channels)
+    public void OnAudioFilterReadProxy(float[] data, int channels)
     {
         if (!skipAudioSource)
         {

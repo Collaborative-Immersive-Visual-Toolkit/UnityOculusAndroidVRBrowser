@@ -175,7 +175,7 @@ namespace GoogleCloudStreamingSpeechToText {
             _cancellationTokenSource?.Dispose();
         }
 
-        private async void OnAudioFilterRead(float[] data, int channels) {
+        public async void OnAudioFilterReadProxy(float[] data, int channels) {
 
             if (!_listening) {
                 return;
