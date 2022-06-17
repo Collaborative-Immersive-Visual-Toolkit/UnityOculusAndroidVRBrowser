@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -147,10 +148,19 @@ public class CaptureAvatarPackages : MonoBehaviour
         public Quaternion EyeRightRotation;
 
 
-        private static List<int> _blendShapeIndexes = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+        public static List<int> _blendShapeIndexes;
         public List<float> blendShapeWeights;
 
         public void ExtractSkinnedMeshWeights(SkinnedMeshRenderer originalFace) {
+
+            if (_blendShapeIndexes == null)
+            {
+
+                int blendShapeCount = originalFace.sharedMesh.blendShapeCount;
+
+                _blendShapeIndexes = Enumerable.Range(0, blendShapeCount).ToList();
+
+            }
 
             blendShapeWeights = new List<float>();
 
@@ -167,7 +177,7 @@ public class CaptureAvatarPackages : MonoBehaviour
         {
             List<float> blendShapeWeightsNew = new List<float>();
 
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i < _blendShapeIndexes.Count; i++) {
 
                 blendShapeWeightsNew.Add(Mathf.Lerp(a.blendShapeWeights[i], b.blendShapeWeights[i], t));
             }

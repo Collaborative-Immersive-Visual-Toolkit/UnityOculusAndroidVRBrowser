@@ -285,7 +285,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
 
         //check if a remote avatar still exist and clean up 
-
         GameObject oldRemoteAvatar = GameObject.Find(player.NickName);
 
         //if an avatar is still there reassociate

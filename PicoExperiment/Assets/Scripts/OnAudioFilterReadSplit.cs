@@ -1,19 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-
-[Serializable]
-public class OnAudioFilterReadProxy : UnityEvent<float[], int> { }
+using GoogleCloudStreamingSpeechToText;
+using Photon.Voice.Unity;
 
 public class OnAudioFilterReadSplit : MonoBehaviour
 {
-    public OnAudioFilterReadProxy onEvent;
+
+
+    public CustomStreamingRecognizer csr;
+
+    public OVRLipSyncContext lsc;
+
+    public Speaker spk;
 
     void OnAudioFilterRead(float[] data, int channels)
     {
-        onEvent.Invoke(data,channels);
+
+        if (csr != null) csr.OnAudioFilterReadProxy(data, channels);
+        if (lsc != null) lsc.OnAudioFilterReadProxy(data, channels);
+#if USE_ONAUDIOFILTERREAD
+        if (spk != null) spk.OnAudioFilterReadProxy(data, channels);
+#endif
     }
 
 }

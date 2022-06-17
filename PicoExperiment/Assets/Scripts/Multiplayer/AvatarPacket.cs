@@ -149,7 +149,7 @@ static class BinaryWriterExtensions
 
     public static void Write(this BinaryWriter writer, List<float> lista)
     {
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < CaptureAvatarPackages.PoseFrame._blendShapeIndexes.Count; i++)
         {
             writer.Write(lista[i]);
         }
@@ -216,7 +216,7 @@ static class BinaryReaderExtensions
     {
         List<float> lista = new List<float>();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < CaptureAvatarPackages.PoseFrame._blendShapeIndexes.Count; i++) {
 
             lista.Add(reader.ReadSingle()); 
         }

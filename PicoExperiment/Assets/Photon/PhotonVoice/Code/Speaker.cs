@@ -7,7 +7,7 @@
 // </summary>
 // <author>developer@photonengine.com</author>
 // ----------------------------------------------------------------------------
-//#define USE_ONAUDIOFILTERREAD
+// #define USE_ONAUDIOFILTERREAD
 
 using System;
 using System.Collections;
@@ -465,14 +465,26 @@ namespace Photon.Voice.Unity
             }
         }
 
-        #if USE_ONAUDIOFILTERREAD
+#if USE_ONAUDIOFILTERREAD
         private void OnAudioFilterRead(float[] data, int channels)
         {
             this.outBuffer.Read(data, channels, this.outputSampleRate);
         }
+        public void OnAudioFilterReadProxy(float[] data, int channels)
+        {
+            //Debug.Log(data);
+            //Debug.Log(channels);
+            //Debug.Log(this);
+            //Debug.Log(this.outBuffer);
+            //Debug.Log(this.outputSampleRate);
+            this.outBuffer.Read(data, channels, this.outputSampleRate);
+        }
+
         #endif
 
-        #if UNITY_EDITOR
+
+
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (this.playDelayMs > 0)

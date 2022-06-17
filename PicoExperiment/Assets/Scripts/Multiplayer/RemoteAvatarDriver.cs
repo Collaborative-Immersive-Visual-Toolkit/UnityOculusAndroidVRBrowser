@@ -114,10 +114,9 @@ public class RemoteAvatarDriver : MonoBehaviour
         RightEye.localRotation = CurrentPose.EyeRightRotation;
 
         // Mirror the face blend shapes.
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < CaptureAvatarPackages.PoseFrame._blendShapeIndexes.Count; i++)
         {
-
-            Face.SetBlendShapeWeight(i+1, CurrentPose.blendShapeWeights[i]);
+            Face.SetBlendShapeWeight(i, CurrentPose.blendShapeWeights[i]);
         }
 
 
