@@ -443,8 +443,8 @@ public class BrowserView : MonoBehaviour
 #elif UNITY_ANDROID
         UnityThread.initUnityThread();
         //RawImage.GetComponent<Button>().onClick.AddListener(OnClick);
-        if(RawImage!=null) _rawImageRect = RawImage.GetComponent<RectTransform>();
-        else if(Image != null) _rawImageRect = Image.GetComponent<RectTransform>();
+        //if(RawImage!=null) _rawImageRect = RawImage.GetComponent<RectTransform>();
+        //else if(Image != null) _rawImageRect = Image.GetComponent<RectTransform>();
 
         InitializeAndroidPlugin();
 
