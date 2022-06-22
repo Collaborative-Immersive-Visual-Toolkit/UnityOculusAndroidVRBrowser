@@ -24,7 +24,7 @@ public class BrowserView : MonoBehaviour
 
     public RawImage RawImage;
     //public Image Image;
-    private UserAgent _currentUserAgent = UserAgent.mobile;
+    private UserAgent _currentUserAgent = UserAgent.desktop;
     public PXR_OverLay _overlay;
     public string startUrl;
     private EventTrigger eventTrigger = null;
@@ -44,6 +44,9 @@ public class BrowserView : MonoBehaviour
 
     private bool Dragging = false;
     private Vector2 dragStartPosition = new Vector2();
+
+    private IntPtr fakeandroidSurfaceObject = IntPtr.Zero;
+
     public enum BrowserHistoryType
     {
         Browser,
@@ -166,20 +169,30 @@ public class BrowserView : MonoBehaviour
     /// Calls the plugin to get png bytes from the surface.
     /// </summary>
     /// <returns>PNG byte array</returns>
-    public byte[] TakePngScreenShot(int width=0, int height=0, int quality=100)
+    public byte[] TakePngScreenShot(int width = 0, int height = 0, int quality = 100)
     {
-        if (width == 0 || width> _surfaceWidth) width = _surfaceWidth;
-        if (height == 0 || height>_surfaceHeight) height = _surfaceHeight;
-            
+        if (width == 0 || width > _surfaceWidth) width = _surfaceWidth;
+        if (height == 0 || height > _surfaceHeight) height = _surfaceHeight;
         AndroidJavaObject jo = _ajc.Call<AndroidJavaObject>("GetSurfaceBytesBuffer",
-            new object[]{width, height, quality});
+            new object[] { width, height, quality });
+        Debug.Log("jo:");
+        Debug.Log(jo);
+        if (jo == null) return new byte[0];
+
         AndroidJavaObject bufferObject = jo.Get<AndroidJavaObject>("Buffer");
+        Debug.Log("bufferObject:");
+        Debug.Log(bufferObject);
+        if (bufferObject == null) return new byte[0];
+
         byte[] bytes = AndroidJNIHelper.ConvertFromJNIArray<byte[]>(bufferObject.GetRawObject());
+        Debug.Log("bytes:");
+        Debug.Log(bytes);
+
+
         return bytes;
     }
-
     #region Button Interactions
-      
+
 
     // PLUGIN METHODS:
 
@@ -479,25 +492,24 @@ public class BrowserView : MonoBehaviour
         private IEnumerator Start()
         {
 
-          
+        #if UNITY_EDITOR
+        yield break;
+        #endif
 
-#if UNITY_EDITOR
-            yield break;
-#endif
-            // Wait for surface to be available.
-            while (_overlay.externalAndroidSurfaceObject == IntPtr.Zero || _ajc == null)
-            {
-                Debug.Log(_overlay.externalAndroidSurfaceObject);
-                Debug.Log(_ajc);
-                yield return null;
-            }
-            Debug.Log("Browser Start!");
+        // Wait for surface to be available.
+        while (_overlay.externalAndroidSurfaceObject == IntPtr.Zero || _ajc == null)
+        {
+            //Debug.Log(_overlay.externalAndroidSurfaceObject);
+            //Debug.Log(_ajc);
+            yield return null;
+        }
+        Debug.Log("[BROWSER] Browser Start!");
             var pluginClass = _ajc.GetRawClass();
             var pluginObject = _ajc.GetRawObject();
             var surfaceMethodId = AndroidJNI.GetMethodID(pluginClass, "PassSurface", "(Landroid/view/Surface;)V");
 
             AndroidJNI.CallVoidMethod(pluginObject, surfaceMethodId,
-                new jvalue[] { new jvalue { l = _overlay.externalAndroidSurfaceObject } });
+                new jvalue[] { new jvalue { l = _overlay.externalAndroidSurfaceObject }});
 
             //try
             //{
@@ -531,7 +543,7 @@ public class BrowserView : MonoBehaviour
 
             var tempAjc = new AndroidJavaClass(classString);
             _ajc = tempAjc.CallStatic<AndroidJavaObject>("CreateInstance",
-                new object[] { _surfaceWidth, _surfaceHeight, UserAgent.mobile.ToString("G") });
+                new object[] { _surfaceWidth, _surfaceHeight, UserAgent.vr.ToString("G") });
             UnityInterface androidPluginCallback = new UnityInterface {BrowserView = this};
             _ajc.Call("SetUnityBitmapCallback", androidPluginCallback);
         }

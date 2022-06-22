@@ -11,19 +11,19 @@ public class UpdateOverlayTextureEditor : Editor
 {
 
   
-    public override void OnInspectorGUI()
-    {
-        // Custom form for Player Preferences
-        UpdateOverlayTexture Target = (UpdateOverlayTexture)target;
+    //public override void OnInspectorGUI()
+    //{
+    //    // Custom form for Player Preferences
+    //    UpdateOverlayTexture Target = (UpdateOverlayTexture)target;
 
-        if (GUILayout.Button("Set Aspect"))
-        {
+    //    if (GUILayout.Button("Set Aspect"))
+    //    {
 
-            Target.setAspect();
-        }
+    //        Target.setAspect();
+    //    }
 
-        base.DrawDefaultInspector();
+    //    base.DrawDefaultInspector();
 
-    }
+    //}
 }
 #endif
