@@ -44,7 +44,8 @@ public class BrowserView : MonoBehaviour
 
     private bool Dragging = false;
     private Vector2 dragStartPosition = new Vector2();
-
+    public float factorW;
+    public float factorH;
     private IntPtr fakeandroidSurfaceObject = IntPtr.Zero;
 
     public enum BrowserHistoryType
@@ -147,8 +148,10 @@ public class BrowserView : MonoBehaviour
         // Debug.Log(positionInRect);
 
         // get the screen dimensions and divide them by the rectangle's screen dimensions for scaling
-        float screenWidth = _surfaceWidth; //rect.width;
-        float screenHeight = _surfaceHeight; //rect.height;
+        int w = (int)(_surfaceWidth * factorW);
+        int h = (int)(_surfaceHeight * factorH);
+        float screenWidth = w; //rect.width;
+        float screenHeight = h; //rect.height;
 
         float xScale = screenWidth / _rawImageRect.rect.width; // rectWidthInScreen;
         float yScale = screenHeight / _rawImageRect.rect.height; // rectHeightInScreen;
@@ -171,8 +174,8 @@ public class BrowserView : MonoBehaviour
     /// <returns>PNG byte array</returns>
     public byte[] TakePngScreenShot(int width = 0, int height = 0, int quality = 100)
     {
-        if (width == 0 || width > _surfaceWidth) width = _surfaceWidth;
-        if (height == 0 || height > _surfaceHeight) height = _surfaceHeight;
+        if (width == 0 || width > (int)(_surfaceWidth*factorW)) width = (int)(_surfaceWidth * factorW);
+        if (height == 0 || height > (int)(_surfaceHeight*factorH)) height = (int)(_surfaceHeight * factorH);
         AndroidJavaObject jo = _ajc.Call<AndroidJavaObject>("GetSurfaceBytesBuffer",
             new object[] { width, height, quality });
         Debug.Log("jo:");
@@ -534,16 +537,17 @@ public class BrowserView : MonoBehaviour
 #if UNITY_EDITOR
             return;
 #endif
-            // testing new values 
-            //_surfaceWidth = (int)_rawImageRect.rect.width; //(int) _rawImage.rectTransform.rect.width;
-            //_surfaceHeight = (int)_rawImageRect.rect.height; //(int) (_rawImage.rectTransform.rect.height);
-
-            Debug.Log("_surfaceWidth "+ _surfaceWidth);
-            Debug.Log("_surfaceHeight " + _surfaceHeight);
+        // testing new values 
+        //_surfaceWidth = (int)_rawImageRect.rect.width; //(int) _rawImage.rectTransform.rect.width;
+        //_surfaceHeight = (int)_rawImageRect.rect.height; //(int) (_rawImage.rectTransform.rect.height);
+            int w =(int) (_surfaceWidth * factorW);
+            int h = (int)(_surfaceHeight * factorH);
+        Debug.Log("_surfaceWidth "+ w);
+            Debug.Log("_surfaceHeight " + h);
 
             var tempAjc = new AndroidJavaClass(classString);
             _ajc = tempAjc.CallStatic<AndroidJavaObject>("CreateInstance",
-                new object[] { _surfaceWidth, _surfaceHeight, UserAgent.vr.ToString("G") });
+                new object[] { w, h, UserAgent.vr.ToString("G") });
             UnityInterface androidPluginCallback = new UnityInterface {BrowserView = this};
             _ajc.Call("SetUnityBitmapCallback", androidPluginCallback);
         }
