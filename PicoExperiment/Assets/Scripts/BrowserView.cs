@@ -542,7 +542,7 @@ public class BrowserView : MonoBehaviour
         //_surfaceHeight = (int)_rawImageRect.rect.height; //(int) (_rawImage.rectTransform.rect.height);
             int w =(int) (_surfaceWidth * factorW);
             int h = (int)(_surfaceHeight * factorH);
-        Debug.Log("_surfaceWidth "+ w);
+            Debug.Log("_surfaceWidth "+ w);
             Debug.Log("_surfaceHeight " + h);
 
             var tempAjc = new AndroidJavaClass(classString);
