@@ -25,6 +25,7 @@ public class EyeRayCasting : MonoBehaviour
 
     void FixedUpdate()
     {
+            if (RightEye == null) return;
 
             RaycastHit hit;
 

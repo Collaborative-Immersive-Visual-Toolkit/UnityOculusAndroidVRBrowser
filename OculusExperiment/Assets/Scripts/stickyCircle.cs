@@ -241,6 +241,7 @@ public class stickyCircle : MonoBehaviour
         else lineRenderer.materials = NonVisible;
      
     }
+ 
     public void toggleMaterialUpdate() {
         updateMaterial = !updateMaterial;
 

@@ -70,6 +70,12 @@ public class GameSettings : ScriptableObject
     public byte LaserPointerChange = 11;
 
     [SerializeField]
+    public byte EyeCircleIncome = 13;
+
+    [SerializeField]
+    public byte EyeCircleDestroy = 14;
+
+    [SerializeField]
     public byte Reorient = 31;
 
     [SerializeField]

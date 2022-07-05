@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
 
 public class circleEye : MonoBehaviour
 {
@@ -61,6 +62,9 @@ public class circleEye : MonoBehaviour
         }
 
         updateCircleLineRender();
+
+        object[] data = new object[] { circlePos, PhotonNetwork.NickName };
+        gameObject.SendMessage("RaiseCircleNewEvent", data, SendMessageOptions.DontRequireReceiver);
     }
 
     Vector3 Normal(Vector3 a, Vector3 b, Vector3 c)
@@ -147,5 +151,7 @@ public class circleEye : MonoBehaviour
 
         circlelr.positionCount = 0;
 
+        object[] data = new object[] { PhotonNetwork.NickName };
+        gameObject.SendMessage("RaiseCircleDestroyEvent", data, SendMessageOptions.DontRequireReceiver);
     }
 }
