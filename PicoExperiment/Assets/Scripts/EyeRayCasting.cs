@@ -1,6 +1,11 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class TriggerNewList : UnityEvent<Vector3[]>{}
 
 public class EyeRayCasting : MonoBehaviour
 {
@@ -12,9 +17,11 @@ public class EyeRayCasting : MonoBehaviour
     public float SaccadeTresholdAbove;
     public LineRenderer lr;
 
-    private Vector3[] m_ClearArray = new[] { Vector3.zero, Vector3.zero };
     private Queue<Vector3> points = new Queue<Vector3>();
     private Vector3 LastPoint;
+
+    public TriggerNewList trigger;
+    public UnityEvent deleteList;
 
     void FixedUpdate()
     {
@@ -23,7 +30,7 @@ public class EyeRayCasting : MonoBehaviour
 
             if (Physics.Raycast(RightEye.transform.position, RightEye.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
-                Debug.Log("hit");
+                //Debug.Log("hit");
                 ProcessHitPoint(hit.point);
             }
 
@@ -31,6 +38,8 @@ public class EyeRayCasting : MonoBehaviour
 
     private void Update()
     {
+        if (points.Count > 20) points.Dequeue();
+
         if (points.Count > 0) //add first point
         {
             UpdateLineRenderer();
@@ -58,8 +67,9 @@ public class EyeRayCasting : MonoBehaviour
             } 
             else if (angle > SaccadeTresholdAbove) //clear quee
             {
-                Debug.Log("Cleared");
+                //Debug.Log("Cleared");
                 points.Clear();
+                deleteList.Invoke();
             }
 
         }
@@ -68,10 +78,10 @@ public class EyeRayCasting : MonoBehaviour
 
     void AddPonint(Vector3 point) {
 
-        Debug.Log("Point Added ->" + points.Count);
+        //Debug.Log("Point Added ->" + points.Count);
         LastPoint = point;
         points.Enqueue(point);
-
+        trigger.Invoke(points.ToArray());
     }
 
     //this output degree*second
@@ -98,4 +108,8 @@ public class EyeRayCasting : MonoBehaviour
         
         lr.positionCount = 0;
     }
+
+
+
+
 }
