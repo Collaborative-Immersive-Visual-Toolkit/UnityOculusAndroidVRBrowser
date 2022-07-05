@@ -30,7 +30,7 @@ public class RemoteEyeCircle : MonoBehaviourPun
             if ((string)data[1] == gameObject.transform.parent.gameObject.name)
             {
 
-                circlePos = (Vector3[])data[1];
+                circlePos = (Vector3[])data[0];
                 updateCircleLineRender();
 
             }

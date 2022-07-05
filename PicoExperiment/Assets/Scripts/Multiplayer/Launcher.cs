@@ -277,7 +277,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //}
 
         ////destroy UiHelpers
-        //DestroyImmediate(GameObject.Find("UIHelpersModified"));
+        DestroyImmediate(GameObject.Find("UIHelpersModified"));
 
         ////enable observer recorder
         //avatarRecorder.enabled = true;
