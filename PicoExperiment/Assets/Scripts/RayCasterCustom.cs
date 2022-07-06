@@ -8,7 +8,17 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class RayCasterCustom : MonoBehaviour
 {
-    public LineRenderer lr;
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+
+    /*public LineRenderer lr;
 
     Vector3[] m_ClearArray = new[] { Vector3.zero, Vector3.zero };
 
@@ -94,7 +104,7 @@ public class RayCasterCustom : MonoBehaviour
     {
         lr.SetPositions(m_ClearArray);
         lr.positionCount = 0;
-    }
+    }*/
 
 }
 
