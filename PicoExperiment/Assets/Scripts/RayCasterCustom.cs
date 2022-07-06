@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.UI;
 
 public class RayCasterCustom : MonoBehaviour
 {
@@ -50,6 +51,9 @@ public class RayCasterCustom : MonoBehaviour
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
                     UpdateLineRenderer(transform.position+transform.forward*0.1f, hit.point);
+
+                //hit.collider.gameObject.GetComponent<GraphicRaycaster>().Raycast()
+                //https://docs.unity3d.com/2019.1/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
             }
             else
             {

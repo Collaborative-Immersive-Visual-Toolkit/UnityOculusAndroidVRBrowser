@@ -13,8 +13,11 @@ public class EyeRayCasting : MonoBehaviour
     public GameObject RightEye;
     public GameObject LeftEye;
     public LayerMask layerMask;
-    public float FixationTresholdBelow;
-    public float SaccadeTresholdAbove;
+    
+    public float TresholdBelow;
+    public float TresholdAbove;    
+    public int MaxPoints;
+
     public LineRenderer lr;
 
     private Queue<Vector3> points = new Queue<Vector3>();
@@ -22,6 +25,8 @@ public class EyeRayCasting : MonoBehaviour
 
     public TriggerNewList trigger;
     public UnityEvent deleteList;
+    public bool ShowPath;
+
 
     void FixedUpdate()
     {
@@ -39,7 +44,7 @@ public class EyeRayCasting : MonoBehaviour
 
     private void Update()
     {
-        if (points.Count > 20) points.Dequeue();
+        if (points.Count > MaxPoints) points.Dequeue();
 
         if (points.Count > 0) //add first point
         {
@@ -62,11 +67,11 @@ public class EyeRayCasting : MonoBehaviour
 
             float angle = calculateAngle(point);
 
-            if (angle > FixationTresholdBelow && angle < SaccadeTresholdAbove) //add point
+            if (angle > TresholdBelow && angle < TresholdAbove) //add point
             {
                 AddPonint(point);
             } 
-            else if (angle > SaccadeTresholdAbove) //clear quee
+            else if (angle > TresholdAbove) //clear quee
             {
                 //Debug.Log("Cleared");
                 points.Clear();
@@ -98,6 +103,12 @@ public class EyeRayCasting : MonoBehaviour
 
     private void UpdateLineRenderer()
     {
+        if (!ShowPath) {
+
+            ClearLineRenderer();
+            return;
+        }
+
         lr.material.color = Color.red;
         lr.positionCount = points.Count;
         lr.SetPositions(points.ToArray());
