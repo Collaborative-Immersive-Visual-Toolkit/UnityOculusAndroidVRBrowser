@@ -80,7 +80,8 @@ public class BrowserView : MonoBehaviour
     {
         PointerEventData eventData = (PointerEventData)data;
 
-        
+        Debug.Log("[Browser View] OnClick");
+
         if (!Dragging)
         {
            

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class RayCasterCustom : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class RayCasterCustom : MonoBehaviour
 
     InputDevice device;
     bool triggerValue;
+
+    public EventSystem m_EventSystem;
 
     enum ControllerLeftRight : ushort
     {
@@ -50,10 +54,11 @@ public class RayCasterCustom : MonoBehaviour
         
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
-                    UpdateLineRenderer(transform.position+transform.forward*0.1f, hit.point);
+                UpdateLineRenderer(transform.position+transform.forward*0.1f, hit.point);
 
-                //hit.collider.gameObject.GetComponent<GraphicRaycaster>().Raycast()
-                //https://docs.unity3d.com/2019.1/Documentation/ScriptReference/UI.GraphicRaycaster.Raycast.html
+                SetUpPointerEvent(hit);
+
+               
             }
             else
             {
@@ -68,6 +73,13 @@ public class RayCasterCustom : MonoBehaviour
             ClearLineRenderer();
         }
        
+    }
+
+    
+    private void SetUpPointerEvent(RaycastHit hit) {
+
+       
+
     }
 
     private void UpdateLineRenderer(Vector3 start,Vector3 end)
