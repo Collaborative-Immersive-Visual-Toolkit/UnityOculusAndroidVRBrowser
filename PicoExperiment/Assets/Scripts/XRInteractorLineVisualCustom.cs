@@ -33,6 +33,15 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// 
         public bool overrideInteractorLineLength { get { return m_OverrideInteractorLineLength; } set { m_OverrideInteractorLineLength = value; } }
 
+        [SerializeField]
+        bool m_LaserAlwaysVisible = true;
+        /// <summary>Gets or sets the width of the line (in centimeters).</summary>	
+        /// 
+        public bool laserAlwaysVisible { get { return m_LaserAlwaysVisible; } set { m_LaserAlwaysVisible = value; } }
+
+
+        
+
 
         [SerializeField]
         float m_LineLength = 10.0f;
@@ -367,7 +376,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
             if (m_NoRenderPoints >= 2)
             {
-                if (m_CurrentHit)
+                if (m_CurrentHit || laserAlwaysVisible)
                 {
                     m_LineRenderer.enabled = true;
                 } else
