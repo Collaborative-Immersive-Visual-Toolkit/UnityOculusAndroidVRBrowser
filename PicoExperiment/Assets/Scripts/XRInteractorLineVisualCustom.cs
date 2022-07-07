@@ -39,8 +39,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
         /// 
         public bool laserAlwaysVisible { get { return m_LaserAlwaysVisible; } set { m_LaserAlwaysVisible = value; } }
 
+        XRRayInteractor interactor;
 
-        
 
 
         [SerializeField]
@@ -132,7 +132,9 @@ namespace UnityEngine.XR.Interaction.Toolkit
             if(m_Reticle != null)
                 m_Reticle.SetActive(false);
 
-            UpdateSettings();     
+            UpdateSettings();
+
+            interactor = GetComponent<XRRayInteractor>();
         }
 
         void OnEnable()
@@ -376,9 +378,26 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
             if (m_NoRenderPoints >= 2)
             {
+                RaycastResult result;
+                int raycastPointIndex;
+                bool found = interactor.GetCurrentUIRaycastResult(out result, out raycastPointIndex);
+
+                string tag = "";
+                if (found)
+                {
+                    tag = result.gameObject.tag;
+                }
+                
                 if (m_CurrentHit || laserAlwaysVisible)
                 {
-                    m_LineRenderer.enabled = true;
+                    if(tag == "GUI") {
+                        m_LineRenderer.enabled = true;
+                    } else if(tag == "Browser")
+                    {
+                        bool isDoneRight = false;
+                        InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.triggerButton, out isDoneRight);
+                        m_LineRenderer.enabled = isDoneRight;
+                    }
                 } else
                 {
                     m_LineRenderer.enabled = false;
