@@ -139,8 +139,11 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
             interactor = GetComponent<XRRayInteractor>();
 
-            eventSystem = Object.FindObjectOfType<EventSystem>();
+        }
 
+        void Start()
+        {
+            eventSystem = Object.FindObjectOfType<EventSystem>();
         }
 
         void OnEnable()
