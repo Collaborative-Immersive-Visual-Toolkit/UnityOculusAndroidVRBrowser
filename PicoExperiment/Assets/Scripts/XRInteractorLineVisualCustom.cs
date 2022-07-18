@@ -403,21 +403,22 @@ namespace UnityEngine.XR.Interaction.Toolkit
                         bool isDoneRight = false;
                         InputDevices.GetDeviceAtXRNode(controller).TryGetFeatureValue(CommonUsages.triggerButton, out isDoneRight);
                         m_LineRenderer.enabled = isDoneRight;
-
+                        Debug.Log(result.gameObject.name);
                         if (isDoneRight)
                         {
-                        Debug.Log(result.gameObject.name);
-                        Transform p = result.gameObject.transform.parent; //check the structure of Panel 
+                        
+                        Debug.Log(result.gameObject.transform.parent.name);
+                        Debug.Log(result.gameObject.transform.parent.parent.name);
+                        /*Transform p = result.gameObject.transform.parent.parent.parent; //check the structure of Panel 
                         Transform b = p.Find("Browser");
-                        if(b)
-                            {
-                                Debug.Log(b.gameObject.name);
-                                BrowserView bv = b.gameObject.GetComponent<BrowserView>();
-                                PointerEventData pd = new PointerEventData(eventSystem);
-                                pd.position = result.screenPosition;
-                                Debug.Log(pd.position);
-                                bv.OnClick(pd);
-                            }
+                        if(b){
+                                    Debug.Log(b.gameObject.name);
+                                    BrowserView bv = b.gameObject.GetComponent<BrowserView>();
+                                    PointerEventData pd = new PointerEventData(eventSystem);
+                                    pd.position = result.screenPosition;
+                                    Debug.Log(pd.position);
+                                    bv.OnClick(pd);
+                              }*/
                         }
                     }
                 } else
