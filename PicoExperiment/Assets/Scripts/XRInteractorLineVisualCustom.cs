@@ -404,12 +404,21 @@ namespace UnityEngine.XR.Interaction.Toolkit
                         InputDevices.GetDeviceAtXRNode(controller).TryGetFeatureValue(CommonUsages.triggerButton, out isDoneRight);
                         m_LineRenderer.enabled = isDoneRight;
 
-
-                        BrowserView bv = result.gameObject.GetComponent<BrowserView>();
-                        PointerEventData pd = new PointerEventData(eventSystem);
-                        pd.position = result.screenPosition;
-                        Debug.Log(pd.position);
-                        bv.OnClick(pd);
+                        if (isDoneRight)
+                        {
+                        Debug.Log(result.gameObject.name);
+                        Transform p = result.gameObject.transform.parent; //check the structure of Panel 
+                        Transform b = p.Find("Browser");
+                        if(b)
+                            {
+                                Debug.Log(b.gameObject.name);
+                                BrowserView bv = b.gameObject.GetComponent<BrowserView>();
+                                PointerEventData pd = new PointerEventData(eventSystem);
+                                pd.position = result.screenPosition;
+                                Debug.Log(pd.position);
+                                bv.OnClick(pd);
+                            }
+                        }
                     }
                 } else
                 {
