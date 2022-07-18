@@ -126,6 +126,8 @@ namespace UnityEngine.XR.Interaction.Toolkit
 
         Vector3[] m_ClearArray = new[] { Vector3.zero, Vector3.zero };
 
+        EventSystem eventSystem;
+
         void Awake()
         {
             m_LineRenderable = GetComponent<ILineRenderable>();
@@ -136,6 +138,9 @@ namespace UnityEngine.XR.Interaction.Toolkit
             UpdateSettings();
 
             interactor = GetComponent<XRRayInteractor>();
+
+            eventSystem = Object.FindObjectOfType<EventSystem>();
+
         }
 
         void OnEnable()
@@ -398,6 +403,13 @@ namespace UnityEngine.XR.Interaction.Toolkit
                         bool isDoneRight = false;
                         InputDevices.GetDeviceAtXRNode(controller).TryGetFeatureValue(CommonUsages.triggerButton, out isDoneRight);
                         m_LineRenderer.enabled = isDoneRight;
+
+
+                        BrowserView bv = result.gameObject.GetComponent<BrowserView>();
+                        PointerEventData pd = new PointerEventData(eventSystem);
+                        pd.position = result.screenPosition;
+                        Debug.Log(pd.position);
+                        bv.OnClick(pd);
                     }
                 } else
                 {
