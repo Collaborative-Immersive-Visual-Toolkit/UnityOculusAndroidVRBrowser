@@ -105,6 +105,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
         bool m_CurrentHit = false;
         GameObject m_ReticleToUse;
 
+        public XRNode controller;
 
         LineRenderer m_LineRenderer;
 
@@ -395,7 +396,7 @@ namespace UnityEngine.XR.Interaction.Toolkit
                     } else if(tag == "Browser")
                     {
                         bool isDoneRight = false;
-                        InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.triggerButton, out isDoneRight);
+                        InputDevices.GetDeviceAtXRNode(controller).TryGetFeatureValue(CommonUsages.triggerButton, out isDoneRight);
                         m_LineRenderer.enabled = isDoneRight;
                     }
                 } else

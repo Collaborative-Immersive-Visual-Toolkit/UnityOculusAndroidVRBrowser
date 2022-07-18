@@ -164,7 +164,7 @@
       }
     },
     "com.unity.xr.interaction.toolkit": {
-      "version": "file:E:/Experiments/UnityOculusAndroidVRBrowser/com.unity.xr.interaction.toolkit@0.9.4-preview",
+      "version": "file:C:/Users/rb1619/Documents/GitHub/UnityOculusAndroidVRBrowser/com.unity.xr.interaction.toolkit@0.9.4-preview",
       "depth": 0,
       "source": "local",
       "dependencies": {
