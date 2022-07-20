@@ -64,6 +64,18 @@ public class GameSettings : ScriptableObject
     public byte NextDataDisplay = 3;
 
     [SerializeField]
+    public byte HideUnhideLayer = 4;
+
+    [SerializeField]
+    public byte SpawnPlaceholder = 5;
+
+    [SerializeField]
+    public byte DeletePlaceHolders = 6;
+
+    [SerializeField]
+    public byte CursorUpdate = 7;
+
+    [SerializeField]
     public byte AddLongTap = 10;
 
     [SerializeField]
@@ -76,34 +88,25 @@ public class GameSettings : ScriptableObject
     public byte EyeCircleDestroy = 14;
 
     [SerializeField]
-    public byte Reorient = 31;
+    public byte EndOfTrialEvent = 15;
 
     [SerializeField]
     public byte VisualConeChange = 12;
 
     [SerializeField]
-    public byte StartRecordAudio = 36;
-
-    [SerializeField]
-    public byte StopRecordAudio = 37;
-
-    [SerializeField]
-    public byte EndOfTrialEvent = 15;
-
-    [SerializeField]
-    public byte HideUnhideLayer = 4;
-
-    [SerializeField]
-    public byte SpawnPlaceholder = 5;
-
-    [SerializeField]
-    public byte DeletePlaceHolders = 6;
+    public byte Reorient = 31;
 
     [SerializeField]
     public byte VisualizationChange = 33;
 
     [SerializeField]
     public byte UiHelperSwitch = 34;
+
+    [SerializeField]
+    public byte StartRecordAudio = 36;
+
+    [SerializeField]
+    public byte StopRecordAudio = 37;
 
     [SerializeField]
     public byte ConeOn = 38;

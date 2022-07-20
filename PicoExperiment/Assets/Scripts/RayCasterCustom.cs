@@ -5,10 +5,10 @@ using UnityEngine.XR;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.XR.Interaction.Toolkit;
+using Photon.Pun;
 
 public class RayCasterCustom : MonoBehaviour
 {
-
     public LineRenderer lr;
 
     Vector3[] m_ClearArray = new[] { Vector3.zero, Vector3.zero };
@@ -56,26 +56,21 @@ public class RayCasterCustom : MonoBehaviour
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
             {
                 UpdateLineRenderer(transform.position+transform.forward*0.1f, hit.point);
-
                 SetUpPointerEvent(hit);
-
-               
+  
             }
             else
             {
-
                 ClearLineRenderer();
             }
 
         } 
         else
         {
-           
             ClearLineRenderer();
         }
        
     }
-
     
     private void SetUpPointerEvent(RaycastHit hit) {
 
@@ -89,12 +84,21 @@ public class RayCasterCustom : MonoBehaviour
         Vector3[] Array = new[] { start, end };
         lr.SetPositions(Array);
         lr.positionCount = 2;
+
+        object[] data = new object[] { start, end, true, controller, PhotonNetwork.NickName };
+        gameObject.SendMessage("RaiseLaserPointerChange", data, SendMessageOptions.DontRequireReceiver);
     }
 
     private void ClearLineRenderer()
     {
+        if (lr.positionCount == 0) return;
+
+        object[] data = new object[] { Vector3.zero, Vector3.zero, false, controller, PhotonNetwork.NickName };
+        gameObject.SendMessage("RaiseLaserPointerChange", data, SendMessageOptions.DontRequireReceiver);
+
         lr.SetPositions(m_ClearArray);
         lr.positionCount = 0;
+
     }
 
 }
