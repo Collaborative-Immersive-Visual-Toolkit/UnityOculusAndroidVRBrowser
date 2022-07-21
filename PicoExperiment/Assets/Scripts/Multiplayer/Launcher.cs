@@ -146,6 +146,14 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         //PhotonVoiceInstantiationForLocalAvatar();
         //StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
+
+        ///try the google speech
+        GameObject InputType_Microphone =  GameObject.Find("InputType_Microphone");
+        CustomStreamingRecognizer customsr = InputType_Microphone.GetComponent<CustomStreamingRecognizer>();
+        SearchKeyWordsScreen Search = GameObject.Find("Ellipses").GetComponent<SearchKeyWordsScreen>();
+        customsr.onInterimResult.AddListener(Search.getSpeechToText);
+        customsr.onFinalResult.AddListener(Search.getSpeechToText);       
+
     }
 
 
