@@ -6,7 +6,8 @@ using Photon.Pun;
 using System;
 using System.IO;
 using UnityEngine.Events;
-
+using UnityEngine.XR;
+using Unity.XR.PXR;
 [System.Serializable]
 public class ChangeVisualization : UnityEvent<visualization> { }
 
@@ -17,14 +18,26 @@ public class UrlManager : MonoBehaviourPun
 
     public Launcher l;
 
-    public BrowserView screenOne;
-    public BrowserView screenTwo;
-    public BrowserView screenThree;
-    public BrowserView screenFour;
-    public BrowserView screenFive;
-    public BrowserView screenSix;
-    public BrowserView screenSeven;
-    public BrowserView screenEight;
+    private BrowserView screenOne;
+    private BrowserView screenTwo;
+    private BrowserView screenThree;
+    private BrowserView screenFour;
+    private BrowserView screenFive;
+    private BrowserView screenSix;
+    private BrowserView screenSeven;
+    private BrowserView screenEight;
+
+    public GameObject screenOnePrefab;
+    public GameObject screenTwoPrefab;
+    public GameObject screenThreePrefab;
+    public GameObject screenFourPrefab;
+    public GameObject screenFivePrefab;
+    public GameObject screenSixPrefab;
+    public GameObject screenSevenPrefab;
+    public GameObject screenEightPrefab;
+
+    private Dictionary<int, BrowserView> browsers;
+    private Dictionary<int, GameObject> browsersPrefabs;
 
     public string urlOne;
     public string urlTwo;
@@ -41,16 +54,79 @@ public class UrlManager : MonoBehaviourPun
 
     public ChangeVisualization changeVisualization;
 
+    public SearchKeyWordsScreen skws;
+
+    bool clicked = false;
+
+    private void SetDictionaryToBrowser(int index)
+    {
+        if (index == 0) screenOne = browsers[index];
+        if (index == 1) screenTwo = browsers[index];
+        if (index == 2) screenThree = browsers[index];
+        if (index == 3) screenFour = browsers[index];
+        if (index == 4) screenFive = browsers[index];
+        if (index == 5) screenSix = browsers[index];
+        if (index == 6) screenSeven = browsers[index];
+        if (index == 7) screenEight = browsers[index];
+    }
+
+    private void SetBoxCollider(int index)
+    {
+        BoxColliders[index] = browsers[index].transform.parent.GetComponent<BoxCollider>();
+    }
+
     private void Start()
     {
+        browsers = new Dictionary<int, BrowserView>() 
+        {
+            { 0,  screenOne},
+            { 1,  screenTwo},
+            { 2,  screenThree},
+            { 3,  screenFour},
+            { 4,  screenFive},
+            { 5,  screenSix},
+            { 6,  screenSeven},
+            { 7,  screenEight}
+        };
+
+        browsersPrefabs = new Dictionary<int, GameObject>()
+        {
+            { 0,  screenOnePrefab},
+            { 1,  screenTwoPrefab},
+            { 2,  screenThreePrefab},
+            { 3,  screenFourPrefab},
+            { 4,  screenFivePrefab},
+            { 5,  screenSixPrefab},
+            { 6,  screenSevenPrefab},
+            { 7,  screenEightPrefab}
+        };
+
+        
+        BoxCollider[] Ar = new BoxCollider[8];
+        List<BoxCollider> BoxColliders = new List<BoxCollider>(Ar);
+
+        for (int i=0; i< browsers.Count; i++)
+        {
+            Debug.Log("Creating Panel " + i.ToString());
+            CreateBrowserPanel(i);
+        }
+
         LoadVis1();
 
     }
+
+    void CreateBrowserPanel(int index)
+    {
+        GameObject go = GameObject.Instantiate(browsersPrefabs[index], gameObject.transform) as GameObject;
+        browsers[index] = go.transform.Find("Browser").gameObject.GetComponent<BrowserView>();
+        Debug.Log("Browser View " + browsers[index].ToString());
+        SetDictionaryToBrowser(index);
+        SetBoxCollider(index);
+
+    }
+
     private void Update()
     {
-
-        
-
         //if (Input.GetKeyDown("1"))
         //{
         //    LoadVis1();
@@ -67,6 +143,42 @@ public class UrlManager : MonoBehaviourPun
 
         // }
 
+        if (Input.GetKeyDown("1"))
+        {
+            RefreshPanel(1);
+        }
+
+
+        bool isDoneRight = false;
+        InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.gripButton, out isDoneRight);
+        if (isDoneRight == false) clicked = false;
+
+        if (isDoneRight && clicked == false)
+        {
+            
+            clicked = true;
+            Debug.Log("------------------- Grab Clicked");
+            int index = GazeLocationToPanelIndex();
+            if (index != -1) RefreshPanel(index);
+               
+        }
+
+    }
+
+    private int GazeLocationToPanelIndex()
+    {
+        Debug.Log("--------------- Screens " + skws.currentmainScreen.ToString());
+        return skws.currentmainScreen;
+    }
+
+    private void RefreshPanel(int index)
+    {
+        /*GameObject go = browsers[index].transform.parent.gameObject;
+        CreateBrowserPanel(index);
+        Destroy(go);
+        Debug.Log("--------------- Refreshed" + index.ToString());*/
+        browsers[index].InvokeRefresh();
+        browsers[index].LoadURL(browsers[index].startUrl);
     }
 
     public void LoadVis1() 
@@ -91,7 +203,6 @@ public class UrlManager : MonoBehaviourPun
 #if UNITY_ANDROID && !UNITY_EDITOR
             if (!screenOne.enabled)
             {
-
                 screenOne.startUrl = mainUrl + urlOne + ".html";
                 screenTwo.startUrl = mainUrl + urlTwo + ".html";
                 screenThree.startUrl = mainUrl + urlThree + ".html";
@@ -112,14 +223,21 @@ public class UrlManager : MonoBehaviourPun
             }
             else
             {
-
+                Debug.Log("--------- S1" + screenOne.ToString());
                 screenOne.LoadURL(mainUrl + urlOne + ".html");
+                Debug.Log("--------- S2" + screenTwo.ToString());
                 screenTwo.LoadURL(mainUrl + urlTwo + ".html");
+                Debug.Log("--------- S3" + screenThree.ToString());
                 screenThree.LoadURL(mainUrl + urlThree + ".html");
+                Debug.Log("--------- S4" + screenFour.ToString());
                 screenFour.LoadURL(mainUrl + urlFour + ".html");
+                Debug.Log("--------- S5" + screenFive.ToString());
                 screenFive.LoadURL(mainUrl + urlFive + ".html");
+                Debug.Log("--------- S6" + screenSix.ToString());
                 screenSix.LoadURL(mainUrl + urlSix + ".html");
+                Debug.Log("--------- S7" + screenSeven.ToString());
                 screenSeven.LoadURL(mainUrl + urlSeven + ".html");
+                Debug.Log("--------- S8" + screenEight.ToString());
                 screenEight.LoadURL(mainUrl + urlEight + ".html");
             }
 #elif UNITY_EDITOR

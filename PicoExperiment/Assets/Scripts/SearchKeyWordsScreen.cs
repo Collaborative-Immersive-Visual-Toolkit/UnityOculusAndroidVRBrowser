@@ -14,6 +14,7 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public UrlManager urlManager;
 
     private List<int> currentScreenFocus;
+    public int currentmainScreen = -1;
     private Vector3 averagePoint;
     private string currentS2T = "";
     private string oldS2T = "";
@@ -96,6 +97,11 @@ public class SearchKeyWordsScreen : MonoBehaviour
         {
             for (int j = 0; j < points.Count; j++)
             {
+                if (urlManager.BoxColliders[i].bounds.Contains(averagePoint))
+                {
+                    currentmainScreen = i;
+                }
+
 
                 if (urlManager.BoxColliders[i].bounds.Contains(points[j]))
                 {
@@ -105,9 +111,6 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
             }
         }
-
-
-
     }
 
     public void getSpeechToText(string speechToTextOutput)

@@ -80,8 +80,6 @@ public class BrowserView : MonoBehaviour
     {
         PointerEventData eventData = (PointerEventData)data;
 
-        Debug.Log("[Browser View] OnClick");
-
         if (!Dragging)
         {
            
@@ -476,29 +474,35 @@ public class BrowserView : MonoBehaviour
 
     private void OnGeckoViewReady()
     {
-       
 
+        //try
+        //{
+        //    AndroidJNI.DeleteLocalRef(pluginClass);
+        //    AndroidJNI.DeleteLocalRef(pluginObject);
+        //}
+        //catch 
+        //{
+        //}
 
-    // call override to allow navigating to youtube tv
-    // SetYoutubeUserAgentOverride();
+        // call override to allow navigating to youtube tv
+        // SetYoutubeUserAgentOverride();
         SwitchSessionTo(BrowserHistoryType.Browser);
         ActivateGeckoSession();
         LoadURL(startUrl);
     }
 
-  
     /// <summary>
-        /// Sets the surface for our GeckoView plugin when the OVROverlay is ready and the plugin is initialized
-        /// Also we sign up for the sign in event so we can load the first webpage/initialize history
-        /// when the user signs ins
-        /// </summary>
-        /// <returns>The start function</returns>
-        private IEnumerator Start()
+    /// Sets the surface for our GeckoView plugin when the OVROverlay is ready and the plugin is initialized
+    /// Also we sign up for the sign in event so we can load the first webpage/initialize history
+    /// when the user signs ins
+    /// </summary>
+    /// <returns>The start function</returns>
+    private IEnumerator Start()
         {
 
         #if UNITY_EDITOR
         yield break;
-        #endif
+#endif
 
         // Wait for surface to be available.
         while (_overlay.externalAndroidSurfaceObject == IntPtr.Zero || _ajc == null)
@@ -508,21 +512,13 @@ public class BrowserView : MonoBehaviour
             yield return null;
         }
         Debug.Log("[BROWSER] Browser Start!");
-            var pluginClass = _ajc.GetRawClass();
-            var pluginObject = _ajc.GetRawObject();
-            var surfaceMethodId = AndroidJNI.GetMethodID(pluginClass, "PassSurface", "(Landroid/view/Surface;)V");
+        var pluginClass = _ajc.GetRawClass();
+        var pluginObject = _ajc.GetRawObject();
+        var surfaceMethodId = AndroidJNI.GetMethodID(pluginClass, "PassSurface", "(Landroid/view/Surface;)V");
 
-            AndroidJNI.CallVoidMethod(pluginObject, surfaceMethodId,
-                new jvalue[] { new jvalue { l = _overlay.externalAndroidSurfaceObject }});
+        AndroidJNI.CallVoidMethod(pluginObject, surfaceMethodId,
+            new jvalue[] { new jvalue { l = _overlay.externalAndroidSurfaceObject } });
 
-            //try
-            //{
-            //    AndroidJNI.DeleteLocalRef(pluginClass);
-            //    AndroidJNI.DeleteLocalRef(pluginObject);
-            //}
-            //catch 
-            //{
-            //}
 
         OnGeckoViewReady();
         }

@@ -31,7 +31,7 @@ public class cone : MonoBehaviourPun
     public PushConePoints pushPoints;
 
     //voice elipse
-    private List<Vector3> newvoiceElipsePoints;
+    public List<Vector3> newvoiceElipsePoints;
     private List<Vector3> currentvoiceElipsePoints;
     private List<Vector3> oldvoiceElipsePoints;
     public bool interpolateElipse;
