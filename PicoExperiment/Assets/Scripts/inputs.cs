@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class inputs : MonoBehaviour
 {
+        public Transform playerposition; 
 
         public Transform ControllerRight;
 

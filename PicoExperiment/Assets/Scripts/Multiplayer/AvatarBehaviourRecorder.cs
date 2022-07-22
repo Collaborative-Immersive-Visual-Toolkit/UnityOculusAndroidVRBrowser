@@ -56,6 +56,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
 
 #if UNITY_EDITOR
+
     private RecorderWindow GetRecorderWindow()
     {
         return (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
@@ -64,13 +65,11 @@ public class AvatarBehaviourRecorder : MonoBehaviour
     void Update()
     {
 
-
-
         if (Time.unscaledTime > nextSampleTime)
         {
             nextSampleTime += sampleFrequency;
 
-            if (ram.inputs.Count > 1 && ram.inputs.Count <= 2 && !recording)
+            if (ram.inputs.Count > 0 && ram.inputs.Count <= 1 && !recording)
             {
 
                Record();
@@ -94,7 +93,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
                 
                 HeadPos = i.LocalHead == null ? "null,null,null" : i.LocalHead.position.ToString("F3");               
                 HeadForward = i.LocalHead == null ? "null,null,null" : i.LocalHead.forward.ToString("F3");
-                HeadUp = i.LocalHead == null ? "null" : i.LocalHead.up.ToString("F3");
+                HeadUp = i.LocalHead == null ? "null,null,null" : i.LocalHead.up.ToString("F3");
                 
                 HeadCone = i.Cone == null ? "null" : Vector2ArrayToString(i.Cone.uvpos.ToArray());
 
@@ -149,14 +148,12 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         path = MasterManager.GameSettings.DataFolder +"\\" + name + ".csv";
         writer = new StreamWriter(path, true);
 
-
-
-        string header = "timestamp" +
+        string header = "timestamp," +
         "U1PosX, U1PosY, U1PosZ," +
         "U1HeadPosX, U1HeadPosY, U1HeadPosZ," +
         "U1HeadForwardX, U1HeadForwardY, U1HeadForwardZ," +
         "U1HeadUpX, U1HeadUpY, U1HeadUpZ," +
-        "U1HeadCone" +
+        "U1HeadCone," +
         "U1LeftEyeX,U1LeftEyeY,U1LeftEyeZ," +
         "U1RightEyeX,U1RightEyeY,U1RightEyeZ," +
         "U1GazeX,U1GazeY,U1GazeZ," +
@@ -165,12 +162,12 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         "U1ControllerLPosX, U1ControllerLPosY, U1ControllerLPosZ," +
         "U1ControllerLEAngX, U1ControllerLEAngY,  U1ControllerLEAngZ," +
         "U1PointerX, U1PointerY,  U1PointerZ," +
-        "U2Speech" +
+        "U2Speech," +
         "U2PosX, U1PosY, U1PosZ," +
         "U2HeadPosX, U2HeadPosY, U2HeadPosZ," +
         "U2HeadForwardX, U2HeadForwardY, U2HeadForwardZ," +
         "U2HeadUpX, U2HeadUpY, U2HeadUpZ," +
-        "U2HeadCone" +
+        "U2HeadCone," +
         "U2LeftEyeX,U2LeftEyeY,U2LeftEyeZ," +
         "U2RightEyeX,U2RightEyeY,U2RightEyeZ," +
         "U2GazeX,U2GazeY,U2GazeZ," +

@@ -294,7 +294,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //avatarRecorder.enabled = true;
 
         //create a folder for saving the data
-        //DataFolderCreation();
+        DataFolderCreation();
     }
 
     private IEnumerator PhotonVoiceInstantiationForLocalObserver()
