@@ -12,8 +12,8 @@ public class RemoteLaser : MonoBehaviour
     public LineRenderer lrRight;
     
     private XRNode controller;
-    private Vector3 start;
-    private Vector3 end;
+    public Vector3 start;
+    public Vector3 end;
     private bool display;
     
     private Vector3[] m_ClearArray = new[] { Vector3.zero, Vector3.zero };

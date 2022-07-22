@@ -8,11 +8,13 @@ public class RemoteEyeCursor : MonoBehaviour
 {
     public GameObject Cursor;
 
-    private Vector3 cursorPos;
+    public Vector3 cursorPos;
 
     private Vector3 cursorNormal;
 
-    private bool display;
+    public bool display;
+
+    public bool off;
 
     private void OnEnable()
     {
@@ -37,7 +39,7 @@ public class RemoteEyeCursor : MonoBehaviour
                 cursorPos = (Vector3)data[0];
                 cursorNormal = (Vector3)data[1];
                 display = (bool)data[2];
-                updateCursor();
+                if(!off) updateCursor();
 
             }
 

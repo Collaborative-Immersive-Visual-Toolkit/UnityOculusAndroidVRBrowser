@@ -118,6 +118,9 @@ public class GameSettings : ScriptableObject
     public byte ConeOff = 40;
 
     [SerializeField]
+    public byte SpeechResult = 41;
+
+    [SerializeField]
     public bool _observer = true;
 
     [SerializeField]

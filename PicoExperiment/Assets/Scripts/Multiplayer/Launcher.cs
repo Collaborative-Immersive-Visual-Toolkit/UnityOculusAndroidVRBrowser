@@ -21,6 +21,8 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public GameObject cone;
 
+    public RemoteAvatarsManager ram;
+
     public bool voiceDebug = true;
 
     PhotonView photonView;
@@ -233,6 +235,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         Debug.Log("[PUN] RemoteAvatar instantiated");
 
+        ram.AddToList(remoteAvatar);
     }
 
 
