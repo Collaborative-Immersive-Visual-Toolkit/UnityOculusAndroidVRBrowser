@@ -9,6 +9,7 @@ public class eyecursor : MonoBehaviour
     public GameObject LeftEye;
     public GameObject Cursor;
     public LayerMask layerMask;
+    public bool visible;
 
     private Vector3 LastPoint;
     private Vector3 LastNormal;
@@ -36,12 +37,24 @@ public class eyecursor : MonoBehaviour
 
      void Update()
     {
+      
         if (hitted)
         {
             object[] data = new object[] { LastPoint, LastNormal, true,PhotonNetwork.NickName };
-            Cursor.SetActive(true);
-            Cursor.transform.position = LastPoint;
-            Cursor.transform.rotation = Quaternion.LookRotation(LastNormal, Vector3.up);
+
+            if (visible)
+            {
+                Cursor.SetActive(true);
+                Cursor.transform.position = LastPoint;
+                Cursor.transform.rotation = Quaternion.LookRotation(LastNormal, Vector3.up);
+            }
+            else 
+            {
+                Cursor.SetActive(false);
+                Cursor.transform.position = LastPoint;
+                Cursor.transform.rotation = Quaternion.LookRotation(LastNormal, Vector3.up);
+            }
+
             gameObject.SendMessage("RaiseCursorUpdateEvent", data, SendMessageOptions.DontRequireReceiver);
         }
         else

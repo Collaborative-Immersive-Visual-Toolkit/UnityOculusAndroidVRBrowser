@@ -62,7 +62,8 @@ public class RemoteEyeCursor : MonoBehaviour
         {
            
             Cursor.SetActive(false);
-            
+            Cursor.transform.position = cursorPos;
+            Cursor.transform.rotation = Quaternion.LookRotation(cursorNormal, Vector3.up);
         }
 
     }

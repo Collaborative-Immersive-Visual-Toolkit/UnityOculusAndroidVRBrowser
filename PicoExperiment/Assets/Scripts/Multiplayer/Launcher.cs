@@ -29,6 +29,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public string RoomName;
 
+
     private void Awake()
     {
         Resources.LoadAll("ScriptableObjects");
@@ -158,7 +159,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     }
 
-
     private IEnumerator PhotonVoiceInstantiationForLocalAvatar()
     {
 
@@ -204,7 +204,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //customsr.Initialize();
 
     }
-
 
     //remote Avatar
     private void InstantiateRemoteAvatar(EventData photonEvent)
@@ -289,6 +288,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
         ////destroy UiHelpers
         DestroyImmediate(GameObject.Find("UIHelpersModified"));
+        DestroyImmediate(GameObject.Find("cone"));
 
         ////enable observer recorder
         //avatarRecorder.enabled = true;

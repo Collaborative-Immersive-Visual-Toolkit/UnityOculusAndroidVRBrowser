@@ -69,7 +69,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         {
             nextSampleTime += sampleFrequency;
 
-            if (ram.inputs.Count > 0 && ram.inputs.Count <= 1 && !recording)
+            if (ram.inputs.Count > 1 && ram.inputs.Count <= 2 && !recording)
             {
 
                Record();
