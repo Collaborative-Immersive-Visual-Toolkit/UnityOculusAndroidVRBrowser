@@ -187,6 +187,7 @@ public class switchCondition : MonoBehaviour
     }
 
 
+
     // voice 
 
     public void SwitchOnVoiceCone()
@@ -310,4 +311,5 @@ public class switchCondition : MonoBehaviour
         }
 
     }
+
 }
