@@ -60,7 +60,7 @@ public class UrlManager : MonoBehaviourPun
         if (obj.Code == MasterManager.GameSettings.VisualizationChange)
         {
 
-            Debug.Log("VisualizationChange");
+            Debug.Log("VisualizationChange Start");
             
             object[] data = (object[])obj.CustomData;
 
@@ -69,7 +69,7 @@ public class UrlManager : MonoBehaviourPun
             if (currentVis == 1) LoadVis1(); 
             else if (currentVis == 2) LoadVis2();
             else if (currentVis == 3) LoadVis3();
-            Debug.Log("VisualizationChange");
+            Debug.Log("VisualizationChange End");
         }
     }
 
@@ -99,8 +99,11 @@ public class UrlManager : MonoBehaviourPun
         if (Input.GetKeyDown("q"))
         {
             currentVis = 1;
+            Debug.Log("1");
             LoadVis1();
+            Debug.Log("2");
             RaiseVisSwitch();
+            Debug.Log("3q");
         }
         else if (Input.GetKeyDown("w"))
         {
@@ -144,9 +147,7 @@ public class UrlManager : MonoBehaviourPun
 
     public void LoadVis(string postfix)
     {
-        changeVisualization.Invoke(visualization.visualization3);
 
-        
             if (android && useGeckoView)
             {
                 if (!screenOne.enabled)

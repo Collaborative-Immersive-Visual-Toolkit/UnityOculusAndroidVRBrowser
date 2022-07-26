@@ -120,10 +120,11 @@ public class SearchKeyWordsScreen : MonoBehaviour
     {
         Vector3[] ps = new Vector3[4];
         bool[] psbool = new bool[4];
-        Debug.Log(currentScreenFocus);
+        
         for (int j = 0; j < currentScreenFocus.Count; j++)
         {
             int screenNumber = currentScreenFocus[j];
+            Debug.Log(screenNumber);
             Page p = keyCo.currentVisualization[screenNumber];
             List<IndexAndLength> indexes = searchKeysInString(p);
             for (int k = 0; k < indexes.Count; k++)
