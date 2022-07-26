@@ -40,20 +40,21 @@ public class eyecursor : MonoBehaviour
       
         if (hitted)
         {
-            object[] data = new object[] { LastPoint, LastNormal, true,PhotonNetwork.NickName };
+            object[] data = new object[] { LastPoint, LastNormal, visible, PhotonNetwork.NickName };
 
             if (visible)
             {
                 Cursor.SetActive(true);
-                Cursor.transform.position = LastPoint;
-                Cursor.transform.rotation = Quaternion.LookRotation(LastNormal, Vector3.up);
+              
             }
             else 
             {
                 Cursor.SetActive(false);
-                Cursor.transform.position = LastPoint;
-                Cursor.transform.rotation = Quaternion.LookRotation(LastNormal, Vector3.up);
+
             }
+
+            Cursor.transform.position = LastPoint;
+            Cursor.transform.rotation = Quaternion.LookRotation(LastNormal, Vector3.up);
 
             gameObject.SendMessage("RaiseCursorUpdateEvent", data, SendMessageOptions.DontRequireReceiver);
         }

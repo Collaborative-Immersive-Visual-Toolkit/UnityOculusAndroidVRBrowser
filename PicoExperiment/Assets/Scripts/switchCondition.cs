@@ -68,15 +68,14 @@ public class switchCondition : MonoBehaviour
 
     public void ConditionOne() {
 
-        Debug.Log("1");
+
         condition = 1;
-        Debug.Log("2");
+
         SwitchOffVoiceCone();
-        Debug.Log("3");
         SwitchOffEyeCursor();
-        Debug.Log("4");
+
         SwitchOnCone();
-        Debug.Log("5");
+
         
   
     }
@@ -243,7 +242,7 @@ public class switchCondition : MonoBehaviour
 
     public void SwitchOffEyeCursor()
     {
-        SwitchOnOwnEyeCursor();
+        SwitchOffOwnEyeCursor();
         SwitchOnOtherEyeCursor();
     }
 
