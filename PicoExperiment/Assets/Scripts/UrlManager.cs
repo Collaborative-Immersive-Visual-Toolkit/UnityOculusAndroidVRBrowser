@@ -209,14 +209,15 @@ public class UrlManager : MonoBehaviourPun
 
     private void ChangeOverlays(string postfix) {
 
-        changeOverlay(Overlay[0], urlOne + postfix);
-        changeOverlay(Overlay[1], "Textures/" + urlTwo + postfix);
-        changeOverlay(Overlay[2], "Textures/" + urlThree + postfix);
-        changeOverlay(Overlay[3], "Textures/" + urlFour + postfix);
-        changeOverlay(Overlay[4], "Textures/" + urlFive + postfix);
-        changeOverlay(Overlay[5], "Textures/" + urlSix + postfix);
-        changeOverlay(Overlay[6], "Textures/" + urlSeven + postfix);
-        changeOverlay(Overlay[7], "Textures/" + urlEight + postfix);
+
+        changeOverlay(Overlay[0],  urlOne + postfix);
+        changeOverlay(Overlay[1],  urlTwo + postfix);
+        changeOverlay(Overlay[2],  urlThree + postfix);
+        changeOverlay(Overlay[3],  urlFour + postfix);
+        changeOverlay(Overlay[4],  urlFive + postfix);
+        changeOverlay(Overlay[5],  urlSix + postfix);
+        changeOverlay(Overlay[6],  urlSeven + postfix);
+        changeOverlay(Overlay[7],  urlEight + postfix);
     }
 
     private void turnOffBrowsers() {
