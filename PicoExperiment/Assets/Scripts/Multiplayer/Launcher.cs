@@ -229,8 +229,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         remoteAvatar.name = player.NickName;
 
         PhotonView photonView = remoteAvatar.GetComponent<PhotonView>();
-        photonView.ViewID = 0; // NEW
+        //photonView.ViewID = 0; // NEW
         photonView.ViewID = (int)photonEvent.CustomData;
+
+        remoteAvatar.SetActive(true);
 
         Debug.Log("[PUN] RemoteAvatar instantiated");
 
