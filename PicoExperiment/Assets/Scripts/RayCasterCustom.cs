@@ -22,6 +22,9 @@ public class RayCasterCustom : MonoBehaviour
 
     public EventSystem m_EventSystem;
 
+    public Vector3 point;
+    public Vector2 pointUV;
+
     enum ControllerLeftRight : ushort
     {
         Left = 0,
@@ -57,17 +60,22 @@ public class RayCasterCustom : MonoBehaviour
             {
                 UpdateLineRenderer(transform.position+transform.forward*0.1f, hit.point);
                 SetUpPointerEvent(hit);
-  
+                point = hit.point;
+                pointUV = hit.textureCoord;
             }
             else
             {
                 ClearLineRenderer();
+                point = Vector3.zero;
+                pointUV = Vector2.zero;
             }
 
         } 
         else
         {
             ClearLineRenderer();
+            point = Vector3.zero;
+            pointUV = Vector2.zero;
         }
        
     }

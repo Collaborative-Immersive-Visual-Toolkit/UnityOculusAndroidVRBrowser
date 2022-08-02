@@ -69,17 +69,7 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         {
             nextSampleTime += sampleFrequency;
 
-            if (ram.inputs.Count > 1 && ram.inputs.Count <= 2 && !recording)
-            {
-
-               Record();
-
-            }
-            else if (ram.inputs.Count > 2)
-            {
-                Debug.Log("there are too many users logged");
-            }
-
+            if ( !recording) Record();
 
             if (writer == null) return;
 
@@ -145,8 +135,12 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
         if (writer != null) closeWriter();
 
-        path = MasterManager.GameSettings.DataFolder +"\\" + name + ".csv";
+
+
+        path = MasterManager.GameSettings.DataFolder + "\\" + name + ".csv";
         writer = new StreamWriter(path, true);
+
+        
 
         string header = "timestamp," +
         "U1PosX, U1PosY, U1PosZ," +

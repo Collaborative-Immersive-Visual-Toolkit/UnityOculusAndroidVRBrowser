@@ -268,6 +268,12 @@ public class cone : MonoBehaviourPun
      
 
     }
+
+    public Vector2[] returnUVpositions() {
+
+        List<Vector2> uvpos = c.returnUVpositions();
+        return uvpos.ToArray();
+    }
 }
 
 [System.Serializable]
@@ -350,6 +356,11 @@ public class ConeVectors
 
     }
 
+    public List<Vector2> returnUVpositions() {
+
+        return uvpositions;
+    }
+
     public void ComputeRaycast()
     {
 
@@ -376,7 +387,7 @@ public class ConeVectors
                     if (hits[i].point.y > 1) {
 
                         positions.Add(new Vector3(hits[i].point.x, 1.959f, hits[i].point.z));
-
+                        
                     }
                     else {
 
@@ -388,11 +399,14 @@ public class ConeVectors
                 {
 
                     positions.Add(hits[i].point);
+                    
                 }
                 distances += hits[i].distance;
             }
 
         }
+
+        uvpositions = CalculateUvPositions(positions.ToArray());
 
     }
 
@@ -429,6 +443,7 @@ public class ConeVectors
             if (Physics.Raycast(positions[i], head.forward, out hits[i], 1f, layerMask))
             {
                 reprojected.Add(hits[i].point);
+                
             }
             else {
 
@@ -437,6 +452,8 @@ public class ConeVectors
         }
 
         positions = reprojected;
+
+        uvpositions = CalculateUvPositions(positions.ToArray());
     }
 
     public Vector3 findCurrentNormal() {
@@ -546,6 +563,36 @@ public class ConeVectors
 
     }
 
+
+    private List<Vector2> CalculateUvPositions(Vector3[] pos)
+    {
+        int i = pos.Length;
+        RaycastHit[] hits = new RaycastHit[i];
+        List<Vector2> uvpos = new List<Vector2>();
+
+        i = pos.Length;
+
+        while (i > 0)
+        {
+            i--;
+            if (Physics.Raycast(Vector3.zero, pos[i], out hits[i], 10f, layerMask))
+            {
+
+                if (hits[i].collider.gameObject.name == "octagon")
+                {
+                    uvpos.Add(hits[i].textureCoord);
+                }
+                else
+                { uvpos.Add(Vector2.zero); }
+
+            }
+            else { uvpos.Add(Vector2.zero); }
+
+        }
+
+        
+        return uvpos;
+    }
 }
 
 public enum ConeRendering

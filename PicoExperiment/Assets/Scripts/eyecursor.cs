@@ -11,6 +11,9 @@ public class eyecursor : MonoBehaviour
     public LayerMask layerMask;
     public bool visible;
 
+    public Vector3 currentPoint;
+    public Vector2 currentPointUV;
+
     private Vector3 LastPoint;
     private Vector3 LastNormal;
     private bool hitted;
@@ -26,11 +29,15 @@ public class eyecursor : MonoBehaviour
             hitted = true;
             LastPoint = hit.point;
             LastNormal = hit.normal;
+            currentPoint = hit.point;
+            currentPointUV = hit.textureCoord;
+
         }
         else {
 
             hitted = false;
-        
+            currentPoint = Vector3.zero;
+            currentPointUV = Vector2.zero;
         }
 
     }

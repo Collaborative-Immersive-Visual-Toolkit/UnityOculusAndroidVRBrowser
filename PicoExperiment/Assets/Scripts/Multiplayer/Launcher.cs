@@ -10,6 +10,11 @@ using System.Collections.Generic;
 using System.IO;
 using GoogleCloudStreamingSpeechToText;
 using UnityEngine.UI;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class RemoteAvatarTrigger : UnityEvent { }
+
 
 public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchmakingCallbacks, IOnEventCallback
 {
@@ -29,6 +34,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     public string RoomName;
 
+    public RemoteAvatarTrigger rat;
 
     private void Awake()
     {
@@ -208,6 +214,9 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
     //remote Avatar
     private void InstantiateRemoteAvatar(EventData photonEvent)
     {
+
+        rat.Invoke();
+
         //sender 
         Player player = PhotonNetwork.CurrentRoom.Players[photonEvent.Sender];
 

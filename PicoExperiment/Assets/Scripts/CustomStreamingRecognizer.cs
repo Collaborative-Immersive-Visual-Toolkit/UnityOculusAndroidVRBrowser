@@ -19,6 +19,8 @@ namespace GoogleCloudStreamingSpeechToText {
     [Serializable]
     public class TranscriptionEvent : UnityEvent<string> { }
 
+
+
     [RequireComponent(typeof(AudioSource))]
     public class CustomStreamingRecognizer : MonoBehaviour {
 
@@ -45,6 +47,7 @@ namespace GoogleCloudStreamingSpeechToText {
         public TranscriptionEvent onFinalResult = new TranscriptionEvent();
         public TranscriptionEvent onInterimResult = new TranscriptionEvent();
 
+
         private bool _initialized = false;
         private bool _listening = false;
         private bool _restart = false;
@@ -67,7 +70,7 @@ namespace GoogleCloudStreamingSpeechToText {
         private const string CredentialFileName = "gcp_credentials.json";
         private const double NormalizedFloatTo16BitConversionFactor = 0x7FFF + 0.4999999999999999;
         private const float MicInitializationTimeout = 1;
-        private const int StreamingLimit = 300000; // 300000 almost 5 minutes
+        private const int StreamingLimit = 700000; // 300000 almost 5 minutes
 
         public void StartListening() {
             if (!_initialized) {
