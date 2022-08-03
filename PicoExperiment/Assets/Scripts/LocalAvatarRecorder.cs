@@ -52,6 +52,7 @@ public class LocalAvatarRecorder : MonoBehaviour
     string Transcript;
     string Condition;
     string Visualization;
+    string insightRecording;
 
     public Transform LocalHead;
     public Transform PlayerPosition;
@@ -67,7 +68,7 @@ public class LocalAvatarRecorder : MonoBehaviour
     public speaking speech;
     public switchCondition condition;
     public UrlManager urlmanager;
-
+    public InsightRecording insight;
 
     void Update()
     {
@@ -115,6 +116,7 @@ public class LocalAvatarRecorder : MonoBehaviour
             isSpeaking = speech.isSpeaking.ToString();
             Condition = condition.condition.ToString();
             Visualization = urlmanager.currentVis.ToString();
+            insightRecording = insight.sphere.activeSelf == true ? "1" : "";
 
             line += "," + PlayerPos.Trim(remove) + "," +
                         HeadPos.Trim(remove) + "," + HeadForward.Trim(remove) + "," + HeadUp.Trim(remove) + "," + HeadCone.Trim(remove) + "," +
@@ -125,7 +127,8 @@ public class LocalAvatarRecorder : MonoBehaviour
                         ControllerLPos.Trim(remove) + "," + ControllerLEAng.Trim(remove) + "," +
                         PointerPosLeft.Trim(remove) + "," + PointerPosRight.Trim(remove) + "," +
                         PointerPosLeftUV.Trim(remove) + "," + PointerPosRightUV.Trim(remove) + "," +
-                        TranscriptStartTime.Trim(remove) + "," + Transcript + "," + isSpeaking + "," + Condition + "," + Visualization;
+                        TranscriptStartTime.Trim(remove) + "," + Transcript + "," + 
+                        isSpeaking + "," + Condition + "," + Visualization + "," + insightRecording;
             
             writer.WriteLine(line);
         }
@@ -146,7 +149,6 @@ public class LocalAvatarRecorder : MonoBehaviour
 
         writer.WriteLine(line);
     }
-
 
     private void Record()
     {
@@ -185,7 +187,7 @@ public class LocalAvatarRecorder : MonoBehaviour
         "U1PointerRightX, U1PointerRightY,  U1PointerRightZ," +
         "U1PointerLeftU, U1PointerLeftV," +
         "U1PointerRightU, U1PointerRightV," +
-        "TranscriptStartTime, Transcript, IsSpeaking, Condition, Visualization";
+        "TranscriptStartTime, Transcript, IsSpeaking, Condition, Visualization, InsightRecording";
 
         writer.WriteLine(header);
 
@@ -213,7 +215,5 @@ public class LocalAvatarRecorder : MonoBehaviour
 
         return sarray.Replace(',', ';').Replace(')', ':').Replace("(", "");
     }
-
-
 
 }

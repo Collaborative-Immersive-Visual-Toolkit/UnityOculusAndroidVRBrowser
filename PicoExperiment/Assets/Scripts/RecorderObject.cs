@@ -11,36 +11,14 @@ public class RecorderObject:MonoBehaviour
 
     AndroidJavaObject intent;
     AndroidJavaObject context;
-    
+
+
+
     private void Start()
     {
-        //StartRecording();
-
-        context = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
-
-        intent = new AndroidJavaObject("android.content.Intent");
-
-        intent.Call<AndroidJavaObject>("setAction", "pvr.intent.action.RECORD");
-
-        intent.Call<AndroidJavaObject>("setPackage", "com.pvr.shortcut");
-
-        intent.Call<AndroidJavaObject>("putExtra", "action_type", 0);
-
-        //0: starts recording screen; 1: stops recording screen
-
-        context.Call<AndroidJavaObject>("startService", intent);
-
-        //Please remeber to add<AndroidJavaObject>
+       //StartRecording();
+        //recordScreen();
     }
-
-    public void OnApplicationPause()
-    {
-        intent.Call<AndroidJavaObject>("putExtra", "action_type", 1);
-        context.Call<AndroidJavaObject>("stopService", intent);
-
-    }
-
-    /*
     public void StartRecording()
     {
 
@@ -78,6 +56,9 @@ public class RecorderObject:MonoBehaviour
     public void OnApplicationPause()
     {
         SaveAndCloseFile();
+        //intent.Call<AndroidJavaObject>("putExtra", "action_type", 1);
+        //context.Call<AndroidJavaObject>("stopService", intent);
+
     }
 
     public void OnAudioFilterReadProxy(float[] data, int channels)
@@ -86,5 +67,22 @@ public class RecorderObject:MonoBehaviour
         if (recording) WriteFrameAudioData(data);
     }
 
-    */
+    void recordScreen() {
+
+
+        context = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+
+        intent = new AndroidJavaObject("android.content.Intent");
+
+        intent.Call<AndroidJavaObject>("setAction", "pvr.intent.action.RECORD");
+
+        intent.Call<AndroidJavaObject>("setPackage", "com.pvr.shortcut");
+
+        intent.Call<AndroidJavaObject>("putExtra", "action_type", 0);
+
+        //0: starts recording screen; 1: stops recording screen
+
+        context.Call<AndroidJavaObject>("startService", intent);
+    }
+    
 }
