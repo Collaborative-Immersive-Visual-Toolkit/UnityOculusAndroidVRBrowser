@@ -8,7 +8,7 @@ public class eyecursornetwork : MonoBehaviour
     public void RaiseCursorUpdateEvent(object[] data)
     {
 
-        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.CursorUpdate, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.CursorUpdate, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendUnreliable);
 
     }
 

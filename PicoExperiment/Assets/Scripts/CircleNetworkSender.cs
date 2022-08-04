@@ -8,7 +8,7 @@ public class CircleNetworkSender : MonoBehaviourPun
     public void RaiseCircleNewEvent(object[] data)
     {
 
-        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.EyeCircleIncome, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.EyeCircleIncome, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendUnreliable);
 
     }
 
@@ -16,7 +16,7 @@ public class CircleNetworkSender : MonoBehaviourPun
     public void RaiseCircleDestroyEvent(object[] data)
     {
 
-        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.EyeCircleDestroy, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.EyeCircleDestroy, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendUnreliable);
 
     }
 

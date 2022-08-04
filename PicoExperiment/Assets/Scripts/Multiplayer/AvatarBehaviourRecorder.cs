@@ -202,21 +202,21 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     public void StartUnityRecorder() {
 
-        RecorderWindow recorderWindow = GetRecorderWindow();
+        //RecorderWindow recorderWindow = GetRecorderWindow();
 
-        if (!recorderWindow.IsRecording())
-        {
-            recorderWindow.StartRecording();
-        }
+        //if (!recorderWindow.IsRecording())
+        //{
+        //    recorderWindow.StartRecording();
+        //}
 
 
     }
 
     public void StopUnityRecorder() {
 
-        RecorderWindow recorderWindow = GetRecorderWindow();
-        if (recorderWindow.IsRecording())
-            recorderWindow.StopRecording();
+        //RecorderWindow recorderWindow = GetRecorderWindow();
+        //if (recorderWindow.IsRecording())
+        //    recorderWindow.StopRecording();
 
 
 
