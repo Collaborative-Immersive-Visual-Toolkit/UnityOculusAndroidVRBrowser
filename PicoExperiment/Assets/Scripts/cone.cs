@@ -177,7 +177,7 @@ public class cone : MonoBehaviourPun
     {
         if (simulated) return; //if is a simulated cone without an avatar we do not need to send events 
 
-        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.VisualConeChange, data, Photon.Realtime.RaiseEventOptions.Default, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.VisualConeChange, data, Photon.Realtime.RaiseEventOptions.Default, SendOptions.SendUnreliable);
 
     }
 

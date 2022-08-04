@@ -63,7 +63,7 @@ public class RecorderObject:MonoBehaviour
 
     public void OnAudioFilterReadProxy(float[] data, int channels)
     {
-        Debug.Log(data);
+        //Debug.Log(data);
         if (recording) WriteFrameAudioData(data);
     }
 
