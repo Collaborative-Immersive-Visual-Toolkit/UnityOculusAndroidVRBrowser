@@ -53,6 +53,7 @@ public class LocalAvatarRecorder : MonoBehaviour
     string Condition;
     string Visualization;
     string insightRecording;
+    string foundKey;
 
     public Transform LocalHead;
     public Transform PlayerPosition;
@@ -69,6 +70,7 @@ public class LocalAvatarRecorder : MonoBehaviour
     public switchCondition condition;
     public UrlManager urlmanager;
     public InsightRecording insight;
+    public SearchKeyWordsScreen search;
 
     void Update()
     {
@@ -117,6 +119,7 @@ public class LocalAvatarRecorder : MonoBehaviour
             Condition = condition.condition.ToString();
             Visualization = urlmanager.currentVis.ToString();
             insightRecording = insight.sphere.activeSelf == true ? "1" : "";
+            foundKey = search.getfoundkeywords();
 
             line += "," + PlayerPos.Trim(remove) + "," +
                         HeadPos.Trim(remove) + "," + HeadForward.Trim(remove) + "," + HeadUp.Trim(remove) + "," + HeadCone.Trim(remove) + "," +
@@ -128,7 +131,7 @@ public class LocalAvatarRecorder : MonoBehaviour
                         PointerPosLeft.Trim(remove) + "," + PointerPosRight.Trim(remove) + "," +
                         PointerPosLeftUV.Trim(remove) + "," + PointerPosRightUV.Trim(remove) + "," +
                         TranscriptStartTime.Trim(remove) + "," + Transcript + "," + 
-                        isSpeaking + "," + Condition + "," + Visualization + "," + insightRecording;
+                        isSpeaking + "," + Condition + "," + Visualization + "," + insightRecording + "," + foundKey;
             
             writer.WriteLine(line);
         }
@@ -187,7 +190,7 @@ public class LocalAvatarRecorder : MonoBehaviour
         "U1PointerRightX, U1PointerRightY,  U1PointerRightZ," +
         "U1PointerLeftU, U1PointerLeftV," +
         "U1PointerRightU, U1PointerRightV," +
-        "TranscriptStartTime, Transcript, IsSpeaking, Condition, Visualization, InsightRecording";
+        "TranscriptStartTime, Transcript, IsSpeaking, Condition, Visualization, InsightRecording, FoundKey";
 
         writer.WriteLine(header);
 

@@ -25,7 +25,8 @@ public class SearchKeyWordsScreen : MonoBehaviour
     public MeshCollider ConeMesh;
     public LineRenderer lineRenderer;
 
-
+    private List<IndexAndLength> indexes;
+    private bool newIndex = false;
 
     private void Start()
     {
@@ -120,11 +121,11 @@ public class SearchKeyWordsScreen : MonoBehaviour
     {
         Vector3[] ps = new Vector3[4];
         bool[] psbool = new bool[4];
-        
+
         for (int j = 0; j < currentScreenFocus.Count; j++)
         {
             int screenNumber = currentScreenFocus[j];
-            Debug.Log(screenNumber);
+
             Page p = keyCo.currentVisualization[screenNumber];
             List<IndexAndLength> indexes = searchKeysInString(p);
             for (int k = 0; k < indexes.Count; k++)
@@ -197,13 +198,14 @@ public class SearchKeyWordsScreen : MonoBehaviour
         else return false;
     }
 
+
     public List<IndexAndLength> searchKeysInString(Page p)
     {
 
 
         List<string> keys = p.keys;
         string key;
-        List<IndexAndLength> indexes = new List<IndexAndLength>();
+        indexes = new List<IndexAndLength>();
 
         for (int i = 0; i < keys.Count; i++)
         {
@@ -224,10 +226,9 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
         indexes = FilteredKeywords(indexes);
 
+        newIndex = true;
 
         return indexes;
-
-
     }
 
     public List<IndexAndLength> FilteredKeywords(List<IndexAndLength> keywords)
@@ -300,6 +301,26 @@ public class SearchKeyWordsScreen : MonoBehaviour
 
         keyCo.setVisualization(v);
 
+    }
+
+    public string getfoundkeywords() 
+    {
+
+        if (newIndex) {
+
+            List<string> result = indexes.Select(x => x.word).ToList();
+
+            string r = string.Join(";", result );
+
+            newIndex = false;
+
+            return r;
+        }
+
+        else {
+
+            return "";
+        }
     }
 }
 
