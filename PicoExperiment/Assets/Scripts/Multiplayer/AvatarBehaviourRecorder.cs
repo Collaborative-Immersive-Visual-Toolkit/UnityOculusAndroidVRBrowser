@@ -69,6 +69,8 @@ public class AvatarBehaviourRecorder : MonoBehaviour
         {
             nextSampleTime += sampleFrequency;
 
+            if (ram.inputs.Count != 2 && !recording) return;
+
             if ( !recording) Record();
 
             if (writer == null) return;
@@ -202,21 +204,21 @@ public class AvatarBehaviourRecorder : MonoBehaviour
 
     public void StartUnityRecorder() {
 
-        //RecorderWindow recorderWindow = GetRecorderWindow();
+        RecorderWindow recorderwindow = GetRecorderWindow();
 
-        //if (!recorderWindow.IsRecording())
-        //{
-        //    recorderWindow.StartRecording();
-        //}
+        if (!recorderwindow.IsRecording())
+        {
+            recorderwindow.StartRecording();
+        }
 
 
     }
 
     public void StopUnityRecorder() {
 
-        //RecorderWindow recorderWindow = GetRecorderWindow();
-        //if (recorderWindow.IsRecording())
-        //    recorderWindow.StopRecording();
+        RecorderWindow recorderWindow = GetRecorderWindow();
+        if (recorderWindow.IsRecording())
+            recorderWindow.StopRecording();
 
 
 
