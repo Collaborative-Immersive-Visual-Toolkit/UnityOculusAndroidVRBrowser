@@ -12,6 +12,7 @@ using Google.Protobuf.WellKnownTypes;
 using Google.Cloud.Speech.V1;
 using Grpc.Core;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 namespace GoogleCloudStreamingSpeechToText {
 
@@ -70,7 +71,54 @@ namespace GoogleCloudStreamingSpeechToText {
         private const string CredentialFileName = "gcp_credentials.json";
         private const double NormalizedFloatTo16BitConversionFactor = 0x7FFF + 0.4999999999999999;
         private const float MicInitializationTimeout = 1;
-        private const int StreamingLimit = 700000; // 300000 almost 5 minutes
+        private const int StreamingLimit = 290000; // almost 5 minutes
+
+        private float starttime =0;
+
+        public int refreshValue;
+        //InputDevice device;
+
+        //bool triggerValue;
+
+        //public XRNode controller;
+
+        //bool pressed = false;
+
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            //if (device.TryGetFeatureValue(CommonUsages.primaryButton, out triggerValue) && triggerValue)
+            //{
+            //    if (!pressed)
+            //    {
+
+            //        Restart();
+            //        pressed = true;
+            //    }
+
+            //}
+            //else
+            //{
+
+            //    pressed = false;
+            //}
+
+
+            //if (starttime > refreshValue)
+            //{
+
+            //    starttime = 0;
+
+            //    Restart();
+            //}
+            //else {
+
+            //    starttime += Time.deltaTime;
+            //}
+
+        }
 
         public void StartListening() {
             if (!_initialized) {
@@ -114,6 +162,19 @@ namespace GoogleCloudStreamingSpeechToText {
         }
 
         public void Start() {
+
+
+            //var Devices = new List<InputDevice>();
+            //InputDevices.GetDevicesAtXRNode(controller, Devices);
+            //if (Devices.Count == 1)
+            //{
+            //    device = Devices[0];
+            //    Debug.Log(string.Format("Device name '{0}' with role '{1}'", device.name, device.role.ToString()));
+            //}
+            //else if (Devices.Count > 1)
+            //{
+            //    Debug.Log("Found more than one left/right hand!");
+            //}
 
 #if UNITY_EDITOR
             string credentialsPath = Path.Combine(Application.streamingAssetsPath, CredentialFileName);
@@ -250,6 +311,7 @@ namespace GoogleCloudStreamingSpeechToText {
             }
 
             AudioConfiguration audioConfiguration = AudioSettings.GetConfiguration();
+            audioConfiguration.sampleRate = 16000;
             _audioSource.clip = Microphone.Start(_microphoneName, true, 10, audioConfiguration.sampleRate);
 
             // wait for microphone to initialize

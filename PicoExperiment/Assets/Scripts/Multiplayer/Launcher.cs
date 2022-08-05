@@ -11,6 +11,7 @@ using System.IO;
 using GoogleCloudStreamingSpeechToText;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.XR;
 
 [System.Serializable]
 public class RemoteAvatarTrigger : UnityEvent { }
@@ -22,9 +23,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     private GameObject localObserver;
 
-    public GameObject localAvatarsMenu;
-
-    public GameObject cone;
 
     public RemoteAvatarsManager ram;
 
@@ -32,9 +30,12 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
 
     PhotonView photonView;
 
-    public string RoomName;
-
     public RemoteAvatarTrigger rat;
+
+    public static CustomStreamingRecognizer recognizer = null;
+
+
+
 
     private void Awake()
     {
@@ -157,12 +158,29 @@ public class Launcher : MonoBehaviourPunCallbacks, IConnectionCallbacks, IMatchm
         //StartCoroutine(PhotonVoiceInstantiationForLocalAvatar());
 
         ///try the google speech
-        GameObject InputType_Microphone =  GameObject.Find("InputType_Microphone");
-        CustomStreamingRecognizer customsr = InputType_Microphone.GetComponent<CustomStreamingRecognizer>();
-        SearchKeyWordsScreen Search = GameObject.Find("Ellipses").GetComponent<SearchKeyWordsScreen>();
-        customsr.onInterimResult.AddListener(Search.getSpeechToText);
-        customsr.onFinalResult.AddListener(Search.getSpeechToText);       
+        CreateRecognizer();
 
+    }
+
+    public void CreateRecognizer()
+    {
+        GameObject InputType_Microphone = GameObject.Find("InputType_Microphone");
+        if (recognizer != null)
+        {
+            DestroyImmediate(recognizer);
+            recognizer = InputType_Microphone.AddComponent<CustomStreamingRecognizer>();
+        }
+        else
+        {
+            recognizer = InputType_Microphone.GetComponent<CustomStreamingRecognizer>();
+        }
+
+        SearchKeyWordsScreen Search = GameObject.Find("Ellipses").GetComponent<SearchKeyWordsScreen>();
+        NetworkGoogleSpeechResult ngsr = InputType_Microphone.GetComponent<NetworkGoogleSpeechResult>();
+        recognizer.onInterimResult.AddListener(Search.getSpeechToText);
+        recognizer.onInterimResult.AddListener(ngsr.startspeechInterim);
+        recognizer.onFinalResult.AddListener(Search.getSpeechToText);
+        recognizer.onFinalResult.AddListener(ngsr.RaiseSpeechResultChange);
     }
 
     private IEnumerator PhotonVoiceInstantiationForLocalAvatar()

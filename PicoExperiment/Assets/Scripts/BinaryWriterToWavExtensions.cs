@@ -47,6 +47,11 @@ public static class BinaryWriterToWavExtensions
 
     public static void UpdateHeader(Stream stream)
     {
+
+        AudioConfiguration audioConfiguration = AudioSettings.GetConfiguration();
+
+
+
         var writer = new BinaryWriter(stream);
 
         writer.Seek(0, SeekOrigin.Begin);
@@ -58,8 +63,8 @@ public static class BinaryWriterToWavExtensions
         writer.Write(16); //Length of format data.  Always 16. 
         writer.Write((short)1); //Type of format (1 is PCM, other number means compression) . 2 byte integer. Wave type PCM
         writer.Write((short)2); //Number of Channels - 2 byte integer
-        writer.Write(Hz); //Sample Rate - 32 byte integer. Sample Rate = Number of Samples per second, or Hertz.
-        writer.Write(Hz * 2 * 1); // sampleRate * bytesPerSample * number of channels, here 16000*2*1.
+        writer.Write(audioConfiguration.sampleRate); //Sample Rate - 32 byte integer. Sample Rate = Number of Samples per second, or Hertz.
+        writer.Write(audioConfiguration.sampleRate * 2 * 1); // sampleRate * bytesPerSample * number of channels, here 16000*2*1.
         writer.Write((short)(1 * 2)); //channels * bytesPerSample, here 1 * 2  // Bytes Per Sample: 1=8 bit Mono,  2 = 8 bit Stereo or 16 bit Mono, 4 = 16 bit Stereo
         writer.Write((short)16); //Bits per sample (BitsPerSample * Channels) ?? should be 8???
         writer.Write(Encoding.ASCII.GetBytes("data")); //"data" chunk header. Marks the beginning of the data section.    
