@@ -121,6 +121,9 @@ public class GameSettings : ScriptableObject
     public byte SpeechResult = 41;
 
     [SerializeField]
+    public byte HalfSwitch = 42;
+
+    [SerializeField]
     public bool _observer = true;
 
     [SerializeField]

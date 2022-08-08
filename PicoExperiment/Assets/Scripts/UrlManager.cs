@@ -44,6 +44,7 @@ public class UrlManager : MonoBehaviourPun
     private bool android = false;
     public bool useGeckoView;
     public int currentVis;
+    public bool currentHalf;
 
     private void OnEnable()
     {
@@ -60,16 +61,24 @@ public class UrlManager : MonoBehaviourPun
         if (obj.Code == MasterManager.GameSettings.VisualizationChange)
         {
 
-            Debug.Log("VisualizationChange Start");
-            
             object[] data = (object[])obj.CustomData;
 
             currentVis = (int)data[0];
 
-            if (currentVis == 1) LoadVis1(); 
+            if (currentVis == 1) LoadVis1();
             else if (currentVis == 2) LoadVis2();
             else if (currentVis == 3) LoadVis3();
-            Debug.Log("VisualizationChange End");
+ 
+        }
+        else if (obj.Code == MasterManager.GameSettings.HalfSwitch) {
+
+
+            object[] data = (object[])obj.CustomData;
+
+            currentHalf = (bool)data[0];
+
+            hideHalf(currentHalf);
+
         }
     }
 
@@ -77,6 +86,14 @@ public class UrlManager : MonoBehaviourPun
     {
         object[] data = new object[] { currentVis };
         PhotonNetwork.RaiseEvent(MasterManager.GameSettings.VisualizationChange, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
+
+    }
+
+
+    public void RaiseHalfSwitch()
+    {
+        object[] data = new object[] { currentHalf };
+        PhotonNetwork.RaiseEvent(MasterManager.GameSettings.HalfSwitch, data, Photon.Realtime.RaiseEventOptions.Default, ExitGames.Client.Photon.SendOptions.SendReliable);
 
     }
 
@@ -95,7 +112,6 @@ public class UrlManager : MonoBehaviourPun
     {
 
 
-
         if (Input.GetKeyDown("q"))
         {
             currentVis = 1;
@@ -103,7 +119,7 @@ public class UrlManager : MonoBehaviourPun
             LoadVis1();
             Debug.Log("2");
             RaiseVisSwitch();
-            Debug.Log("3q");
+            Debug.Log("3");
         }
         else if (Input.GetKeyDown("w"))
         {
@@ -119,14 +135,40 @@ public class UrlManager : MonoBehaviourPun
         }
         else if (Input.GetKeyDown("s"))
         {
-            currentVis = 3;
-            LoadVis3();
-            RaiseVisSwitch();
+            ToggleHalf();
+
         }
 
     }
 
-    public void hideSwhowHalf() { }
+    public void ToggleHalf() {
+
+        currentHalf = !currentHalf;
+        hideHalf(currentHalf);
+
+
+    }
+
+    public void hideHalf(bool whichhalf) {
+
+        for (int i = 0; i < BoxColliders.Count; i++) {
+
+            if (i < 4)
+            {
+
+                BoxColliders[i].gameObject.SetActive(whichhalf);
+
+            }
+            else {
+
+                BoxColliders[i].gameObject.SetActive(!whichhalf);
+
+            }
+        }
+
+    }
+
+
 
     public void LoadVis1() 
     {
