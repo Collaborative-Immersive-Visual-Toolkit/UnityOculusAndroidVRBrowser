@@ -8,14 +8,13 @@ public class Positioning : MonoBehaviour
     InputDevice deviceleft;
     InputDevice deviceright;
     bool triggerValue;
-    public GameObject sphere;
+
     public XRNode controllerleft;
     public XRNode controllerright;
     bool pressedleft = false;
     bool pressedright = false;
 
     public GameObject player;
-
     private void Start()
     {
 
@@ -49,7 +48,7 @@ public class Positioning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (deviceleft.TryGetFeatureValue(CommonUsages.primaryButton, out triggerValue) && triggerValue)
+        if (deviceleft.TryGetFeatureValue(CommonUsages.secondaryButton, out triggerValue) && triggerValue)
         {
             if (!pressedleft)
             {
@@ -65,7 +64,7 @@ public class Positioning : MonoBehaviour
         }
 
 
-        if (deviceright.TryGetFeatureValue(CommonUsages.primaryButton, out triggerValue) && triggerValue)
+        if (deviceright.TryGetFeatureValue(CommonUsages.secondaryButton, out triggerValue) && triggerValue)
         {
             if (!pressedright)
             {
@@ -79,16 +78,21 @@ public class Positioning : MonoBehaviour
 
             pressedright = false;
         }
+
+
+
     }
 
     void placeright()
     {
-        player.transform.position = new Vector3(0.34f,0f,0.78f) ;
+
+        player.transform.position = new Vector3(0.34f,0f,0.78f);
 
     }
 
     void placeleft()
     {
+
         player.transform.position = new Vector3(-0.32f, 0f, -0.91f);
 
     }

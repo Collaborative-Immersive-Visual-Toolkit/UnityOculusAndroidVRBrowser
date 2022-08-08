@@ -33,7 +33,7 @@ public class InsightRecording : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (device.TryGetFeatureValue(CommonUsages.primaryButton, out triggerValue) && triggerValue)
+        if (device.TryGetFeatureValue(CommonUsages.gripButton, out triggerValue) && triggerValue)
         {
             if (!pressed)
             {
