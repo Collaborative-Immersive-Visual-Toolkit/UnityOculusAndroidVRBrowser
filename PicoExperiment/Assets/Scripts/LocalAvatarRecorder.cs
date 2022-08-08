@@ -54,6 +54,7 @@ public class LocalAvatarRecorder : MonoBehaviour
     string Visualization;
     string insightRecording;
     string foundKey;
+    string VisualizationHalf;
 
     public Transform LocalHead;
     public Transform PlayerPosition;
@@ -120,6 +121,7 @@ public class LocalAvatarRecorder : MonoBehaviour
             Visualization = urlmanager.currentVis.ToString();
             insightRecording = insight.sphere.activeSelf == true ? "1" : "";
             foundKey = search.getfoundkeywords();
+            VisualizationHalf = urlmanager.currentHalf == true ? "1" : "2";
 
             line += "," + PlayerPos.Trim(remove) + "," +
                         HeadPos.Trim(remove) + "," + HeadForward.Trim(remove) + "," + HeadUp.Trim(remove) + "," + HeadCone.Trim(remove) + "," +
@@ -131,7 +133,7 @@ public class LocalAvatarRecorder : MonoBehaviour
                         PointerPosLeft.Trim(remove) + "," + PointerPosRight.Trim(remove) + "," +
                         PointerPosLeftUV.Trim(remove) + "," + PointerPosRightUV.Trim(remove) + "," +
                         TranscriptStartTime.Trim(remove) + "," + Transcript + "," + 
-                        isSpeaking + "," + Condition + "," + Visualization + "," + insightRecording + "," + foundKey;
+                        isSpeaking + "," + Condition + "," + Visualization + "," + insightRecording + "," + foundKey + "," + VisualizationHalf;
             
             writer.WriteLine(line);
         }
@@ -190,7 +192,7 @@ public class LocalAvatarRecorder : MonoBehaviour
         "U1PointerRightX, U1PointerRightY,  U1PointerRightZ," +
         "U1PointerLeftU, U1PointerLeftV," +
         "U1PointerRightU, U1PointerRightV," +
-        "TranscriptStartTime, Transcript, IsSpeaking, Condition, Visualization, InsightRecording, FoundKey";
+        "TranscriptStartTime, Transcript, IsSpeaking, Condition, Visualization, InsightRecording, FoundKey, VisualizationHalf";
 
         writer.WriteLine(header);
 

@@ -145,7 +145,7 @@ public class UrlManager : MonoBehaviourPun
 
         currentHalf = !currentHalf;
         hideHalf(currentHalf);
-
+        RaiseHalfSwitch();
 
     }
 
