@@ -135,7 +135,9 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 5925961130406926332, guid: 0cca6f6276eba4c9eb6e7f48845c0b4b, type: 2}
+  - {fileID: 11400000, guid: fea1dc5d609f74063985f91073ed92d3, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -154,7 +156,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.CollaborativeToolkit.Experiment
-    Standalone: com.oculus.UnitySample
+    Standalone: com.CollaborativeToolkit.Experiment
     iPhone: com.oculus.UnitySample
   buildNumber:
     Standalone: 0
