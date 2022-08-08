@@ -117,8 +117,16 @@ public class UrlManager : MonoBehaviourPun
             LoadVis3();
             RaiseVisSwitch();
         }
+        else if (Input.GetKeyDown("s"))
+        {
+            currentVis = 3;
+            LoadVis3();
+            RaiseVisSwitch();
+        }
 
     }
+
+    public void hideSwhowHalf() { }
 
     public void LoadVis1() 
     {
